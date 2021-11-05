@@ -12,12 +12,12 @@ jobs:
     steps:
       - name: Call update script on dots-website repo
         env:
-          user: ${{ secrets.PAT_DOTS_WEBSITE_USER }}
-          pass: ${{ secrets.PAT_DOTS_WEBSITE }}
+          user: ${{ secrets.PAT_DECENTPATTERNS_WEBSITE_USER }}
+          pass: ${{ secrets.PAT_DECENTPATTERNS_WEBSITE_TOKEN }}
         run: |
           curl -XPOST \
             -u "$user:$pass" \
             -H "Accept: application/vnd.github.everest-preview+json" \
             -H "Content-Type: application/json" \
-            https://api.github.com/repos/simplysecure/dots-website/actions/workflows/3742993/dispatches \
+            https://api.github.com/repos/decentpatterns/website/actions/workflows/3742993/dispatches \
             --data '{"ref": "master"}'
