@@ -6,7 +6,7 @@ However, adoption is slow. Developers and designers need resources that help the
 
 This is the work-in-progress library of patterns to support the design and development of better user-facing applications that are backed by decentralized architecture.
 
-You can see these patterns in ther published state, on the [pattern library website](https://decentpatterns.xyz/library).
+You can see these patterns in ther published state, on the [pattern library website](https://decentpatterns.org/library).
 
 ## Contributing
 
@@ -20,13 +20,9 @@ Stay up to date by watching this repository. Maintainers will be prompt in respo
 
 These patterns were originally developed at Simply Secure.
 
-The initiative is currently maintained by Eileen Wagner, Karissa Rae McKelvey, Vincent Ahrend, and Ngoc Trieu and has a group of volunteer contributors and advisors.
+The initiative is currently maintained by Eileen Wagner, Karissa Rae McKelvey, Vincent Ahrend, and Ngọc Triệu and has a group of volunteer contributors and advisors.
 
-[Read more about governance structures and our Code of Conduct.](https://decentpatterns.xyz/governance/)
-
-## Support Us
-
-You can support us by [donating](https://decentpatterns.xyz/support-us/) or through direct contribution to this repository.
+[Read more about governance structures and our Code of Conduct.](https://decentpatterns.org/governance/)
 
 ### Backers
 
