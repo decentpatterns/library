@@ -39,7 +39,7 @@ codes with the device's camera.
 
 :::
 
-### Why Choose Paper Keys?
+### Why Choose Paper Keys? 🔑
 
 Paper Keys is a safe and accessible method to verify, share, or backup information.
 
