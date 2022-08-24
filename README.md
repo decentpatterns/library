@@ -10,9 +10,11 @@ You can see these patterns in ther published state, on the [pattern library webs
 
 ## Contributing
 
-This pattern library would not exist without YOUR contributions. Please feel free to open an issue or pull request to start a discussion or suggest changes to any of these patterns -- or add a new one! We are actively seeking more input and expertise to advance existing patterns we've already released in this repository.
+This pattern library would not exist without YOUR contributions. Please feel free to open a discussion or suggest changes to any of these patterns — or add a new one! If you're not sure about a new pattern, you can start a thread in the Discussions.
 
-If you'd like to contribute to an existing pattern or propose a new pattern, please feel free to open a pull request or [open an issue](https://github.com/decentpatterns/library/issues/new/choose).
+We are actively seeking more input and expertise to advance existing patterns we've already released in this repository.
+
+If you'd like to contribute to an existing pattern or propose a new pattern, please feel free to open a pull request or open an issue.
 
 Stay up to date by watching this repository. Maintainers will be prompt in responding to inquiries!
 
