@@ -22,18 +22,6 @@ These patterns were originally developed at Simply Secure.
 
 The initiative is currently maintained by Eileen Wagner, Karissa Rae McKelvey, Vincent Ahrend, and Ngọc Triệu and has a group of volunteer contributors and advisors.
 
-[Read more about governance structures and our Code of Conduct.](https://decentpatterns.org/governance/)
-
-### Backers
-
-Backers support this project by contributing $2 to $99 a month. [Become a backer](https://opencollective.com/dots#backer)
-
-### Sponsors
-
-Sponsors support this project by contributing \$100 a month or more. [Become a sponsor](https://opencollective.com/dots#sponsor)
-
-<a href="https://opencollective.com/dots/sponsor/0/website" target="_blank"><img src="https://opencollective.com/dots/sponsor/0/avatar.svg"></a>
-
 ## License
 
-All design patterns are licensed CC-BY
+All design patterns are licensed CC0.
