@@ -41,6 +41,8 @@ provider over another, randomly assign new users to a hosting provider.
 ::: examples
 
 - [![Nextcoud hosts](Nextcloud.png) Nextcloud randomly selects a server for you](Nextcloud.png)
+- [![Matrix clients](matrix-clients.png) Options to select your favorite Matrix client](matrix-clients.png)
+
 
 :::
 
