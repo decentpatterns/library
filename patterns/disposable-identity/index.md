@@ -1,6 +1,6 @@
 ---
 title: Disposable Identity
-topic: agency-identity
+topic: identity-agency
 tags:
   - protocol
 description:
