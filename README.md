@@ -20,7 +20,7 @@ Stay up to date by watching this repository. Maintainers will be prompt in respo
 
 ## Governance
 
-These patterns were originally developed at Simply Secure.
+These patterns were originally developed at Superbloom (formerly known as Simply Secure).
 
 The initiative is currently maintained by Eileen Wagner, Karissa Rae McKelvey, Vincent Ahrend, and Ngọc Triệu and has a group of volunteer contributors and advisors.
 
