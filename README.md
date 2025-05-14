@@ -6,7 +6,7 @@ However, adoption is slow. Developers and designers need resources that help the
 
 This is the work-in-progress library of patterns to support the design and development of better user-facing applications that are backed by decentralized architecture.
 
-You can see these patterns in ther published state, on the [pattern library website](https://decentpatterns.org/library).
+You can see these patterns in ther published state, on the [pattern library website](https://decentpatterns.com/library/).
 
 ## Contributing
 
