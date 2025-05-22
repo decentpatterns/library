@@ -5,7 +5,7 @@ module.exports = {
   layout: "pattern",
   tags: "pattern",
   eleventyComputed: {
-    published: (data) => data.page.date.toLocaleDateString("en-us"),
+    published: (data) => data.helpers.publishedDate(data),
     relatedPatterns: (data) => data.helpers.relatedPatterns(data),
     categoryName: (data) => data.helpers.categoryName(data),
   },
