@@ -4,6 +4,8 @@ description: "Set clear expectations around the kinds of social interactions you
 tags:
   - ui
   - topic/moderation-curation
+thumbnail: "patterns/village-or-city/thumbnail.svg"
+illustration: "patterns/village-or-city/illustration.svg"
 ---
 
 

@@ -4,6 +4,8 @@ description: "A centralized server to discover new content and backup user data.
 tags:
   - protocol
   - topic/sync-status
+thumbnail: "patterns/discovery-server/thumbnail.svg"
+illustration: "patterns/discovery-server/illustration.svg"
 ---
 
 

@@ -4,6 +4,8 @@ description: "Quickly differentiate between two users or pieces of content."
 tags:
   - ui
   - topic/sharing-permissions
+thumbnail: "patterns/visual-hash/thumbnail.svg"
+illustration: "patterns/visual-hash/illustration.svg"
 ---
 
 

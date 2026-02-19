@@ -5,6 +5,8 @@ tags:
   - protocol
   - ui
   - topic/sync-status
+thumbnail: "patterns/network-health-indicator/thumbnail.svg"
+illustration: "patterns/network-health-indicator/illustration.svg"
 ---
 
 

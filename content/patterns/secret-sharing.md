@@ -4,6 +4,8 @@ description: "Backup your keys and other secrets with your trusted peers."
 tags:
   - protocol
   - topic/sharing-permissions
+thumbnail: "patterns/secret-sharing/thumbnail.svg"
+illustration: "patterns/secret-sharing/illustration.svg"
 ---
 
 

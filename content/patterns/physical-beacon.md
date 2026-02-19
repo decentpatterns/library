@@ -4,6 +4,8 @@ description: "Control the physical location of data."
 tags:
   - ui
   - topic/sync-status
+thumbnail: "patterns/physical-beacon/thumbnail.svg"
+illustration: "patterns/physical-beacon/illustration.svg"
 ---
 
 

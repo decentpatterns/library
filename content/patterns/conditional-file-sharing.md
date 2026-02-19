@@ -4,6 +4,8 @@ description: "Help users collectively keep data online"
 tags:
   - ui
   - topic/moderation-curation
+thumbnail: "patterns/conditional-file-sharing/thumbnail.svg"
+illustration: "patterns/conditional-file-sharing/illustration.svg"
 ---
 
 

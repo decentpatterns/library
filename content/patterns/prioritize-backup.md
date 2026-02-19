@@ -4,6 +4,8 @@ description: "Prioritizing backup is crucial for competing with centralized serv
 tags:
   - protocol
   - topic/moderation-curation
+thumbnail: "patterns/prioritize-backup/thumbnail.svg"
+illustration: "patterns/prioritize-backup/illustration.svg"
 ---
 
 

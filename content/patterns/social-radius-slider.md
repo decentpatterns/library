@@ -4,6 +4,8 @@ description: "Control information overload in large networks."
 tags:
   - ui
   - topic/moderation-curation
+thumbnail: "patterns/social-radius-slider/thumbnail.svg"
+illustration: "patterns/social-radius-slider/illustration.svg"
 ---
 
 

@@ -4,6 +4,8 @@ description: "Build opportunities for detecting and reacting to bad behavior"
 tags:
   - protocol
   - topic/moderation-curation
+thumbnail: "patterns/cautious-optimism/thumbnail.svg"
+illustration: "patterns/cautious-optimism/illustration.svg"
 ---
 
 

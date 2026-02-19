@@ -5,6 +5,8 @@ tags:
   - ui
   - protocol
   - topic/sharing-permissions
+thumbnail: "patterns/whisper-links/thumbnail.svg"
+illustration: "patterns/whisper-links/illustration.svg"
 ---
 
 

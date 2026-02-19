@@ -4,6 +4,8 @@ description: "Securely move between providers and aliases."
 tags:
   - protocol
   - topic/identity-agency
+thumbnail: "patterns/persistent-identity/thumbnail.svg"
+illustration: "patterns/persistent-identity/illustration.svg"
 ---
 
 

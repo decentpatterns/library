@@ -4,6 +4,8 @@ description: "Privacy-preserving connections with trusted contacts"
 tags:
   - protocol
   - topic/identity-agency
+thumbnail: "patterns/disposable-identity/thumbnail.svg"
+illustration: "patterns/disposable-identity/illustration.svg"
 ---
 
 

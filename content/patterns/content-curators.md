@@ -4,6 +4,8 @@ description: "Choice, flexibility, and control over feeds."
 tags:
   - ui
   - topic/moderation-curation
+thumbnail: "patterns/content-curators/thumbnail.svg"
+illustration: "patterns/content-curators/illustration.svg"
 ---
 
 

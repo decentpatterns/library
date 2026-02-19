@@ -4,6 +4,8 @@ description: "Protect privacy & safety through networked deletion"
 tags:
   - protocol
   - topic/moderation-curation
+thumbnail: "patterns/tombstones/thumbnail.svg"
+illustration: "patterns/tombstones/illustration.svg"
 ---
 
 

@@ -64,7 +64,6 @@ export const defaultContentPageLayout: PageLayout = {
       components: [
         {
           Component: Component.Search(),
-          grow: true,
         },
         { Component: Component.Darkmode() },
         { Component: Component.ReaderMode() },
@@ -73,6 +72,10 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer(explorerOptions),
   ],
   right: [
+    Component.ConditionalRender({
+      component: Component.PatternThumbnail(),
+      condition: (page) => page.fileData.slug?.startsWith("patterns/") ?? false,
+    }),
     Component.Graph(),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
@@ -89,7 +92,6 @@ export const defaultListPageLayout: PageLayout = {
       components: [
         {
           Component: Component.Search(),
-          grow: true,
         },
         { Component: Component.Darkmode() },
       ],

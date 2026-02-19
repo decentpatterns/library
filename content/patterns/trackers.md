@@ -4,6 +4,8 @@ description: "Trackers can facilitate introduction in peer-to-peer networks."
 tags:
   - protocol
   - topic/sync-status
+thumbnail: "patterns/trackers/thumbnail.svg"
+illustration: "patterns/trackers/illustration.svg"
 ---
 
 

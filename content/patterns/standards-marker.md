@@ -4,6 +4,8 @@ description: "Quickly find and open files that are related to your application."
 tags:
   - ui
   - topic/sharing-permissions
+thumbnail: "patterns/standards-marker/thumbnail.svg"
+illustration: "patterns/standards-marker/illustration.svg"
 ---
 
 

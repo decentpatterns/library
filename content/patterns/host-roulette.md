@@ -4,6 +4,8 @@ description: "Encourage an equal distribution of users per server."
 tags:
   - ui
   - topic/identity-agency
+thumbnail: "patterns/host-roulette/thumbnail.svg"
+illustration: "patterns/host-roulette/illustration.svg"
 ---
 
 

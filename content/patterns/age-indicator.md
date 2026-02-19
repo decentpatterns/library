@@ -4,6 +4,8 @@ description: "Quickly distinguish if information is viral or stale"
 tags:
   - ui
   - topic/sync-status
+thumbnail: "patterns/age-indicator/thumbnail.svg"
+illustration: "patterns/age-indicator/illustration.svg"
 ---
 
 

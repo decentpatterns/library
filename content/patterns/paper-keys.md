@@ -4,6 +4,8 @@ description: "Accessible verification, backup, and sharing"
 tags:
   - ui
   - topic/sharing-permissions
+thumbnail: "patterns/paper-keys/thumbnail.svg"
+illustration: "patterns/paper-keys/illustration.svg"
 ---
 
 

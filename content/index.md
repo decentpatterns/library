@@ -16,10 +16,24 @@ In decentralized applications, user "accounts" may not exist, or they might get 
 
 See the full [[identity-agency|Identity & Agency]] topic page.
 
-- [[Address]] -- Users are uniquely identified by their handle and a server name
-- [[Disposable Identity]] -- Privacy-preserving connections with trusted contacts
-- [[Host Roulette]] -- Encourage an equal distribution of users per server
-- [[Persistent Identity]] -- Securely move between providers and aliases
+<div class="pattern-grid">
+  <a class="pattern-card" href="patterns/address">
+    <img src="patterns/address/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Address</span>
+  </a>
+  <a class="pattern-card" href="patterns/disposable-identity">
+    <img src="patterns/disposable-identity/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Disposable Identity</span>
+  </a>
+  <a class="pattern-card" href="patterns/host-roulette">
+    <img src="patterns/host-roulette/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Host Roulette</span>
+  </a>
+  <a class="pattern-card" href="patterns/persistent-identity">
+    <img src="patterns/persistent-identity/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Persistent Identity</span>
+  </a>
+</div>
 
 ---
 
@@ -29,13 +43,36 @@ Information overload, spam, and abuse are serious problems for decentralized app
 
 See the full [[moderation-curation|Moderation & Curation]] topic page.
 
-- [[Cautious Optimism]] -- Build opportunities for detecting and reacting to bad behavior
-- [[Conditional File Sharing]] -- Help users collectively keep data online
-- [[Content Curators]] -- Choice, flexibility, and control over feeds
-- [[Prioritize Backup]] -- Competing with centralized long-term storage
-- [[Social Radius Slider]] -- Control information overload in large networks
-- [[Tombstones]] -- Protect privacy and safety through networked deletion
-- [[Village or City]] -- Set expectations around social interactions
+<div class="pattern-grid">
+  <a class="pattern-card" href="patterns/cautious-optimism">
+    <img src="patterns/cautious-optimism/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Cautious Optimism</span>
+  </a>
+  <a class="pattern-card" href="patterns/conditional-file-sharing">
+    <img src="patterns/conditional-file-sharing/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Conditional File Sharing</span>
+  </a>
+  <a class="pattern-card" href="patterns/content-curators">
+    <img src="patterns/content-curators/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Content Curators</span>
+  </a>
+  <a class="pattern-card" href="patterns/prioritize-backup">
+    <img src="patterns/prioritize-backup/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Prioritize Backup</span>
+  </a>
+  <a class="pattern-card" href="patterns/social-radius-slider">
+    <img src="patterns/social-radius-slider/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Social Radius Slider</span>
+  </a>
+  <a class="pattern-card" href="patterns/tombstones">
+    <img src="patterns/tombstones/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Tombstones</span>
+  </a>
+  <a class="pattern-card" href="patterns/village-or-city">
+    <img src="patterns/village-or-city/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Village or City</span>
+  </a>
+</div>
 
 ---
 
@@ -45,12 +82,32 @@ Most decentralized applications share everything publicly by default. These patt
 
 See the full [[sharing-permissions|Sharing & Permissions]] topic page.
 
-- [[Paper Keys]] -- Accessible verification, backup, and sharing
-- [[QR Code Verification]] -- Securely verify or transfer information between peers
-- [[Secret Sharing]] -- Backup keys and secrets with trusted peers
-- [[Standards Marker]] -- Quickly find and open related application files
-- [[Visual Hash]] -- Quickly differentiate between users or content
-- [[Whisper Links]] -- Share resources quickly between two trusted users
+<div class="pattern-grid">
+  <a class="pattern-card" href="patterns/paper-keys">
+    <img src="patterns/paper-keys/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Paper Keys</span>
+  </a>
+  <a class="pattern-card" href="patterns/QR-code-verification">
+    <img src="patterns/QR-code-verification/thumbnail.svg" alt="">
+    <span class="pattern-card-title">QR Code Verification</span>
+  </a>
+  <a class="pattern-card" href="patterns/secret-sharing">
+    <img src="patterns/secret-sharing/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Secret Sharing</span>
+  </a>
+  <a class="pattern-card" href="patterns/standards-marker">
+    <img src="patterns/standards-marker/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Standards Marker</span>
+  </a>
+  <a class="pattern-card" href="patterns/visual-hash">
+    <img src="patterns/visual-hash/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Visual Hash</span>
+  </a>
+  <a class="pattern-card" href="patterns/whisper-links">
+    <img src="patterns/whisper-links/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Whisper Links</span>
+  </a>
+</div>
 
 ---
 
@@ -60,12 +117,32 @@ Decentralized applications are not always connected to a single source of truth.
 
 See the full [[sync-status|Sync & Status]] topic page.
 
-- [[Age Indicator]] -- Quickly distinguish if information is viral or stale
-- [[Discovery Server]] -- Discover new content and backup user data
-- [[Network Health Indicator]] -- Build trust through data visualizations
-- [[Physical Beacon]] -- Control the physical location of data
-- [[Protocol Agnosticism]] -- Give options for which protocols to use
-- [[Trackers]] -- Facilitate introduction in peer-to-peer networks
+<div class="pattern-grid">
+  <a class="pattern-card" href="patterns/age-indicator">
+    <img src="patterns/age-indicator/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Age Indicator</span>
+  </a>
+  <a class="pattern-card" href="patterns/discovery-server">
+    <img src="patterns/discovery-server/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Discovery Server</span>
+  </a>
+  <a class="pattern-card" href="patterns/network-health-indicator">
+    <img src="patterns/network-health-indicator/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Network Health Indicator</span>
+  </a>
+  <a class="pattern-card" href="patterns/physical-beacon">
+    <img src="patterns/physical-beacon/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Physical Beacon</span>
+  </a>
+  <a class="pattern-card" href="patterns/protocol-agnosticism">
+    <img src="patterns/protocol-agnosticism/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Protocol Agnosticism</span>
+  </a>
+  <a class="pattern-card" href="patterns/trackers">
+    <img src="patterns/trackers/thumbnail.svg" alt="">
+    <span class="pattern-card-title">Trackers</span>
+  </a>
+</div>
 
 ---
 

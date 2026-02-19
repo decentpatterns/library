@@ -4,6 +4,8 @@ description: "Give options for which relevant protocols to use."
 tags:
   - protocol
   - topic/sync-status
+thumbnail: "patterns/protocol-agnosticism/thumbnail.svg"
+illustration: "patterns/protocol-agnosticism/illustration.svg"
 ---
 
 
