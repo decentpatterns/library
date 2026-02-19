@@ -24,11 +24,10 @@ in the physical world.
 The user can save or print a file that can be used to gain access to the
 resource. The file itself should be easily human readable and printable.
 
-You can use this in conjunction with the [[QR Code
-verification]] pattern to make it easier to import the
+You can use this in conjunction with the [[QR Code Verification]] pattern to make it easier to import the
 codes with the device's camera.
 
-#### Examples
+### Examples
 
 > [!example]- Examples
 > - [![Paper Keys in 1Password ](patterns/paper-keys/paper-keys-1password.png) 1Password offers an all-in-one 'Emergency Kit'](patterns/paper-keys/paper-keys-1password.png)
@@ -38,13 +37,13 @@ codes with the device's camera.
 > - [![Paper Keys in Keybase](patterns/paper-keys/paper-keys-keybase.png) Keybase generates a multiple word passphrase](patterns/paper-keys/paper-keys-keybase.png)
 
 
-### Why Choose Paper Keys? 🔑
+### Why Choose Paper Keys?
 
 Paper Keys is a safe and accessible method to verify, share, or backup information.
 
 ### Best Practice: How to Implement Paper Keys
 
-It is advisable that users know the risks, and have a secure and oragnised
+It is advisable that users know the risks, and have a secure and organised
 place to store the keys. Be clear with users that they should print it or
 save it in a safe backup location in case their device gets lost or stolen.
 
@@ -53,6 +52,10 @@ save it in a safe backup location in case their device gets lost or stolen.
 If lost, access to data is potentially lost permanently.
 
 If found by an adversary, it can lead to unauthorized access to data.
+
+### The Take Away
+
+Paper Keys provide a simple, accessible way to back up and share access credentials in the physical world, bridging the gap between digital security and everyday usability.
 
 ### References & Where to Learn More
 

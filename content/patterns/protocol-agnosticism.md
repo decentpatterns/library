@@ -41,6 +41,6 @@ Use Protocol Agnosticism if you are supporting a large user base with varied pre
 
 It can be difficult for most users to fully grasp the ramifications of their protocol choices.
 
-### The Take-Away
+### The Take Away
 
 Protocol agnosticism is a step toward real interoperability.

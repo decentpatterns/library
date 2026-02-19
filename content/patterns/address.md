@@ -35,7 +35,7 @@ Users are uniquely identified by their handle and a server name.
 > - [![Address in Matrix](patterns/address/address-matrix.png) Matrix gives more visual guidance for address choice](patterns/address/address-matrix.png)
 
 
-### Why Choose Address ?
+### Why Choose Address?
 
 - When users have a server that receives messages from other users.
 
@@ -50,8 +50,7 @@ It is often complex for a user to convert their address, account, contact list, 
 If the user does decide to move to a new server, the user then needs to take on
 the cumbersome task of notifying all contacts of their new address. Recipients
 would need to trust your new address, without strong proof if it is the same
-person or even the same device. See [[Persistent
-Identity]] for making portability more secure.
+person or even the same device. See [[Persistent Identity]] for making portability more secure.
 
 ### The Take Away
 

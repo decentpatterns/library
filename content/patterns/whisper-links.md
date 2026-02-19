@@ -30,7 +30,7 @@ when clicked on, your application will automatically open.
 >
 > - [![Whisper links in Jitsi](patterns/whisper-links/whisper-links-jitsi.png) Jitsi allows users to choose a phrase](patterns/whisper-links/whisper-links-jitsi.png)
 >
-> - [![Whisper links in Briar](patterns/whisper-links/whisper-links-briar.png) Briar's phrases are cryptographicly secure but unpronounceable](patterns/whisper-links/whisper-links-briar.png)
+> - [![Whisper links in Briar](patterns/whisper-links/whisper-links-briar.png) Briar's phrases are cryptographically secure but unpronounceable](patterns/whisper-links/whisper-links-briar.png)
  
 
 ### Why Choose Whisper Links?
@@ -48,7 +48,7 @@ Allow users to create their own whisper links.
 
 Consider only allowing a certain number of failed attempts to protect against spammers and brute-force attacks. See [password-authenticated key agreement](https://en.wikipedia.org/wiki/Password-authenticated_key_agreement) for more implementation details.
 
-This could be used in conjunction with [[QR code verification]] if two users are able to share an image or
+This could be used in conjunction with [[QR Code Verification]] if two users are able to share an image or
 are in the same physical location.
 
 ### Potential Problems with Whisper Links
@@ -64,7 +64,7 @@ choose names that are easy to guess. Consider implementing a "bad meeting name
 detector" which tells users when their link could be hijacked by an suspicious
 third-party attacker.
 
-### The Take-Away
+### The Take Away
 
 Whisper Links make it easy to share information quickly between two trusted users.
 

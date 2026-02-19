@@ -36,8 +36,7 @@ Age indicator shows you information about participants without taking up too muc
   checked for validity. As such, it enables an assertion of truth as
   information gets referenced over time.
 - Make sure context is always clear.
-- Use Age Indicator in combination with a [[network health
-indicator]] to give advanced users more fine-grained detail.
+- Use Age Indicator in combination with a [[Network Health Indicator]] to give advanced users more fine-grained detail.
 
 ### Potential Problems with Age Indicator
 
@@ -51,7 +50,7 @@ indicator]] to give advanced users more fine-grained detail.
   more valuable with the increased engagement over the course of time? Consider
   recommending an action (if any) that could be taken based upon the age of the content.
 
-### The Take-Away
+### The Take Away
 
 Age indicator helps guide users when the age of content affects how a user
 should interact with it.

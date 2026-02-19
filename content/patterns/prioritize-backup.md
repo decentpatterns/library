@@ -40,6 +40,6 @@ When users depend upon long-term storage of their data.
 - Prioritize backup can be too technical. Hide advanced metrics and show users simple indicators for canceled, paused, in progress, completed, and error.
 - It could be difficult to delete data if there are many storage providers or peers on the network.
 
-### The Take-Away
+### The Take Away
 
 Prioritizing backup is crucial for competing with centralized services that provide long-term storage.

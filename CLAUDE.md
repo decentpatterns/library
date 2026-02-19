@@ -16,7 +16,7 @@ npm test                         # Run tests (tsx --test)
 ## Project Structure
 
 - `content/` — All Markdown content (edit these for content changes)
-  - `content/patterns/<name>.md` — 22 pattern pages
+  - `content/patterns/<name>.md` — 23 pattern pages
   - `content/patterns/<name>/` — Images for each pattern (SVG, PNG, JPEG)
   - `content/topics/<name>.md` — 4 topic category pages
   - `content/glossary/<name>.md` — ~35 glossary term pages

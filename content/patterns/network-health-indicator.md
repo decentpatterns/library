@@ -33,7 +33,7 @@ synchronize data to new devices.
 Allow the user to see what other devices have access and are re-hosting their
 data to the network. Visualize this information in the user interface at
 multiple scales depending on the details necessary per screen. You can use this
-in conjunction with [[age-indicator]] to understand how long
+in conjunction with [[Age Indicator]] to understand how long
 it's been since a device has seen another, helping users understand if their
 data is safely replicated to another device and they can turn off their computer.
 
@@ -47,7 +47,7 @@ data is safely replicated to another device and they can turn off their computer
 > - [![Network health indicator in Syncthing](patterns/network-health-indicator/network-health-indicator-syncthing.png) Syncthing provides device monitoring & control](patterns/network-health-indicator/network-health-indicator-syncthing.png)
  
 
-### Why Choose Network Heath Indicator?
+### Why Choose Network Health Indicator?
 
 - Confirm that shared data remains widely available
 - Confirm that hosts supply data for a long time
@@ -86,13 +86,13 @@ Network Health Indicators may be unreliable in offline (i.e., [sneakernet](https
   when they are connected and available, rather than nodes polling all peers
   periodically to discover availability.
 
-### The Take-Away
+### The Take Away
 
 Network health indicators reassure users and build trust in your application.
 
 ### References & Where to Learn More
 
-Network health indicators overlap with reputation and trust management, in that hosting data for a long period of time can be used to gauge the reliability of a peer. See [[cautious optimism]] and [[conditional file sharing]]. There are potential applications related to preventing DDoS and Sybil attacks.
+Network health indicators overlap with reputation and trust management, in that hosting data for a long period of time can be used to gauge the reliability of a peer. See [[Cautious Optimism]] and [[Conditional File Sharing]]. There are potential applications related to preventing DDoS and Sybil attacks.
 
 Network [heartbeats](<https://en.wikipedia.org/wiki/Heartbeat_(computing)>) confirm _lack of data availability_, a component of [[tombstones]].
 

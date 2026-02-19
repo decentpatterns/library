@@ -29,7 +29,7 @@ This solution is sometimes called an [identicon](https://en.wikipedia.org/wiki/I
 
 > [!example]- Examples
 > - [![Visual hash in Cabal](patterns/visual-hash/visual-hash-cabal.png) Cabal's visual hash format](patterns/visual-hash/visual-hash-cabal.png)
-> - [![Visual hash in Cabal](patterns/visual-hash/visual-hash-github.png) Github uses colors as well as patterns](patterns/visual-hash/visual-hash-github.png)
+> - [![Visual hash in GitHub](patterns/visual-hash/visual-hash-github.png) Github uses colors as well as patterns](patterns/visual-hash/visual-hash-github.png)
 > - [![Visual hash in Radicle](patterns/visual-hash/visual-hash-radicle.png) Radicle's visual hashes don't look like QR codes](patterns/visual-hash/visual-hash-radicle.png)
 
 
@@ -50,6 +50,6 @@ visible in a typical user's social network (e.g., 1000 items).
 - Color blindness could be an issue in differentiating two visual hashes from
   each other. Ensure that the visual hash uses two colors that can be seen by all users.
 
-### The Take-Away
+### The Take Away
 
 Visual hash is a good default image picker that helps you differentiate between users or content.

@@ -27,7 +27,7 @@ how your data is being shared between instances.
 - **Create incentives** that encourage hosting less popular content. For example,
   "Users who share datasets with less than 5 peers get a free gold account." See [[Cautious Optimism]] for more details.
 
-#### Examples
+### Examples
 
 > [!example]- Examples
 > - [![Timed messages in Wire](patterns/conditional-file-sharing/Wire.png) Wire offers timed messages](patterns/conditional-file-sharing/Wire.png)
@@ -35,11 +35,11 @@ how your data is being shared between instances.
 > - [![Nextcloud retention](patterns/conditional-file-sharing/nextcloud.png) Nextcloud' retention can be filtered by tag](patterns/conditional-file-sharing/nextcloud.png)
 
 
-### Why Choose Conditional Sharing?
+### Why Choose Conditional File Sharing?
 
 When there is a large amount of information on the network with varied relevance and popularity.
 
-### Best Practices: How to Implement Conditional Sharing?
+### Best Practice: How to Implement Conditional File Sharing
 
 - Ensure you can control with whom data is shared and when, including
   individual blocks of data.
@@ -47,14 +47,14 @@ When there is a large amount of information on the network with varied relevance
   your application, but allow users to modify this easily using sliders and
   toggles.
 
-### Potential Problems with Conditional Sharing
+### Potential Problems with Conditional File Sharing
 
 - There are maybe still copies of data after the conditions are no longer met.
 
-### The Take-Away
+### The Take Away
 
 Conditional sharing helps users collectively keep data online when it needs to be without a central coordinator.
 
-### References and Where to Learn More
+### References & Where to Learn More
 
 Integrating the data availability layer (p2p redundant hosting) with tracking where data is being shared can provide insight into how data is being used by peers. See [[network health indicator|network health indicators]] for more.

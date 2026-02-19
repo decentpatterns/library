@@ -25,15 +25,15 @@ We can encourage deletion across the network quite well by using Tombstones. A t
 > - [![Tombstones in Mapeo](patterns/tombstones/mapeo.png) Mapeo has a delete feature which hides items from view](patterns/tombstones/mapeo.png)
 
 
-### How to best implement
+### Why Choose Tombstones?
+
+When you want to protect the safety and privacy of users.
+
+### Best Practice: How to Implement Tombstones
 
 - When a message is deleted, show users if the content is still available somewhere on the network (e.g., it could be that some client is not respecting the message).
 - Some clients may not respect tombstones, give users visibility into this and allow blocking replication with those clients.
 - Allow 'reversing' tombstones, that is, a tombstone should be a boolean value that can be turned off or on in the future.
-
-### Why Choose Tombstones?
-
-When you want to protect the safety and privacy of users.
 
 ### Potential Problems with Tombstones
 
@@ -41,6 +41,10 @@ It won't always be clear that content won't be deleted immediately from the netw
 
 Depending on the protocol or library you choose for storage, it may not be possible to delete historical data. In this case, tombstones only 'hide' data from view, rather than delete it from disk.
 
+### The Take Away
+
+Use tombstones to let users request deletion of content across a decentralized network, making clear to users what guarantees can and cannot be made about full removal.
+
 ### References & Where to Learn More
 
-Network "[heartbeats](<https://en.wikipedia.org/wiki/Heartbeat_(computing)>)" can track which peers with a copy of data continue to share it after a tombstone has been sent. See [[network health indicator]] for more on this approach.
+Network "[heartbeats](<https://en.wikipedia.org/wiki/Heartbeat_(computing)>)" can track which peers with a copy of data continue to share it after a tombstone has been sent. See [[Network Health Indicator]] for more on this approach.

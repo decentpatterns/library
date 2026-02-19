@@ -44,7 +44,7 @@ Users will expect different behaviors based on a 'large' or 'small' radius.
 Do research on your target user base to understand what the default setting
 should be, as many users do not change default settings.
 
-### The Take-Away
+### The Take Away
 
 Social radius slider helps users control information overload in otherwise
 large networks.

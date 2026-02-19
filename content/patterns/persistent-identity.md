@@ -35,7 +35,7 @@ talking to the same person.
 > - [![Persistent Identity in Keybase](patterns/persistent-identity/persistent-identity-keybase.png) Keybase encourages publicly proving long-term ownership](patterns/persistent-identity/persistent-identity-keybase.png)
 >
 > - [![GPG Keychain](patterns/persistent-identity/gpg.png) GPG Keychains associate
->   multiple keypairs with a single address](gpg.png)
+>   multiple keypairs with a single address](patterns/persistent-identity/gpg.png)
 
 
 ### Why Choose Persistent Identity?
@@ -60,7 +60,7 @@ create entirely anonymous accounts. For example, if a 3rd-party finds the id
 secret in the profile on the device's hard drive, they have linked that device
 to that account. To give extra security guarantees, ensure any identifiers are deleted
 completely from devices upon account deletion. See
-[[disposable-identity]] for more information about
+[[Disposable Identity]] for more information about
 anonymous, one-time, and short-lived accounts.
 
 ### The Take Away

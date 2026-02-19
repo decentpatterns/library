@@ -40,11 +40,11 @@ provider over another, randomly assign new users to a hosting provider.
 ### Examples
 
 > [!example]- Examples
-> - [![Nextcoud hosts](patterns/host-roulette/Nextcloud.png) Nextcloud randomly selects a server for you](patterns/host-roulette/Nextcloud.png)
+> - [![Nextcloud hosts](patterns/host-roulette/Nextcloud.png) Nextcloud randomly selects a server for you](patterns/host-roulette/Nextcloud.png)
 > - [![Matrix clients](patterns/host-roulette/matrix-clients.png) Options to select your favorite Matrix client](patterns/host-roulette/matrix-clients.png)
 
 
-### Why Choose Host Roulette ?
+### Why Choose Host Roulette?
 
 When you want to steer the network into further distribution
 
@@ -72,6 +72,6 @@ test the copy with users to see if they all sound similarly attractive. See
 Host Roulette can help you decentralize a network among equal, federated
 servers.
 
-## References & Where to Learn More
+### References & Where to Learn More
 
 [Nextcloud's design decision](https://opensource.com/article/20/9/decentralization-signup)

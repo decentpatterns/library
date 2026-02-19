@@ -13,7 +13,7 @@ Decentralized applications prioritize portability. In other words, data is not t
 
 ### The Design Solution
 
-When exporting data, such as keys or backups, from the application, ensure that the file has a distinguishable and noticeable file extension (e.g., docx or zip). Instead, use the name of your application, or some other name that is unique to your application.
+When exporting data, such as keys or backups, from the application, avoid generic file extensions (e.g., `.docx` or `.zip`), and instead use the name of your application, or some other name that is unique to your application.
 
 ### Examples
 
@@ -37,6 +37,6 @@ When there are sharable or backup files.
 
 If you're using a common file format, like sql or zip, it won't be immediately obvious. Include in your help desk and documentation a clear description of what your file format contains and how to use it outside of the application.
 
-### The Take-Away
+### The Take Away
 
 Standards marker helps users quickly find and open files that are related to your application.

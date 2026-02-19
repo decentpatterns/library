@@ -40,8 +40,7 @@ physical beacons that are synchronizing and backing up the data on the internet.
 It is good for grasping a concrete aspect of the network for those who might
 not understand the conceptual aspect of it.
 
-Use this in conjunction with [[Network Health
-Indicator]] to show which physical beacons are
+Use this in conjunction with [[Network Health Indicator]] to show which physical beacons are
 currently online. Include concrete information about these locations, such as
 their IP address, city, country, provider name (e.g., URL), and latency.
 
@@ -71,7 +70,7 @@ Physical Beacon can expose a new attack surface or become a point of failure.
 To avoid this, consider using end-to-end encryption and synchronize with beacons
 in multiple locations.
 
-### The Take-Away
+### The Take Away
 
 Physical Beacon can be useful when it's important that data is stored in
 a particular physical location (or many physical locations) for improved data

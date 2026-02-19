@@ -1,15 +1,11 @@
 ---
 title: "Disposable Identity"
+description: "Privacy-preserving connections with trusted contacts"
 tags:
   - protocol
   - topic/identity-agency
 ---
 
-
-### Why Choose Disposable Identity?
-
-- When you want to allow for a privacy-preserving method of connecting
-  with trusted contacts.
 
 ### The Design Problem
 
@@ -39,6 +35,11 @@ amount of time. Display this prominently to the user upon identity creation.
 > - [![Disposable identity in Cabal](patterns/disposable-identity/disposable-identity-cabal.png) Cabal random nicknames can be changed later](patterns/disposable-identity/disposable-identity-cabal.png)
  
 
+### Why Choose Disposable Identity?
+
+- When you want to allow for a privacy-preserving method of connecting
+  with trusted contacts.
+
 ### Best Practice: How to Implement Disposable Identity
 
 - Identities could be created with limits set up front. For example, "this
@@ -46,8 +47,7 @@ amount of time. Display this prominently to the user upon identity creation.
   parameter.
 
 - Some users may want to decide to keep their identities as their permanent
-  one after some time in use. Allow users to upgrade to a [[persistent
-identity]] if they want to keep it.
+  one after some time in use. Allow users to upgrade to a [[Persistent Identity]] if they want to keep it.
 
 - Consider making disposable identity very easy to create or even the default
   identity creation action. Allow users to simply scan a QR Code or click a link

@@ -7,7 +7,7 @@ tags:
 ---
 
 
-## The Design Problem
+### The Design Problem
 
 Managing your "secrets" (like keys and passwords) is hard! If they are saved only on
 a single device, they are highly secure because someone must gain possession of
@@ -23,7 +23,7 @@ for many Internet companies today that store your important information. This
 is why many companies focus on creating a social, friendly, and trusted image
 in their brand.  
 
-## The Design Solution
+### The Design Solution
 
 Because trust is inherently social, we can also model secret management in a social
 way. Secret sharing allows you to share your secret with a number of
@@ -37,20 +37,20 @@ employee from stealing your secret, as they would need to coordinate with
 a number of your peers to unlock the secret.
 
 
-## Examples
+### Examples
 
 > [!example]- Examples
 > - [![Dark Crystal demo](patterns/secret-sharing/secret-history-screenshot.png) Dark Crystal in Secure Scuttlebutt](patterns/secret-sharing/secret-history-screenshot.png)
 
 
-## Why Choose Secret Sharing?
+### Why Choose Secret Sharing?
 
 Secret sharing is great in a scenario where users have to maintain a single secret across all of their
 devices, and losing that secret can be catastrophic. For example, in
 applications that manage sensitive information such as money, personally
 identifying information, or encrypted documents.
 
-## Best Practice: How to Implement Secret Sharing
+### Best Practice: How to Implement Secret Sharing
 
 Allow users to choose a minimum number of peers that need to come together to
 re-create the secret. The number of peers can be small, as little as two. Most
@@ -64,7 +64,7 @@ peers, or five shards with at least three minimum peers. This way, if one of
 the peers is unable or unwilling to participate at a later date, the secret
 won't be lost.
 
-## Potential Problems with Secret Sharing
+### Potential Problems with Secret Sharing
 
 The simplest way to implement secret sharing likely requires the users to
 distribute the secret shards to peers themselves in an ad-hoc manner. There
@@ -79,10 +79,10 @@ the application to make it easier for users to create, send, and revoke keys
 over encrypted channels, but that is not always an easy task for development
 teams to build and deploy.
 
-## The Take Away
+### The Take Away
 
 Secret Sharing is a protocol that models trust in a social and distributed fashion.
 
-## References & Where to Learn More
+### References & Where to Learn More
 
 [Dark Crystal](https://darkcrystal.pw/what-is-secret-sharing/)
