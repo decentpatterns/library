@@ -29,6 +29,47 @@ h4 {
   border-bottom: none !important;
 }
 
+// Icons: Lucide stroke-based icons — override fill-based defaults
+.darkmode svg,
+.readermode svg {
+  fill: none !important;
+  stroke: var(--darkgray);
+}
+
+// ReaderMode: swap outline/filled icon based on active state
+:root .readermode > .readerIconOff {
+  display: none;
+}
+:root[reader-mode="on"] .readermode > .readerIconOff {
+  display: inline;
+}
+:root[reader-mode="on"] .readermode > .readerIconOn {
+  display: none;
+}
+
+// Search: icon-only button, no fake search bar
+.search {
+  min-width: unset;
+  max-width: unset;
+
+  & > .search-button {
+    border: none;
+    padding: 0;
+    width: auto;
+    height: 32px;
+
+    & > p {
+      display: none;
+    }
+
+    & svg {
+      margin: 0;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
 // Search result highlight: use orange-tinted highlight instead of cyan tertiary
 .search-layout .highlight {
   background: var(--highlight) !important;
@@ -168,4 +209,55 @@ footer {
 // Graph node colors: use brand teal for active node
 :root {
   --graph-node-active: var(--tertiary);
+}
+
+// Pattern illustration in right sidebar
+.pattern-thumbnail {
+  width: 100%;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+}
+
+// Pattern card grid on index page
+.pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.pattern-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding-bottom: 0.75rem;
+  border-radius: 6px;
+  text-decoration: none;
+  gap: 0;
+  overflow: hidden;
+  border-bottom: none !important;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .pattern-card-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--dark);
+    padding: 0.15rem 0 0;
+  }
 }
