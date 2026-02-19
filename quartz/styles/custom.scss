@@ -12,6 +12,21 @@ h4 {
 
 h1 {
   color: var(--secondary) !important;
+  font-weight: 400;
+}
+
+h2,
+h3 {
+  font-weight: 300;
+}
+
+h4 {
+  font-weight: 400;
+}
+
+// Breadcrumbs: no underline
+.breadcrumb-element a {
+  border-bottom: none !important;
 }
 
 // Search result highlight: use orange-tinted highlight instead of cyan tertiary
@@ -126,15 +141,18 @@ article img[src$=".svg"] {
   }
 }
 
-// Explorer: use body font (Inter) for leaf page links (about, contribute, friends, etc.)
-.explorer-content ul li > a {
+// Explorer: use Inter for all nav items (leaves, folder labels, and collapsibles)
+.explorer-content ul li > a,
+.folder-container div > a,
+.folder-container div > button,
+.folder-container div > button span {
   font-family: var(--bodyFont);
 }
 
-// Explorer: make folder heading labels larger than their child items
+// Explorer: uniform 1rem size for all nav items
 .folder-container div > a,
 .folder-container div > button span {
-  font-size: 1.05rem !important;
+  font-size: 1rem !important;
 }
 
 // Hide tags in folder/list page listings
