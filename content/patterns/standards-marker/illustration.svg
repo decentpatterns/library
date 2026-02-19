@@ -1,0 +1,16 @@
+<svg width="738" height="425" viewBox="0 0 738 425" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="1" width="736" height="423" rx="9" stroke="white" stroke-width="2"/>
+<rect x="34" y="28" width="670" height="370" rx="10" fill="#FF8566"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M103 89H227L185.667 126.434L227 163.868H103V89Z" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path d="M103 163.868V262.132" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path d="M185.667 126.434H289.001L247.667 163.868L289.001 201.302H185.667" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path d="M247.667 163.868H351.001L309.667 201.302L351.001 238.736H247.667" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path d="M185.667 201.303V299.567" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path d="M247.667 238.736V337" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M387 89H511L469.667 126.434L511 163.868H387V89Z" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path d="M387 163.868V262.132" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path d="M469.667 126.434H573.001L531.667 163.868L573.001 201.302H469.667" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path d="M531.667 163.868H635.001L593.667 201.302L635.001 238.736H531.667" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path d="M469.667 201.303V299.567" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+<path d="M531.667 238.736V337" stroke="white" stroke-width="6" stroke-linejoin="round"/>
+</svg>
