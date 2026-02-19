@@ -126,6 +126,22 @@ article img[src$=".svg"] {
   }
 }
 
+// Explorer: use body font (Inter) for leaf page links (about, contribute, friends, etc.)
+.explorer-content ul li > a {
+  font-family: var(--bodyFont);
+}
+
+// Explorer: make folder heading labels larger than their child items
+.folder-container div > a,
+.folder-container div > button span {
+  font-size: 1.05rem !important;
+}
+
+// Hide tags in folder/list page listings
+.section > .tags {
+  display: none;
+}
+
 // Footer branding accent
 footer {
   border-top: 2px solid var(--secondary);
