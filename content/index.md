@@ -143,14 +143,3 @@ See the full [[sync-status|Sync & Status]] topic page.
     <span class="pattern-card-title">Trackers</span>
   </a>
 </div>
-
----
-
-## Resources
-
-- [[Glossary]] -- Key terms and definitions for decentralized technologies
-- [[About]] -- About the Decent Patterns project and team
-- [[Contribute]] -- Join the conversation and help improve the patterns
-- [[Friends]] -- Related pattern libraries and kindred projects
-- [Decent Patterns](https://decentpatterns.com) -- The original pattern library project
-- [Source on GitHub](https://github.com/decentpatterns/library) -- Contribute to the patterns
