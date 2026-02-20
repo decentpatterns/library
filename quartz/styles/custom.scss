@@ -20,6 +20,11 @@ h3 {
   font-weight: 300;
 }
 
+// Page title: override link font-weight to match heading weight
+.page-title a {
+  font-weight: 300;
+}
+
 h4 {
   font-weight: 400;
 }
@@ -143,7 +148,6 @@ article img[src$=".svg"] {
 
 // Glossary page: definition list styling
 .glossary-term {
-  border-bottom: 1px solid var(--lightgray);
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
 
@@ -164,8 +168,6 @@ article img[src$=".svg"] {
 
   h2 {
     color: var(--secondary) !important;
-    border-bottom: 2px solid var(--lightgray);
-    padding-bottom: 0.5rem;
   }
 
   ul {
@@ -198,6 +200,11 @@ article img[src$=".svg"] {
 
 // Hide tags in folder/list page listings
 .section > .tags {
+  display: none;
+}
+
+// Hide horizontal rule dividers
+hr {
   display: none;
 }
 
