@@ -19,6 +19,7 @@ npm test                         # Run tests (tsx --test)
   - `content/patterns/<name>.md` — 23 pattern pages
   - `content/patterns/<name>/` — Images for each pattern (SVG, PNG, JPEG)
   - `content/topics/<name>.md` — 4 topic category pages
+  - `content/glossary/index.md` — Glossary overview page (linked from index as [[Glossary]])
   - `content/glossary/<name>.md` — ~35 glossary term pages
   - `content/index.md` — Landing page
 - `quartz.config.ts` — Site config (title, theme colors, plugins)
