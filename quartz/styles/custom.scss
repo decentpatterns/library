@@ -28,9 +28,14 @@ h3 {
   font-size: 1.3rem;
 }
 
-// Page title: override link font-weight to match heading weight
-.page-title a {
-  font-weight: 300;
+// Page title: match h1 color and weight
+.page-title {
+  color: var(--secondary) !important;
+  font-weight: 400;
+
+  a {
+    font-weight: 400;
+  }
 }
 
 h4 {
