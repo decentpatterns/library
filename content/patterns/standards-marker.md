@@ -17,7 +17,6 @@ Decentralized applications prioritize portability. In other words, data is not t
 
 When exporting data, such as keys or backups, from the application, avoid generic file extensions (e.g., `.docx` or `.zip`), and instead use the name of your application, or some other name that is unique to your application.
 
-### Examples
 
 > [!example]- Examples
 > - [![Standards Marker in Mapeo](patterns/standards-marker/mapeo.jpeg) Mapeo users can export and import 'mapeosettings' file to share a project between peers](patterns/standards-marker/mapeo.jpeg)

@@ -39,7 +39,6 @@ in conjunction with [[Age Indicator]] to understand how long
 it's been since a device has seen another, helping users understand if their
 data is safely replicated to another device and they can turn off their computer.
 
-### Examples
 
 > [!example]- Examples
 > - [![Network health indicator in uTorrent](patterns/network-health-indicator/network-health-indicator-utorrent.png) uTorrent provides a dense overview of network traffic](patterns/network-health-indicator/network-health-indicator-utorrent.png)

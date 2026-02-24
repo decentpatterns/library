@@ -21,7 +21,6 @@ In a decentralized application, deletion gets even harder, because we can't just
 
 We can encourage deletion across the network quite well by using Tombstones. A tombstone is a message that says "Please, delete the information with the following identification numbers." These tombstone messages can be sent to everyone or only certain devices or servers, depending on the use case.
 
-### Examples
 
 > [!example]- Examples
 > - [![Tombstones in Mapeo](patterns/tombstones/mapeo.png) Mapeo has a delete feature which hides items from view](patterns/tombstones/mapeo.png)

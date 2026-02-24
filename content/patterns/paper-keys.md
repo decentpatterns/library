@@ -29,7 +29,6 @@ resource. The file itself should be easily human readable and printable.
 You can use this in conjunction with the [[QR Code Verification]] pattern to make it easier to import the
 codes with the device's camera.
 
-### Examples
 
 > [!example]- Examples
 > - [![Paper Keys in 1Password ](patterns/paper-keys/paper-keys-1password.png) 1Password offers an all-in-one 'Emergency Kit'](patterns/paper-keys/paper-keys-1password.png)

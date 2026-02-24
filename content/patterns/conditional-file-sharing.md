@@ -29,7 +29,6 @@ how your data is being shared between instances.
 - **Create incentives** that encourage hosting less popular content. For example,
   "Users who share datasets with less than 5 peers get a free gold account." See [[Cautious Optimism]] for more details.
 
-### Examples
 
 > [!example]- Examples
 > - [![Timed messages in Wire](patterns/conditional-file-sharing/Wire.png) Wire offers timed messages](patterns/conditional-file-sharing/Wire.png)

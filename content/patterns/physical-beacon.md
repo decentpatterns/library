@@ -46,7 +46,6 @@ Use this in conjunction with [[Network Health Indicator]] to show which physical
 currently online. Include concrete information about these locations, such as
 their IP address, city, country, provider name (e.g., URL), and latency.
 
-### Examples
 
 > [!example]- Examples
 > - [![Physical Beacon in Holo](patterns/physical-beacon/physical-beacon-holo.png) Holo is a box comparable in size to a home router](patterns/physical-beacon/physical-beacon-holo.png)

@@ -31,7 +31,6 @@ name, the `id` does not change, allowing an application to keep an
 up-to-date contact list and make it easier for users to understand if they are
 talking to the same person.
 
-### Examples
 
 > [!example]- Examples
 > - [![Persistent Identity in Keybase](patterns/persistent-identity/persistent-identity-keybase.png) Keybase encourages publicly proving long-term ownership](patterns/persistent-identity/persistent-identity-keybase.png)

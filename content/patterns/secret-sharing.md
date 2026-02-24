@@ -39,7 +39,6 @@ employee from stealing your secret, as they would need to coordinate with
 a number of your peers to unlock the secret.
 
 
-### Examples
 
 > [!example]- Examples
 > - [![Dark Crystal demo](patterns/secret-sharing/secret-history-screenshot.png) Dark Crystal in Secure Scuttlebutt](patterns/secret-sharing/secret-history-screenshot.png)

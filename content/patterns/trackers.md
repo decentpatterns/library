@@ -25,7 +25,6 @@ Trackers are a database of content and the contact information (i.e., IP
 address) all for devices that have that content. This contact information may contain
 additional metadata about the peer's bandwidth and supported functionality.
 
-### Examples
 
 > [!example]- Examples
 > - [![BitTorrent](patterns/trackers/trackers-bittorrent.png)'Trackers' in BitTorrent](patterns/trackers/trackers-bittorrent.png)

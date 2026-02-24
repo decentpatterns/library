@@ -27,7 +27,6 @@ the user.
 
 This solution is sometimes called an [identicon](https://en.wikipedia.org/wiki/Identicon).
 
-### Examples
 
 > [!example]- Examples
 > - [![Visual hash in Cabal](patterns/visual-hash/visual-hash-cabal.png) Cabal's visual hash format](patterns/visual-hash/visual-hash-cabal.png)

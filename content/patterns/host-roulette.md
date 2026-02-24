@@ -39,7 +39,6 @@ thus accidentally introducing centralization again.
 The solution here is simple: if there is no reason to choose one hosting
 provider over another, randomly assign new users to a hosting provider.
 
-### Examples
 
 > [!example]- Examples
 > - [![Nextcloud hosts](patterns/host-roulette/Nextcloud.png) Nextcloud randomly selects a server for you](patterns/host-roulette/Nextcloud.png)

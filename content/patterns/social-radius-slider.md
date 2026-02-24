@@ -19,7 +19,6 @@ family. Wanting to pro-actively manage your feed requires a lot of overhead.
 
 Use a radius to indicate how "big" your circle is today.
 
-### Examples
 
 > [!example]- Examples
 > - [![Social Radius Slider in SSB](patterns/social-radius-slider/patchbay.png) Patchbay presents choices horizontally](patterns/social-radius-slider/patchbay.png)

@@ -27,7 +27,6 @@ manually "self-destruct" all related identity information.
 You can also create an internal timer that deletes the identity after a certain
 amount of time. Display this prominently to the user upon identity creation.
 
-### Examples
 
 > [!example]- Examples
 > - [![Disposable identity in Delta.chat](patterns/disposable-identity/disposable-identity-deltachat.png) Delta.chat QR codes create short-lived Email accounts](patterns/disposable-identity/disposable-identity-deltachat.png)

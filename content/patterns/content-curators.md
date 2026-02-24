@@ -21,7 +21,6 @@ Users can pick third-party organizations, applications, or services to curate
 their content feed. Make it easy for developers to write programs that provide
 curation for social network feeds. Allow users to choose what algorithm(s) they want to use.
 
-### Examples
 
 > [!example]- Examples
 > - [![Mastodon](patterns/content-curators/Mastodon.jpeg) Mastodon gives you the option to filter out "awful servers"](patterns/content-curators/Mastodon.jpeg)

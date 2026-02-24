@@ -25,7 +25,6 @@ a phonetically-distinct word list.
 Consider using a URI protocol handler link (e.g., myapp://<whisper-link-here>) so that
 when clicked on, your application will automatically open.
 
-### Examples
 
 > [!example]- Examples
 > - [![Whisper links in Magic Wormhole](patterns/whisper-links/whisper-links-magicwormhole.png) Magic Wormhole automatically generates pronounceable phrases](patterns/whisper-links/whisper-links-magicwormhole.png)

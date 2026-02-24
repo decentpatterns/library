@@ -19,7 +19,6 @@ In a decentralized application, we have no guarantee that data will be replicate
 
 Prioritize backing up all data in multiple locations, ideally across the world. Tell the user when data has been synchronized to long-term storage locations. Pair this with [[Network Health Indicator]] for more fine-grained information about where data is synchronized.
 
-### Examples
 
 - Status.im
 - IPFS

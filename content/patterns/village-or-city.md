@@ -37,7 +37,6 @@ Utilize patterns like [[Social Radius Slider]]
 and [[Content Curators]] to give fine-grained control over
 social feeds.
 
-### Examples
 
 
 > [!example]- Examples

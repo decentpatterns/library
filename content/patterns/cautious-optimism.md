@@ -36,7 +36,6 @@ on the context, this could be: sharing (or not sharing) your data for some
 period of time, or on a more social level, sharing with your friends of
 friends.
 
-### Examples
 
 - ["Optimistic Unchoking" in BitTorrent](https://www.cs.helsinki.fi/webfm_send/1330) to mitigate free-riders, and promote peers who are willing to share
 files back.

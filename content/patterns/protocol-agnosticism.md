@@ -19,7 +19,6 @@ When an application needs to support a variety of user needs and personas, it ca
 
 Give users the option to choose a protocol as their default communication method for their given profile. Offer explanatory in-app tutorials to help users understand which choices are the best for them.
 
-### Examples
 
 > [!example]- Examples
 > - [![Email](patterns/protocol-agnosticism/protocol-agnosticism-email.png) Email clients require users to choose either POP or IMAP.](patterns/protocol-agnosticism/protocol-agnosticism-email.png)

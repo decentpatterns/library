@@ -27,7 +27,6 @@ often not sufficient to understand who you're talking to.
 
 Users are uniquely identified by their handle and a server name.
 
-### Examples
 
 > [!example]- Examples
 > - [![Address in Email](patterns/address/address-thunderbird.png) Email is the classic example of addresses (shown: Thunderbird app)](patterns/address/address-thunderbird.png)
