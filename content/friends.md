@@ -35,6 +35,5 @@ General UI patterns for those looking for inspiration.
 - **[Ink and Switch](https://www.inkandswitch.com/)**
 - **[Modal Collective](https://modal.cx/)**
 - **[Hypha Coop](https://hypha.coop/)**
-- **[Open Source Design](https://opensourcedesign.net/)** 
 - **[Run your own social](https://runyourown.social/)**
 - **[Low-Tech Magazine](https://solar.lowtechmagazine.com/)**
