@@ -15,6 +15,6 @@ Our design patterns live in a GitHub repository where you can join our discussio
 
 ## Governance
 
-Our core values are mutual respect, open-mindedness, human-centric approaches, and inclusion. All design assets created are licensed under [CC-BY](https://creativecommons.org/licenses/by/4.0/). All code created is open source.
+Our core values are mutual respect, curiosity, human-centric approaches, and inclusion. 
 
-- [Learn about our governance structure](https://decentpatterns.com/contribute/)
+Decent Patterns is maintained by volunteers. The Maintainers hold decision-making power and set community policy, taking reasonable account of input from contributors. Participation is open to anyone; we follow the [Berlin Code of Conduct](https://berlincodeofconduct.org/). All design assets created are licensed under [CC0](https://creativecommons.org/publicdomain/zero/1.0/) unless otherwise specified. All code created is open source.

@@ -9,12 +9,32 @@ A collection of related pattern libraries, design resources, and kindred project
 
 ## Other Pattern Libraries
 
-- **[Prosocial Design Network](https://www.prosocialdesign.org/)** — A curated library of evidence-based design patterns for building healthy online spaces. Each pattern is rated by the strength of public research supporting its effectiveness, from "Validated" (replicated by independent teams) to "Emergent" (qualitative evidence only). Patterns can be filtered by goals such as welcoming participation, encouraging humanization, ensuring safety, and building bridges.
+**[IF Design Patterns Catalogue](https://catalogue.projectsbyif.com/)**  
+Design patterns for building trustworthy services around data privacy , curated by Projects by IF.
 
-- **[IF Design Patterns Catalogue](https://catalogue.projectsbyif.com/)** — A catalogue of design patterns by Projects by IF, focused on helping teams design trustworthy services. The patterns emphasize AI explainability, user control, and transparency — covering topics like showing confidence levels, controlling automation, and model provenance. Developed through work with Google AI, these patterns have been deployed across billions of devices.
+**[Prosocial Design Network](https://www.prosocialdesign.org/)**  
+Evidence-based design patterns for healthy online spaces, each rated by the strength of research supporting it.
 
-## Friends
+**[Civic Signals](https://newpublic.org/signals)**  
+Patterns for healthy online spaces, backed by user research conducted by New Public.
 
-- **[Resonant Computing](https://resonantcomputing.org/)** — A manifesto and growing movement calling for technology that brings out the best in people. Inspired by Christopher Alexander's architectural philosophy, Resonant Computing advocates for software that is private, dedicated, plural, adaptable, and prosocial — pushing back against the logic of hyper-scale in favor of environments that leave us feeling more human.
+**[Resonant Computing](https://commons.garden/)**  
+Ways to make contributing to the commons more gentle and effective.
 
-- **[A Pattern Language](https://patternlanguage.cc/)** — Christopher Alexander's classic *A Pattern Language* rendered as a browsable, interlinked digital edition built with Quartz. Covers 253 patterns spanning towns, buildings, and construction — the architectural pattern language that inspired design pattern thinking across many disciplines, including this very library.
+**[CommunityRule.info/library](https://communityrule.info/templates/)**  
+Governance patterns for communities to adopt as they see fit.
+
+**[Pttrns](https://www.pttrns.com/)**  
+General UI patterns for those looking for inspiration.
+
+
+## Other Places for Inspiration
+
+- **[DWeb Principles](https://getdweb.net/principles/)**
+- **[Resonant Computing](https://resonantcomputing.org/)**
+- **[Ink and Switch](https://www.inkandswitch.com/)**
+- **[Modal Collective](https://modal.cx/)**
+- **[Hypha Coop](https://hypha.coop/)**
+- **[Open Source Design](https://opensourcedesign.net/)** 
+- **[Run your own social](https://runyourown.social/)**
+- **[Low-Tech Magazine](https://solar.lowtechmagazine.com/)**
