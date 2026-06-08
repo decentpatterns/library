@@ -8,7 +8,6 @@ thumbnail: "patterns/prioritize-backup/thumbnail.svg"
 illustration: "patterns/prioritize-backup/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In a centralized application, it is assumed that the owner will prioritize backing up all your data. If there was some natural disaster at one of Google's data centers, for example, they have a variety of backups of your data in various locations around the world.
@@ -18,7 +17,6 @@ In a decentralized application, we have no guarantee that data will be replicate
 ### The Design Solution
 
 Prioritize backing up all data in multiple locations, ideally across the world. Tell the user when data has been synchronized to long-term storage locations. Pair this with [[Network Health Indicator]] for more fine-grained information about where data is synchronized.
-
 
 - Status.im
 - IPFS

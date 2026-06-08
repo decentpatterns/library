@@ -27,7 +27,6 @@ Governance patterns for communities to adopt as they see fit.
 **[Pttrns](https://www.pttrns.com/)**  
 General UI patterns for those looking for inspiration.
 
-
 ## Other Places for Inspiration
 
 - **[DWeb Principles](https://getdweb.net/principles/)**

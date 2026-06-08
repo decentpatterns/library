@@ -8,7 +8,6 @@ thumbnail: "patterns/village-or-city/thumbnail.svg"
 illustration: "patterns/village-or-city/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 When building a new platform (e.g., a social network), it is hard to make design decisions about features and workflows that fit a variety of users, use cases, and contexts. Decentralized technologies often want to be "forked" and implemented by many different and vibrant communities. This means that there won't be a unifying way to describe user groups and their needs, and the design process can feel "stuck".
@@ -37,14 +36,11 @@ Utilize patterns like [[Social Radius Slider]]
 and [[Content Curators]] to give fine-grained control over
 social feeds.
 
-
-
 > [!example]- Examples
+>
 > - [![Mastodon](patterns/village-or-city/mastodon.png) Mastodon can be
 >   configured as invite-only](patterns/village-or-city/mastodon.png)
->
 > - [![Aether](patterns/village-or-city/aether.png) Aether users vote and impeach moderators similar to a democratic city government](patterns/village-or-city/aether.png)
-
 
 ### Why Choose Village or City?
 

@@ -7,6 +7,6 @@ tags:
   - reference
 ---
 
-*Also known as: search*
+_Also known as: search_
 
 The process by which one [[peer]] is able to make a connection with another peer.

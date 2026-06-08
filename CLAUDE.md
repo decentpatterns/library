@@ -16,11 +16,11 @@ npm test                         # Run tests (tsx --test)
 ## Project Structure
 
 - `content/` — All Markdown content (edit these for content changes)
-  - `content/patterns/<name>.md` — 23 pattern pages
+  - `content/patterns/<name>.md` — Pattern pages (one per pattern)
   - `content/patterns/<name>/` — Images for each pattern (SVG, PNG, JPEG)
-  - `content/topics/<name>.md` — 4 topic category pages
+  - `content/topics/<name>.md` — Topic category pages (one per topic)
   - `content/glossary/index.md` — Glossary overview page (linked from index as [[Glossary]])
-  - `content/glossary/<name>.md` — ~35 glossary term pages
+  - `content/glossary/<name>.md` — Glossary term pages (one per term)
   - `content/index.md` — Landing page
 - `quartz.config.ts` — Site config (title, theme colors, plugins)
 - `quartz.layout.ts` — Page layout and sidebar components
@@ -29,17 +29,19 @@ npm test                         # Run tests (tsx --test)
 ## Content Conventions
 
 **Pattern frontmatter:**
+
 ```yaml
 ---
 title: "Pattern Name"
 description: "One-line description"
 tags:
-  - protocol          # or: ux, social, etc.
-  - topic/moderation-curation  # hierarchical topic tag
+  - protocol # or: ux, social, etc.
+  - topic/moderation-curation # hierarchical topic tag
 ---
 ```
 
 **Glossary frontmatter:**
+
 ```yaml
 ---
 title: "Term"
@@ -50,6 +52,7 @@ tags:
 ```
 
 **Topic page frontmatter:**
+
 ```yaml
 ---
 title: "Topic Name"
@@ -60,6 +63,7 @@ tags:
 ```
 
 **Pattern page sections** (in order):
+
 1. The Design Problem
 2. The Design Solution
 3. Examples
@@ -74,6 +78,7 @@ tags:
 **Image callouts:** Use `> [!example]` callout blocks for image galleries.
 
 ## What NOT to do
+
 - Don't create new dependencies without asking
 - Don't refactor unrelated code while fixing a bug
 - Don't create new files when editing an existing one will do

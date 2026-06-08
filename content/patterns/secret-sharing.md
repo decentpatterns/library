@@ -8,7 +8,6 @@ thumbnail: "patterns/secret-sharing/thumbnail.svg"
 illustration: "patterns/secret-sharing/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 Managing your "secrets" (like keys and passwords) is hard! If they are saved only on
@@ -23,7 +22,7 @@ unintentionally).
 Thus, gaining trust thus has become an important part of marketing strategies
 for many Internet companies today that store your important information. This
 is why many companies focus on creating a social, friendly, and trusted image
-in their brand.  
+in their brand.
 
 ### The Design Solution
 
@@ -38,11 +37,9 @@ single peer can recreate your secret with their shard. This prevents a single at
 employee from stealing your secret, as they would need to coordinate with
 a number of your peers to unlock the secret.
 
-
-
 > [!example]- Examples
+>
 > - [![Dark Crystal demo](patterns/secret-sharing/secret-history-screenshot.png) Dark Crystal in Secure Scuttlebutt](patterns/secret-sharing/secret-history-screenshot.png)
-
 
 ### Why Choose Secret Sharing?
 

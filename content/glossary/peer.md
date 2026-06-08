@@ -7,6 +7,6 @@ tags:
   - reference
 ---
 
-*Also known as: node*
+_Also known as: node_
 
 A [[computer]] in a [[peer to peer]] network that both uploads and downloads [[data]].

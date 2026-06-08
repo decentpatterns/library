@@ -8,7 +8,6 @@ thumbnail: "patterns/standards-marker/thumbnail.svg"
 illustration: "patterns/standards-marker/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 Decentralized applications prioritize portability. In other words, data is not tied to one centralized location and should be easily moved between installations, devices, or instances. Although beneficial for many use cases, this feature poses usability challenges when exporting and importing data.
@@ -17,12 +16,10 @@ Decentralized applications prioritize portability. In other words, data is not t
 
 When exporting data, such as keys or backups, from the application, avoid generic file extensions (e.g., `.docx` or `.zip`), and instead use the name of your application, or some other name that is unique to your application.
 
-
 > [!example]- Examples
-> - [![Standards Marker in Mapeo](patterns/standards-marker/mapeo.jpeg) Mapeo users can export and import 'mapeosettings' file to share a project between peers](patterns/standards-marker/mapeo.jpeg)
 >
+> - [![Standards Marker in Mapeo](patterns/standards-marker/mapeo.jpeg) Mapeo users can export and import 'mapeosettings' file to share a project between peers](patterns/standards-marker/mapeo.jpeg)
 > - [![Delta Chat](patterns/standards-marker/deltachat.png) Delta.Chat exports to a 'bak' file with the current date](patterns/standards-marker/deltachat.png)
-
 
 ### Why Choose Standards Marker?
 

@@ -6,16 +6,16 @@ An open design pattern library for decentralized technologies, built with [Quart
 
 Patterns Garden is a curated collection of UX design patterns for decentralized applications. The patterns address common challenges that arise when building apps backed by peer-to-peer, federated, or otherwise decentralized architectures — from managing identity and moderation to handling data sync and sharing permissions.
 
-The content originates from the [Decent Patterns](https://decentpatterns.com) project (source: [decentpatterns/library](https://github.com/decentpatterns/library)), originally developed at [Simply Secure](https://simplysecure.org). All design patterns are licensed CC0.
+The content comes from the [Decent Patterns](https://decentpatterns.com) project, originally developed at [Simply Secure](https://simplysecure.org) as the Decentralization Off The Shelf (DOTS) project. All design patterns are licensed CC0.
 
 ## Content
 
-The library includes **22 patterns** organized across **4 topics**:
+The library's patterns are organized by topic:
 
-- **Identity & Agency** — Address, Disposable Identity, Host Roulette, Persistent Identity
-- **Moderation & Curation** — Cautious Optimism, Conditional File Sharing, Content Curators, Prioritize Backup, Social Radius Slider, Tombstones, Village or City
-- **Sharing & Permissions** — Paper Keys, QR Code Verification, Secret Sharing, Standards Marker, Visual Hash, Whisper Links
-- **Sync & Status** — Age Indicator, Discovery Server, Network Health Indicator, Physical Beacon, Protocol Agnosticism, Trackers
+- **Identity & Agency** — managing online identity and credentials
+- **Moderation & Curation** — content moderation and community safety
+- **Sharing & Permissions** — deciding who sees what, and when
+- **Sync & Status** — data availability, sync status, and discoverability
 
 Plus a **glossary** of key decentralization terms.
 
@@ -26,17 +26,15 @@ The site is built with [Quartz v4](https://quartz.jzhao.xyz/), a static-site gen
 ```
 content/
   index.md                    # Landing page with categorized pattern listing
-  glossary.md                 # Glossary index page linking to all terms
   glossary/
-    <term-name>.md            # 35 individual glossary term pages
+    index.md                  # Glossary overview linking to all terms
+    <term-name>.md            # One page per glossary term
   patterns/
-    <pattern-name>.md         # 22 pattern pages (one per pattern)
+    _template.md              # Starting point for new patterns (not published)
+    <pattern-name>.md         # One page per pattern
     <pattern-name>/           # Images for each pattern (SVG, PNG, JPEG)
   topics/
-    identity-agency.md        # 4 topic category pages
-    moderation-curation.md
-    sharing-permissions.md
-    sync-status.md
+    <topic-name>.md           # One page per topic
 ```
 
 Key Quartz features used:
@@ -65,13 +63,17 @@ npx quartz build --serve
 
 ## Deployment (Cloudflare Pages)
 
-| Setting              | Value              |
-| -------------------- | ------------------ |
-| Build command        | `npx quartz build` |
-| Build output dir     | `public`           |
-| Node.js version      | `22`               |
+| Setting          | Value              |
+| ---------------- | ------------------ |
+| Build command    | `npx quartz build` |
+| Build output dir | `public`           |
+| Node.js version  | `22`               |
 
 Set the environment variable `NODE_VERSION=22` in your Cloudflare Pages project settings.
+
+## Contributing
+
+New patterns are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). You don't need to be a developer: propose a pattern by opening an issue, or copy [`content/patterns/_template.md`](content/patterns/_template.md) and open a pull request.
 
 ## License
 

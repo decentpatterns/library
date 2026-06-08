@@ -9,7 +9,6 @@ thumbnail: "patterns/whisper-links/thumbnail.svg"
 illustration: "patterns/whisper-links/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In a peer-to-peer application, two devices are able to connect their computers
@@ -25,14 +24,11 @@ a phonetically-distinct word list.
 Consider using a URI protocol handler link (e.g., myapp://<whisper-link-here>) so that
 when clicked on, your application will automatically open.
 
-
 > [!example]- Examples
+>
 > - [![Whisper links in Magic Wormhole](patterns/whisper-links/whisper-links-magicwormhole.png) Magic Wormhole automatically generates pronounceable phrases](patterns/whisper-links/whisper-links-magicwormhole.png)
->
 > - [![Whisper links in Jitsi](patterns/whisper-links/whisper-links-jitsi.png) Jitsi allows users to choose a phrase](patterns/whisper-links/whisper-links-jitsi.png)
->
 > - [![Whisper links in Briar](patterns/whisper-links/whisper-links-briar.png) Briar's phrases are cryptographically secure but unpronounceable](patterns/whisper-links/whisper-links-briar.png)
- 
 
 ### Why Choose Whisper Links?
 

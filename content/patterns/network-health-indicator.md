@@ -9,7 +9,6 @@ thumbnail: "patterns/network-health-indicator/thumbnail.svg"
 illustration: "patterns/network-health-indicator/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In a centralized world, users trust a particular server with data. It's assumed
@@ -39,14 +38,11 @@ in conjunction with [[Age Indicator]] to understand how long
 it's been since a device has seen another, helping users understand if their
 data is safely replicated to another device and they can turn off their computer.
 
-
 > [!example]- Examples
+>
 > - [![Network health indicator in uTorrent](patterns/network-health-indicator/network-health-indicator-utorrent.png) uTorrent provides a dense overview of network traffic](patterns/network-health-indicator/network-health-indicator-utorrent.png)
->
 > - [![Network health indicator in IPFS](patterns/network-health-indicator/network-health-indicator-ipfs.png) IPFS gives it a modern touch](patterns/network-health-indicator/network-health-indicator-ipfs.png)
->
 > - [![Network health indicator in Syncthing](patterns/network-health-indicator/network-health-indicator-syncthing.png) Syncthing provides device monitoring & control](patterns/network-health-indicator/network-health-indicator-syncthing.png)
- 
 
 ### Why Choose Network Health Indicator?
 
@@ -63,29 +59,29 @@ data is safely replicated to another device and they can turn off their computer
 ### Potential Problems with Network Health Indicator
 
 There can be a lot of information about each device that isn't really useful
-  to all users. Some users will want to see advanced information, like the IP address. Consider 'advanced' and 'basic' views that users can toggle on or
-  off depending on what they need from the interface.
+to all users. Some users will want to see advanced information, like the IP address. Consider 'advanced' and 'basic' views that users can toggle on or
+off depending on what they need from the interface.
 
 Keeping a local database may not be enough to have the full scope of history,
-  especially in peer to peer applications. Consider gossiping the data as part
-  of the replication protocol. For example, if Bob synchronizes with Sally, and
-  then logs off. Later Sally synchronizes with John, and John logs off. When Bob
-  logs back on, he will not know that John also has the data. Sally's device
-  should automatically tell Bob that she saw John while Bob was offline. This
-  will ensure that users know who has seen the latest information.
+especially in peer to peer applications. Consider gossiping the data as part
+of the replication protocol. For example, if Bob synchronizes with Sally, and
+then logs off. Later Sally synchronizes with John, and John logs off. When Bob
+logs back on, he will not know that John also has the data. Sally's device
+should automatically tell Bob that she saw John while Bob was offline. This
+will ensure that users know who has seen the latest information.
 
 Some protocols by default will not have the ability to acknowledge or verify how much
-  of a dataset has been replicated by particular devices. This is required
-  to make Network Health Indicator more informative and accurate.
+of a dataset has been replicated by particular devices. This is required
+to make Network Health Indicator more informative and accurate.
 
 Network Health Indicators may be unreliable in offline (i.e., [sneakernet](https://en.wikipedia.org/wiki/Sneakernet)) networks,
-  where people share data offline using hard drives or other physical methods.
-  This is also true for applications where users may disconnect from the network
-  for large stretches of time. Implementing indicators in these environments may
-  require tracking detailed network health history rather than continued uptime.
-  Alternatively, utilize a notification protocol, such that peers notify one another
-  when they are connected and available, rather than nodes polling all peers
-  periodically to discover availability.
+where people share data offline using hard drives or other physical methods.
+This is also true for applications where users may disconnect from the network
+for large stretches of time. Implementing indicators in these environments may
+require tracking detailed network health history rather than continued uptime.
+Alternatively, utilize a notification protocol, such that peers notify one another
+when they are connected and available, rather than nodes polling all peers
+periodically to discover availability.
 
 ### The Take Away
 

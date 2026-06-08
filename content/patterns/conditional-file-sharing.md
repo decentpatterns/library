@@ -8,7 +8,6 @@ thumbnail: "patterns/conditional-file-sharing/thumbnail.svg"
 illustration: "patterns/conditional-file-sharing/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In a centralized world, all content is managed by a single provider. It controls
@@ -29,12 +28,10 @@ how your data is being shared between instances.
 - **Create incentives** that encourage hosting less popular content. For example,
   "Users who share datasets with less than 5 peers get a free gold account." See [[Cautious Optimism]] for more details.
 
-
 > [!example]- Examples
-> - [![Timed messages in Wire](patterns/conditional-file-sharing/Wire.png) Wire offers timed messages](patterns/conditional-file-sharing/Wire.png)
 >
+> - [![Timed messages in Wire](patterns/conditional-file-sharing/Wire.png) Wire offers timed messages](patterns/conditional-file-sharing/Wire.png)
 > - [![Nextcloud retention](patterns/conditional-file-sharing/nextcloud.png) Nextcloud' retention can be filtered by tag](patterns/conditional-file-sharing/nextcloud.png)
-
 
 ### Why Choose Conditional File Sharing?
 

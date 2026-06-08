@@ -8,6 +8,6 @@ tags:
   - reference
 ---
 
-*Also known as: host, pin*
+_Also known as: host, pin_
 
 A [[computer]] in a [[peer to peer]] network that uploads [[data]] to other computers.

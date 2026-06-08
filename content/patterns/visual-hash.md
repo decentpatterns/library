@@ -8,7 +8,6 @@ thumbnail: "patterns/visual-hash/thumbnail.svg"
 illustration: "patterns/visual-hash/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 Differentiating between users on a social network scales in difficulty with the
@@ -27,12 +26,11 @@ the user.
 
 This solution is sometimes called an [identicon](https://en.wikipedia.org/wiki/Identicon).
 
-
 > [!example]- Examples
+>
 > - [![Visual hash in Cabal](patterns/visual-hash/visual-hash-cabal.png) Cabal's visual hash format](patterns/visual-hash/visual-hash-cabal.png)
 > - [![Visual hash in GitHub](patterns/visual-hash/visual-hash-github.png) Github uses colors as well as patterns](patterns/visual-hash/visual-hash-github.png)
 > - [![Visual hash in Radicle](patterns/visual-hash/visual-hash-radicle.png) Radicle's visual hashes don't look like QR codes](patterns/visual-hash/visual-hash-radicle.png)
-
 
 ### Why Choose Visual Hash?
 

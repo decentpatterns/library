@@ -8,7 +8,6 @@ thumbnail: "patterns/cautious-optimism/thumbnail.svg"
 illustration: "patterns/cautious-optimism/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In a centralized world, trust is simple: all participants have to
@@ -36,12 +35,11 @@ on the context, this could be: sharing (or not sharing) your data for some
 period of time, or on a more social level, sharing with your friends of
 friends.
 
-
 - ["Optimistic Unchoking" in BitTorrent](https://www.cs.helsinki.fi/webfm_send/1330) to mitigate free-riders, and promote peers who are willing to share
-files back.
+  files back.
 - ["Transitive interest gossip" in Secure
   Scuttlebutt](https://dicg2020.github.io/papers/kermarrec.pdf) promotes peers
-to share information with those who share the same interests or social networks.
+  to share information with those who share the same interests or social networks.
 
 ### Why Choose Cautious Optimism?
 
@@ -75,7 +73,6 @@ bad behavior.
 
 - The "[tit for tat](https://en.wikipedia.org/wiki/Tit_for_tat)" strategy in game theory.
 
-- Rodrigues, Carlo Kleber da Silva. ["Analyzing peer selection policies for BitTorrent multimedia on-demand streaming systems in internet."](https://arxiv.org/abs/1402.2187) International Journal of Computer Networks & Communications (IJCNC) Vol.6, No.1, January 2014. 
+- Rodrigues, Carlo Kleber da Silva. ["Analyzing peer selection policies for BitTorrent multimedia on-demand streaming systems in internet."](https://arxiv.org/abs/1402.2187) International Journal of Computer Networks & Communications (IJCNC) Vol.6, No.1, January 2014.
 
 - See [[network health indicator|network health indicators]] for one implementation strategy, tracking how long peers share data to determine whether to share with them in the future.
-

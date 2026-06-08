@@ -9,13 +9,12 @@ thumbnail: "patterns/address/thumbnail.svg"
 illustration: "patterns/address/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In a centralized world, it's assumed that other users are mediated through the
 same service. For example, a handle on Twitter is
 displayed the same to everyone else on Twitter. There is a global Twitter
-database of these handles, and each is unique -- no one can use the same handle as someone else. 
+database of these handles, and each is unique -- no one can use the same handle as someone else.
 
 In a decentralized application, users may not be connecting to each other from the exact
 same service that you are. Data can be hosted by different
@@ -27,14 +26,11 @@ often not sufficient to understand who you're talking to.
 
 Users are uniquely identified by their handle and a server name.
 
-
 > [!example]- Examples
+>
 > - [![Address in Email](patterns/address/address-thunderbird.png) Email is the classic example of addresses (shown: Thunderbird app)](patterns/address/address-thunderbird.png)
->
 > - [![Address in Adium](patterns/address/address-adium.png) XMPP has addresses similar to Email (shown: Adium app)](patterns/address/address-adium.png)
->
 > - [![Address in Matrix](patterns/address/address-matrix.png) Matrix gives more visual guidance for address choice](patterns/address/address-matrix.png)
-
 
 ### Why Choose Address?
 

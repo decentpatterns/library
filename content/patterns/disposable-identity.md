@@ -8,7 +8,6 @@ thumbnail: "patterns/disposable-identity/thumbnail.svg"
 illustration: "patterns/disposable-identity/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In many centralized applications, users are forced to create an identity (i.e.,
@@ -27,14 +26,11 @@ manually "self-destruct" all related identity information.
 You can also create an internal timer that deletes the identity after a certain
 amount of time. Display this prominently to the user upon identity creation.
 
-
 > [!example]- Examples
+>
 > - [![Disposable identity in Delta.chat](patterns/disposable-identity/disposable-identity-deltachat.png) Delta.chat QR codes create short-lived Email accounts](patterns/disposable-identity/disposable-identity-deltachat.png)
->
 > - [![Disposable identity in Discord](patterns/disposable-identity/disposable-identity-discord.png) Discord requires only a nickname to get started](patterns/disposable-identity/disposable-identity-discord.png)
->
 > - [![Disposable identity in Cabal](patterns/disposable-identity/disposable-identity-cabal.png) Cabal random nicknames can be changed later](patterns/disposable-identity/disposable-identity-cabal.png)
- 
 
 ### Why Choose Disposable Identity?
 

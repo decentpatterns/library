@@ -9,6 +9,6 @@ tags:
   - reference
 ---
 
-*Also known as: backups, peers, hosts*
+_Also known as: backups, peers, hosts_
 
 A set of [[peer|peers]] on a [[peer to peer]] network that are all serving the same [[data]].

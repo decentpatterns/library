@@ -8,7 +8,6 @@ thumbnail: "patterns/age-indicator/thumbnail.svg"
 illustration: "patterns/age-indicator/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In a local-first world, peers may or may not be connected at all
@@ -19,12 +18,9 @@ times, and information left by the users could be out-of-date.
 Give a visual indication for the age of a piece of information, for example
 when a peer was last seen. Fading a tag or a card usually works.
 
-
-
 > [!example]- Examples
+>
 > - [![Age indicator in Trello](patterns/age-indicator/age-indicator-trello.png) Trello's Card Aging](patterns/age-indicator/age-indicator-trello.png)
-
-
 
 ### Why Choose Age Indicator?
 

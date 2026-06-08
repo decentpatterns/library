@@ -8,7 +8,6 @@ thumbnail: "patterns/trackers/thumbnail.svg"
 illustration: "patterns/trackers/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 On centralized social networks, users can identify content and peers relevant to their own interests and "follow" or "subscribe" to the content. The platform provides the supporting infrastructure to connect with peers and browse available content.
@@ -25,14 +24,13 @@ Trackers are a database of content and the contact information (i.e., IP
 address) all for devices that have that content. This contact information may contain
 additional metadata about the peer's bandwidth and supported functionality.
 
-
 > [!example]- Examples
+>
 > - [![BitTorrent](patterns/trackers/trackers-bittorrent.png)'Trackers' in BitTorrent](patterns/trackers/trackers-bittorrent.png)
 > - [![Tor](patterns/trackers/trackers-tor.png) 'Directory Authorities' in Tor use consensus to
 >   stay up-to-date](patterns/trackers/trackers-tor.png)
 > - [![IPFS Bootstrap Peers](patterns/trackers/trackers-ipfs.png) Kademlia Distributed Hash Tables, like the
 >   one in IPFS, offer "bootstrap peers"](patterns/trackers/trackers-ipfs.png)
-
 
 ### Why Choose Trackers?
 

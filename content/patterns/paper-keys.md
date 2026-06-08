@@ -8,7 +8,6 @@ thumbnail: "patterns/paper-keys/thumbnail.svg"
 illustration: "patterns/paper-keys/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 When wanting to grant access to a resource in a decentralized system, we can't
@@ -29,14 +28,11 @@ resource. The file itself should be easily human readable and printable.
 You can use this in conjunction with the [[QR Code Verification]] pattern to make it easier to import the
 codes with the device's camera.
 
-
 > [!example]- Examples
+>
 > - [![Paper Keys in 1Password ](patterns/paper-keys/paper-keys-1password.png) 1Password offers an all-in-one 'Emergency Kit'](patterns/paper-keys/paper-keys-1password.png)
->
 > - [![Paper Keys in Filevault](patterns/paper-keys/paper-keys-filevault.png) Apple Filevault uses a serial number style key](patterns/paper-keys/paper-keys-filevault.png)
->
 > - [![Paper Keys in Keybase](patterns/paper-keys/paper-keys-keybase.png) Keybase generates a multiple word passphrase](patterns/paper-keys/paper-keys-keybase.png)
-
 
 ### Why Choose Paper Keys?
 

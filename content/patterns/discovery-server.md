@@ -8,7 +8,6 @@ thumbnail: "patterns/discovery-server/thumbnail.svg"
 illustration: "patterns/discovery-server/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In a centralized world, searching doesn't involve too many difficult decisions on the part of the user. When typing into a search box, the user trusts that the service is giving them the results they've asked for. This usually involves algorithms to display information in a way that makes sense to the user — including filtering, ranking, and selecting information intelligently. For most services, the user has little-to-no choice on how this search and discovery is executed on their behalf, and if controls are offered, these options are usually buried within profile and platform settings.
@@ -30,12 +29,10 @@ Allow users to opt-in to search and discovery of content. For search, add indica
 
 Provide the ability for users to easily configure which servers to search. These considerations can be governed by the protocol or client. For example, the client can be 'fat' (e.g., download everything by default and search it all); 'thin' (e.g., download very little and call out to another server for search); or 'gossipy' (e.g., search only what my direct peers or peers of peers have downloaded).
 
-
 > [!example]- Examples
-> - [![Discovery servers in Radicle](patterns/discovery-server/discovery-pub-radicle.png) Discovery servers are called 'Seeds' in Radicle](patterns/discovery-server/discovery-pub-radicle.png)
 >
+> - [![Discovery servers in Radicle](patterns/discovery-server/discovery-pub-radicle.png) Discovery servers are called 'Seeds' in Radicle](patterns/discovery-server/discovery-pub-radicle.png)
 > - [![Secure Scuttlebutt](patterns/discovery-server/discovery-pub-ssb.jpeg) 'Pubs' in Secure Scuttlebutt](patterns/discovery-server/discovery-pub-ssb.jpeg)
-
 
 ### Why Choose Discovery Server?
 

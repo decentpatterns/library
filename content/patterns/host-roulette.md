@@ -8,7 +8,6 @@ thumbnail: "patterns/host-roulette/thumbnail.svg"
 illustration: "patterns/host-roulette/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In a centralized world, onboarding users to a service doesn't involve too many
@@ -39,11 +38,10 @@ thus accidentally introducing centralization again.
 The solution here is simple: if there is no reason to choose one hosting
 provider over another, randomly assign new users to a hosting provider.
 
-
 > [!example]- Examples
+>
 > - [![Nextcloud hosts](patterns/host-roulette/Nextcloud.png) Nextcloud randomly selects a server for you](patterns/host-roulette/Nextcloud.png)
 > - [![Matrix clients](patterns/host-roulette/matrix-clients.png) Options to select your favorite Matrix client](patterns/host-roulette/matrix-clients.png)
-
 
 ### Why Choose Host Roulette?
 
@@ -52,11 +50,11 @@ When you want to steer the network into further distribution
 ### Best Practice: How to Implement Host Roulette
 
 Make sure you indicate that the host was randomly chosen, e.g. write "choose
-  a different host" next to it, and visualizing the next randomly assigned host
-  in a similar fashion. Think about animating this, too.
+a different host" next to it, and visualizing the next randomly assigned host
+in a similar fashion. Think about animating this, too.
 
 Always offer users their own choice by making the choice editable (choose
-  from list, for example).
+from list, for example).
 
 ### Potential Problems with Host Roulette
 

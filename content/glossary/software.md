@@ -7,6 +7,6 @@ tags:
   - reference
 ---
 
-*Also known as: program*
+_Also known as: program_
 
 A defined process that reads or writes [[data]].

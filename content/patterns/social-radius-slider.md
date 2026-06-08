@@ -8,7 +8,6 @@ thumbnail: "patterns/social-radius-slider/thumbnail.svg"
 illustration: "patterns/social-radius-slider/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 Social networks are mentally taxing. Sometimes news from around the world is inspiring, other times it is just depressing. Sometimes you want to hear from
@@ -19,12 +18,10 @@ family. Wanting to pro-actively manage your feed requires a lot of overhead.
 
 Use a radius to indicate how "big" your circle is today.
 
-
 > [!example]- Examples
-> - [![Social Radius Slider in SSB](patterns/social-radius-slider/patchbay.png) Patchbay presents choices horizontally](patterns/social-radius-slider/patchbay.png)
 >
+> - [![Social Radius Slider in SSB](patterns/social-radius-slider/patchbay.png) Patchbay presents choices horizontally](patterns/social-radius-slider/patchbay.png)
 > - [![Social Radius Slider in Gather.town](patterns/social-radius-slider/social-radius-slider-gathertown.png) Gathertown radius displayed as a circle](patterns/social-radius-slider/social-radius-slider-gathertown.png)
- 
 
 ### Why Choose Social Radius Slider?
 

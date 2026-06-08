@@ -8,7 +8,6 @@ thumbnail: "patterns/protocol-agnosticism/thumbnail.svg"
 illustration: "patterns/protocol-agnosticism/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 Two computers connect directly to each other to exchange using information by using a protocol. Protocols have different strengths and weaknesses for particular use cases.
@@ -19,14 +18,11 @@ When an application needs to support a variety of user needs and personas, it ca
 
 Give users the option to choose a protocol as their default communication method for their given profile. Offer explanatory in-app tutorials to help users understand which choices are the best for them.
 
-
 > [!example]- Examples
+>
 > - [![Email](patterns/protocol-agnosticism/protocol-agnosticism-email.png) Email clients require users to choose either POP or IMAP.](patterns/protocol-agnosticism/protocol-agnosticism-email.png)
->
 > - [![Adium](patterns/protocol-agnosticism/protocol-agnosticism-adium.png) Adium allows users to select from a variety of different chat applications.](patterns/protocol-agnosticism/protocol-agnosticism-adium.png)
->
 > - [![Brave](patterns/protocol-agnosticism/protocol-agnosticism-brave.png) Brave offers a 'New Private Window with Tor' option ](patterns/protocol-agnosticism/protocol-agnosticism-brave.png)
-
 
 ### Why Choose Protocol Agnosticism?
 

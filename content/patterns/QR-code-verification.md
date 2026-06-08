@@ -8,7 +8,6 @@ thumbnail: "patterns/QR-code-verification/thumbnail.svg"
 illustration: "patterns/QR-code-verification/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 Use QR codes to quickly scan and verify that a device or some information is secure. In a typical centralized application, we trust the person or company operating the website to verify content. A particular profile or piece of content is mediated by this central server.
@@ -19,16 +18,12 @@ However, decentralized applications often rely upon very long strings of charact
 
 In a decentralized world, QR codes no longer have to link to a centralized shared item. Instead, you can embed information directly in the QR code to share with peers. QR codes can also be exported or printed as an image and sent over a third-party service such as WhatsApp.
 
-
 > [!example]- Examples
+>
 > - [![QR Codes in Delta.Chat](patterns/QR-code-verification/qr-code-deltachat.png) delta.chat for verified groups](patterns/QR-code-verification/qr-code-deltachat.png)
->
 > - [![QR Codes in Signal](patterns/QR-code-verification/qr-code-signal.png) Signal for verified devices](patterns/QR-code-verification/qr-code-signal.png)
->
 > - [![QR Codes in SSB](patterns/QR-code-verification/qr-code-ssb.png) Secure Scuttlebutt for invitations](patterns/QR-code-verification/qr-code-ssb.png)
->
 > - [![QR Codes in Threema](patterns/QR-code-verification/qr-code-threema.png) Threema makes QR Code prominent as part of the user id](patterns/QR-code-verification/qr-code-threema.png)
- 
 
 ### Why Choose QR Code Verification?
 

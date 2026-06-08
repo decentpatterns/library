@@ -7,6 +7,6 @@ tags:
   - reference
 ---
 
-*Also known as: device*
+_Also known as: device_
 
 Anything with computing power (e.g., mobile phone, laptop, raspberry pi, router). Anything that can store, read, or write zeros and ones.

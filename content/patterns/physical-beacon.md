@@ -8,7 +8,6 @@ thumbnail: "patterns/physical-beacon/thumbnail.svg"
 illustration: "patterns/physical-beacon/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 In a centralized world, you must trust that your provider is managing
@@ -46,12 +45,10 @@ Use this in conjunction with [[Network Health Indicator]] to show which physical
 currently online. Include concrete information about these locations, such as
 their IP address, city, country, provider name (e.g., URL), and latency.
 
-
 > [!example]- Examples
-> - [![Physical Beacon in Holo](patterns/physical-beacon/physical-beacon-holo.png) Holo is a box comparable in size to a home router](patterns/physical-beacon/physical-beacon-holo.png)
 >
+> - [![Physical Beacon in Holo](patterns/physical-beacon/physical-beacon-holo.png) Holo is a box comparable in size to a home router](patterns/physical-beacon/physical-beacon-holo.png)
 > - [![Physical Beacon in Syncthing](patterns/physical-beacon/physical-beacon-syncthing.png) One of syncthing's primary functions is to add a remote device](patterns/physical-beacon/physical-beacon-syncthing.png)
- 
 
 ### Why Choose Physical Beacon?
 
@@ -78,4 +75,3 @@ a particular physical location (or many physical locations) for improved data
 resiliency & archiving capabilities.
 
 ### References & Where to Learn More
-

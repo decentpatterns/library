@@ -8,7 +8,6 @@ thumbnail: "patterns/content-curators/thumbnail.svg"
 illustration: "patterns/content-curators/illustration.svg"
 ---
 
-
 ### The Design Problem
 
 Decentralized social network providers struggle to decide between displaying
@@ -21,12 +20,10 @@ Users can pick third-party organizations, applications, or services to curate
 their content feed. Make it easy for developers to write programs that provide
 curation for social network feeds. Allow users to choose what algorithm(s) they want to use.
 
-
 > [!example]- Examples
-> - [![Mastodon](patterns/content-curators/Mastodon.jpeg) Mastodon gives you the option to filter out "awful servers"](patterns/content-curators/Mastodon.jpeg)
 >
+> - [![Mastodon](patterns/content-curators/Mastodon.jpeg) Mastodon gives you the option to filter out "awful servers"](patterns/content-curators/Mastodon.jpeg)
 > - [![Twitter lists](patterns/content-curators/Twitter_lists.jpeg) Twitter lists allow you to select content from a specific group](patterns/content-curators/Twitter_lists.jpeg)
- 
 
 ### Why Choose Content Curators?
 
