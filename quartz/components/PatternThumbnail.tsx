@@ -13,5 +13,4 @@ const PatternThumbnail: QuartzComponent = ({ fileData }: QuartzComponentProps) =
   )
 }
 
-
 export default (() => PatternThumbnail) satisfies QuartzComponentConstructor
