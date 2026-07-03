@@ -4,15 +4,14 @@ Thank you for helping grow this library! It's an open, [CC0](https://creativecom
 
 There are two ways in, depending on how far you want to take it.
 
-## 1. Propose an idea (no code)
+## 1. Propose or request a pattern (no code)
 
-If you have a pattern in mind but aren't ready to write the whole page, **open an issue** describing:
+Open an issue — there's a form for each path:
 
-- the **problem** the pattern solves,
-- the **solution** in a sentence or two, and
-- any **apps or examples** you've seen it in.
+- **[Propose a pattern](../../issues/new?template=propose-pattern.yml)** — you have a pattern in mind (a name, the problem, the solution, examples you've seen) but aren't ready to write the whole page.
+- **[Request a pattern](../../issues/new?template=request-pattern.yml)** — you keep running into a design problem and want the community to work out a pattern for it.
 
-A maintainer (or another contributor) can help shape it into a full page. This is the best starting point if you're new.
+A maintainer (or another contributor) can pick it up from there. This is the best starting point if you're new.
 
 ## 2. Write a pattern (pull request)
 

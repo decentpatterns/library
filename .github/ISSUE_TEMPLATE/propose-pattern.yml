@@ -1,0 +1,70 @@
+name: Propose a pattern
+description: Submit a new design pattern — describe it here and we'll help shape it into a full page.
+title: "[submission] "
+labels: ["pattern-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for growing the library! Fill in what you can — only the first three fields are required.
+        If you'd rather write the full page yourself, see [CONTRIBUTING.md](../blob/HEAD/CONTRIBUTING.md) and open a pull request instead.
+  - type: input
+    id: pattern-name
+    attributes:
+      label: Pattern name
+      description: A short, memorable name.
+      placeholder: e.g. Paper Keys, Host Roulette, Tombstones
+    validations:
+      required: true
+  - type: textarea
+    id: design-problem
+    attributes:
+      label: The design problem
+      description: What recurring problem in decentralized applications does this pattern address?
+    validations:
+      required: true
+  - type: textarea
+    id: design-solution
+    attributes:
+      label: The design solution
+      description: How does the pattern solve it? Describe the approach, not one specific implementation.
+    validations:
+      required: true
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Topic
+      description: Where does this pattern belong?
+      options:
+        - Identity & Agency
+        - Moderation & Curation
+        - Sharing & Permissions
+        - Sync & Status
+        - A new topic (say more under "Anything else")
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples
+      description: Apps or protocols where you've seen this pattern in the wild. Screenshots welcome — drag and drop them here.
+  - type: textarea
+    id: why-choose
+    attributes:
+      label: Why choose this pattern?
+      description: When should a designer or developer reach for it?
+  - type: textarea
+    id: best-practice
+    attributes:
+      label: Best practice
+      description: Concrete guidance for implementing it well.
+  - type: textarea
+    id: potential-problems
+    attributes:
+      label: Potential problems
+      description: Trade-offs, failure modes, and risks.
+  - type: textarea
+    id: anything-else
+    attributes:
+      label: Anything else
+      description: References, links, related patterns, or open questions.

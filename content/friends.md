@@ -10,7 +10,7 @@ A collection of related pattern libraries, design resources, and kindred project
 ## Other Pattern Libraries
 
 **[IF Design Patterns Catalogue](https://catalogue.projectsbyif.com/)**  
-Design patterns for building trustworthy services around data privacy , curated by Projects by IF.
+Design patterns for building trustworthy services around data privacy, curated by Projects by IF.
 
 **[Prosocial Design Network](https://www.prosocialdesign.org/)**  
 Evidence-based design patterns for healthy online spaces, each rated by the strength of research supporting it.

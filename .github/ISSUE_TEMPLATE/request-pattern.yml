@@ -1,0 +1,34 @@
+name: Request a pattern
+description: Describe a design problem you'd like the community to turn into a pattern.
+title: "[request] "
+labels: ["pattern-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        You don't need a solution in hand — a well-described problem is a valuable contribution on its own.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's the problem?
+      description: Describe the design problem you keep running into.
+    validations:
+      required: true
+  - type: textarea
+    id: possible-solution
+    attributes:
+      label: One possible solution
+      description: If you have a hunch, sketch it — even roughly.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you've considered
+  - type: textarea
+    id: where-seen
+    attributes:
+      label: Where does this problem show up?
+      description: Protocols, tools, platforms, or communities that share this problem.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
