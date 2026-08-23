@@ -1,6 +1,9 @@
 ---
 title: Decent Patterns
 description: "An open design pattern library for decentralized technologies."
+aliases:
+  - "library"
+  - "library/list"
 ---
 
 An open library of design patterns for building better user-facing applications backed by decentralized architectures. These patterns help developers and designers understand the unique challenges of decentralized systems and provide proven solutions for common problems.

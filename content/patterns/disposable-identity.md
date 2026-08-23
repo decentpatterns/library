@@ -6,7 +6,9 @@ tags:
   - topic/identity-agency
 thumbnail: "patterns/disposable-identity/thumbnail.svg"
 illustration: "patterns/disposable-identity/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/disposable-identity"
 ---
 
 ### The Design Problem

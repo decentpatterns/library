@@ -2,9 +2,9 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 import { Date as DateComponent, getDate } from "./Date"
 
 const STATUS: Record<string, string> = {
-  seedling: "🌱 Seedling",
-  growing: "🌿 Growing",
-  evergreen: "🌲 Evergreen",
+  stub: "○ Stub",
+  draft: "◐ Draft",
+  mature: "● Mature",
 }
 
 const PatternMeta: QuartzComponent = ({ cfg, fileData }: QuartzComponentProps) => {
@@ -21,12 +21,12 @@ const PatternMeta: QuartzComponent = ({ cfg, fileData }: QuartzComponentProps) =
   if (date) {
     parts.push(
       <span>
-        last tended <DateComponent date={date} locale={cfg.locale} />
+        last updated <DateComponent date={date} locale={cfg.locale} />
       </span>,
     )
   }
   if (contributors && contributors.length > 0) {
-    parts.push(<span>planted by {contributors.join(", ")}</span>)
+    parts.push(<span>contributed by {contributors.join(", ")}</span>)
   }
   if (parts.length === 0) return null
 

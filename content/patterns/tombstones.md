@@ -6,7 +6,9 @@ tags:
   - topic/moderation-curation
 thumbnail: "patterns/tombstones/thumbnail.svg"
 illustration: "patterns/tombstones/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/tombstones"
 ---
 
 ### The Design Problem

@@ -9,7 +9,7 @@ const contentDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "..",
 const patternsDir = path.join(contentDir, "patterns")
 const topicsDir = path.join(contentDir, "topics")
 
-const VALID_STATUSES = ["seedling", "growing", "evergreen"]
+const VALID_STATUSES = ["stub", "draft", "mature"]
 
 const patternFiles = fs
   .readdirSync(patternsDir)

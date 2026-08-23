@@ -9,8 +9,8 @@ interface Options {
 }
 
 const STATUS_ICON: Record<string, string> = {
-  seedling: "🌱",
-  growing: "🌿",
+  stub: "○",
+  draft: "◐",
 }
 
 const byTitle = (a: QuartzPluginData, b: QuartzPluginData) =>
@@ -56,7 +56,7 @@ function Card({
       <span class="pattern-card-title">
         {title}
         {icon && (
-          <span class="pattern-card-status" title={`This pattern is a ${status} — help it grow`}>
+          <span class="pattern-card-status" title={`This pattern is a ${status} — help finish it`}>
             {" "}
             {icon}
           </span>
@@ -83,7 +83,7 @@ export default ((opts: Options) => {
           ))}
         </div>
       ) : (
-        <p class="pattern-grid-empty">No patterns here yet — plant one!</p>
+        <p class="pattern-grid-empty">No patterns here yet — add the first one!</p>
       )
 
     if (opts.mode === "current-topic") {

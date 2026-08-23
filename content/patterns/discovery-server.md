@@ -6,7 +6,9 @@ tags:
   - topic/sync-status
 thumbnail: "patterns/discovery-server/thumbnail.svg"
 illustration: "patterns/discovery-server/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/discovery-server"
 ---
 
 ### The Design Problem

@@ -6,7 +6,9 @@ tags:
   - topic/sharing-permissions
 thumbnail: "patterns/paper-keys/thumbnail.svg"
 illustration: "patterns/paper-keys/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/paper-keys"
 ---
 
 ### The Design Problem

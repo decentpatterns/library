@@ -6,7 +6,9 @@ tags:
   - topic/moderation-curation
 thumbnail: "patterns/village-or-city/thumbnail.svg"
 illustration: "patterns/village-or-city/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/village-or-city"
 ---
 
 ### The Design Problem

@@ -4,7 +4,7 @@ description: "One-line description shown on cards, in search results, and in lin
 tags:
   - protocol # primary type — pick what fits: protocol | ux | social (see existing patterns)
   - topic/moderation-curation # exactly one topic: identity-agency | moderation-curation | sharing-permissions | sync-status
-status: seedling # seedling (stub) | growing (usable, incomplete) | evergreen (mature)
+status: stub # stub (skeleton) | draft (usable, incomplete) | mature (complete)
 contributors:
   - Your Name
 # Images are optional — a placeholder is shown until someone adds them.
@@ -20,15 +20,16 @@ contributors:
      (lowercase, hyphenated, e.g. social-radius-slider.md).
   2. Update the frontmatter above (title, description, tags, status).
      That's it — the homepage and topic page update themselves from the
-     frontmatter. A seedling with just the frontmatter and a rough
-     "Design Problem" section is a welcome contribution; someone else can help
-     it grow.
+     frontmatter. A stub with just the frontmatter and a rough
+     "Design Problem" section is a welcome contribution; someone else can
+     help finish it.
   3. Images are optional. If you have them, create
      content/patterns/<your-pattern-name>/ with thumbnail.svg and
      illustration.svg (look at any existing pattern folder for sizing), and
      uncomment the frontmatter paths.
-  4. Fill in what you can of the sections below. REQUIRED sections must exist
-     before a pattern is marked evergreen; a seedling can leave them as stubs.
+  4. Fill in what you can of the sections below. REQUIRED sections must be
+     filled in before a pattern is marked mature; a stub or draft can leave
+     gaps.
   5. Run `npm run format`, then `npx quartz build --serve` to preview at
      http://localhost:8080 (optional — editing on GitHub works too).
 

@@ -1,7 +1,7 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 
-const REPO_URL = "https://github.com/bumbleblue/gardening"
+const REPO_URL = "https://github.com/decentpatterns/library"
 
 const explorerOptions: Parameters<typeof Component.Explorer>[0] = {
   mapFn: (node) => {

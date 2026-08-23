@@ -6,7 +6,9 @@ tags:
   - topic/sync-status
 thumbnail: "patterns/trackers/thumbnail.svg"
 illustration: "patterns/trackers/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/trackers"
 ---
 
 ### The Design Problem

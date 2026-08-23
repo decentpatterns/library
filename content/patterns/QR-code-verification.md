@@ -6,7 +6,9 @@ tags:
   - topic/sharing-permissions
 thumbnail: "patterns/QR-code-verification/thumbnail.svg"
 illustration: "patterns/QR-code-verification/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/QR-code-verification"
 ---
 
 ### The Design Problem

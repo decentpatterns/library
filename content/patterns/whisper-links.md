@@ -7,7 +7,9 @@ tags:
   - topic/sharing-permissions
 thumbnail: "patterns/whisper-links/thumbnail.svg"
 illustration: "patterns/whisper-links/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/whisper-links"
 ---
 
 ### The Design Problem

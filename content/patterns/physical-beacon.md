@@ -6,7 +6,9 @@ tags:
   - topic/sync-status
 thumbnail: "patterns/physical-beacon/thumbnail.svg"
 illustration: "patterns/physical-beacon/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/physical-beacon"
 ---
 
 ### The Design Problem

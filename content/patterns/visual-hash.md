@@ -6,7 +6,9 @@ tags:
   - topic/sharing-permissions
 thumbnail: "patterns/visual-hash/thumbnail.svg"
 illustration: "patterns/visual-hash/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/visual-hash"
 ---
 
 ### The Design Problem

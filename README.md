@@ -1,12 +1,12 @@
-# Patterns Garden
+# Decent Patterns
 
-An open design pattern library for decentralized technologies, built with [Quartz](https://quartz.jzhao.xyz/).
+The pattern library and website of [Decent Patterns](https://decentpatterns.com) — an open design pattern library for decentralized technologies, built with [Quartz](https://quartz.jzhao.xyz/).
 
 ## About
 
-Patterns Garden is a curated collection of UX design patterns for decentralized applications. The patterns address common challenges that arise when building apps backed by peer-to-peer, federated, or otherwise decentralized architectures — from managing identity and moderation to handling data sync and sharing permissions.
+Decent Patterns is a curated collection of UX design patterns for decentralized applications. The patterns address common challenges that arise when building apps backed by peer-to-peer, federated, or otherwise decentralized architectures — from managing identity and moderation to handling data sync and sharing permissions.
 
-The content comes from the [Decent Patterns](https://decentpatterns.com) project, originally developed at [Simply Secure](https://simplysecure.org) as the Decentralization Off The Shelf (DOTS) project. All design patterns are licensed CC0.
+The project was originally developed at [Simply Secure](https://simplysecure.org) as Decentralization Off The Shelf (DOTS). All design patterns are licensed CC0. The pre-Quartz content lives on the `master` branch (see [MIGRATION.md](MIGRATION.md)).
 
 ## Content
 

@@ -14,7 +14,7 @@ const config: QuartzConfig = {
     enablePopovers: true,
     analytics: null,
     locale: "en-US",
-    baseUrl: "patterns-garden.pages.dev",
+    baseUrl: "decentpatterns.com",
     ignorePatterns: ["private", "templates", ".obsidian", "patterns/_template.md"],
     defaultDateType: "modified",
     theme: {

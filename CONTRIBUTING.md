@@ -1,6 +1,6 @@
 # Contributing to Decent Patterns
 
-Thank you for helping grow this library! It's an open, [CC0](https://creativecommons.org/publicdomain/zero/1.0/)-licensed collection of UX design patterns for decentralized technologies. Patterns come from practitioners — you don't need to be a developer to contribute, and you don't need to arrive with a finished page. Patterns have a **status** — `seedling` (a stub), `growing` (usable but incomplete), or `evergreen` (mature) — and planting a seedling is a real contribution.
+Thank you for helping grow this library! It's an open, [CC0](https://creativecommons.org/publicdomain/zero/1.0/)-licensed collection of UX design patterns for decentralized technologies. Patterns come from practitioners — you don't need to be a developer to contribute, and you don't need to arrive with a finished page. Patterns have a **status** — `stub` (a skeleton), `draft` (usable but incomplete), or `mature` (complete) — and submitting a stub is a real contribution.
 
 There are two ways in, depending on how far you want to take it.
 
@@ -24,25 +24,25 @@ Every pattern is a single Markdown file. You can do this entirely in the GitHub 
 1. **Fork** this repository and create a branch.
 2. **Copy the template** [`content/patterns/_template.md`](content/patterns/_template.md) to `content/patterns/<your-pattern-name>.md`. Use a lowercase, hyphenated name (e.g. `social-radius-slider.md`).
 3. **Update the frontmatter**: `title`, `description`, tags, and a `status` that honestly reflects how done it is. That's the whole registration — the homepage and topic page generate themselves from the frontmatter.
-4. **Fill in what you can** of the sections (see _Anatomy of a pattern_ below). A `seedling` can leave most of them as stubs.
+4. **Fill in what you can** of the sections (see _Anatomy of a pattern_ below). A `stub` or `draft` can leave gaps.
 5. **Images are optional.** If you have them, create `content/patterns/<your-pattern-name>/` with a `thumbnail.svg` and an `illustration.svg` (see any existing pattern folder for sizing and style) and point the `thumbnail` / `illustration` frontmatter paths at them. Until then the site shows a placeholder inviting someone to illustrate it — often a designer picks that up later.
 6. **Cross-link** related patterns and glossary terms with `[[Wikilinks]]` — this powers the graph view, backlinks, and hover previews.
 7. **Format and preview** (see _Local development_), then open a pull request.
 
 ### Anatomy of a pattern
 
-A pattern page uses these sections, in this order. An **evergreen** pattern has all required sections filled in; a `seedling` or `growing` pattern can leave gaps — visible gaps are invitations for the next contributor.
+A pattern page uses these sections, in this order. A **mature** pattern has all required sections filled in; a `stub` or `draft` can leave gaps — visible gaps are invitations for the next contributor.
 
-| Section                              | Status                   |
-| ------------------------------------ | ------------------------ |
-| The Design Problem                   | **Required (evergreen)** |
-| The Design Solution                  | **Required (evergreen)** |
-| Examples (an `> [!example]` callout) | Optional                 |
-| Why Choose [Pattern]?                | **Required (evergreen)** |
-| Best Practice: How to Implement …    | **Required (evergreen)** |
-| Potential Problems with [Pattern]    | **Required (evergreen)** |
-| The Take Away                        | **Required (evergreen)** |
-| References & Where to Learn More     | Optional                 |
+| Section                              | Status                |
+| ------------------------------------ | --------------------- |
+| The Design Problem                   | **Required (mature)** |
+| The Design Solution                  | **Required (mature)** |
+| Examples (an `> [!example]` callout) | Optional              |
+| Why Choose [Pattern]?                | **Required (mature)** |
+| Best Practice: How to Implement …    | **Required (mature)** |
+| Potential Problems with [Pattern]    | **Required (mature)** |
+| The Take Away                        | **Required (mature)** |
+| References & Where to Learn More     | Optional              |
 
 The frontmatter must include `title`, `description`, a primary type tag (`protocol`, `ux`, or `social`), one `topic/<name>` tag, and a `status`. `thumbnail`, `illustration`, and `contributors` are optional. The template has all of this stubbed out, and `npm test` checks it.
 

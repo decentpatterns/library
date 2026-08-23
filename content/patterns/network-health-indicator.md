@@ -7,7 +7,9 @@ tags:
   - topic/sync-status
 thumbnail: "patterns/network-health-indicator/thumbnail.svg"
 illustration: "patterns/network-health-indicator/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/network-health-indicator"
 ---
 
 ### The Design Problem

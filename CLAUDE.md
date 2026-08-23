@@ -1,6 +1,6 @@
-# Project: Patterns Garden
+# Project: Decent Patterns
 
-A Quartz v4 static site — a design pattern library for decentralized technologies. Deploys to Cloudflare Pages at `patterns-garden.pages.dev`.
+A Quartz v4 static site — the pattern library and website of Decent Patterns (`decentpatterns.com`, repo `decentpatterns/library`). The pre-Quartz content is archived on the `master` branch; see `MIGRATION.md` for cutover status.
 
 ## Dev Commands
 
@@ -37,6 +37,9 @@ description: "One-line description"
 tags:
   - protocol # or: ux, social, etc.
   - topic/moderation-curation # hierarchical topic tag
+status: stub # stub | draft | mature — stubs publish visibly; no draft: true hiding
+aliases:
+  - "library/pattern-name" # only for patterns that existed on the old site
 ---
 ```
 

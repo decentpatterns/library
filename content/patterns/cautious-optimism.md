@@ -6,7 +6,9 @@ tags:
   - topic/moderation-curation
 thumbnail: "patterns/cautious-optimism/thumbnail.svg"
 illustration: "patterns/cautious-optimism/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/cautious-optimism"
 ---
 
 ### The Design Problem

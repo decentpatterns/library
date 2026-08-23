@@ -6,7 +6,9 @@ tags:
   - topic/moderation-curation
 thumbnail: "patterns/content-curators/thumbnail.svg"
 illustration: "patterns/content-curators/illustration.svg"
-status: evergreen
+status: mature
+aliases:
+  - "library/content-curators"
 ---
 
 ### The Design Problem

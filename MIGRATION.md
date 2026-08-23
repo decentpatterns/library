@@ -1,13 +1,13 @@
 # Migration checklist: moving this site to `decentpatterns/library`
 
-Working notes for the cutover from this repo (`bumbleblue/gardening` → Cloudflare Pages at `patterns-garden.pages.dev`) to its intended home. Delete this file once the migration is complete.
+Working notes for the cutover from `bumbleblue/gardening` to this repo (`decentpatterns/library`). Delete this file once the migration is complete.
 
 **Current wiring** (surveyed July 2026): `decentpatterns/website` (Eleventy 0.11 + Tailwind 1 + Webpack, default branch `develop`) consumes `decentpatterns/library` (branch `master`) as a git submodule with symlinks, advanced by a manual GitHub Action. It deploys via **Netlify** — the deploy config lives in the Netlify dashboard, not in the repo, and the production branch (`develop` vs `master`) must be verified there. The domain **decentpatterns.com** points at Netlify via DNS at the registrar. The website repo is still active (live `/soups-2026/` CFP page).
 
 ## 1. Repo cutover (`decentpatterns/library`)
 
-- [ ] Preserve the old Eleventy-era content on an archive branch (e.g. `eleventy-archive`)
-- [ ] Push this repo's history; set default branch to `main` (currently `master`)
+- [x] Preserve the old Eleventy-era content on an archive branch — it stays on `master` until the default-branch flip; archive-tag it then
+- [x] History imported onto the local `quartz` branch (2026-08-23). Still to do: push (`origin/quartz` exists as a stale copy of master — needs `--force-with-lease` or a fresh branch name), then set default branch to `main`
 - [ ] Delete `.github/workflows/update-website.yml` (build-dispatch to the website repo) and decommission its PAT secrets
 - [ ] Decide fate of `.github/workflows/update-format.yml` (prettier auto-commit bot) — our CI _checks_ formatting instead of auto-fixing; keeping both is redundant
 - [ ] Old issue templates (`.github/ISSUE_TEMPLATE/*-template.md`) are superseded by the YAML forms in this repo
@@ -24,14 +24,14 @@ Working notes for the cutover from this repo (`bumbleblue/gardening` → Cloudfl
 
 - [ ] In the Netlify dashboard: confirm which branch is production, then disable the site after cutover
 - [ ] Re-point decentpatterns.com DNS (at the registrar) from Netlify to the Quartz deploy
-- [ ] Update `baseUrl` in `quartz.config.ts` (OG images, sitemap, and RSS all derive from it)
+- [x] `baseUrl` set to `decentpatterns.com` (2026-08-23) — note the deploy will emit decentpatterns.com canonical/OG URLs even while served elsewhere; flip DNS promptly after deploying
 - [ ] Archive `decentpatterns/website` once traffic is off it
 
 ## 4. Redirects (old URLs → new)
 
 The old site has no redirect config in-repo, so the new host must map these:
 
-- [ ] `/library/<slug>` → `/patterns/<slug>` — **the pattern URL shape differs**
+- [x] `/library/<slug>` → `/patterns/<slug>` — handled in-repo via `aliases` frontmatter on every pattern (plus `/library` and `/library/list` → home); no host config needed
 - [ ] `/report/` and `/files/DOTS_Report_7Maxims.pdf`, `/files/report.txt`
 - [ ] `/projects/web-monetization/`, `/zines/web-monetization/`, `/files/Barriers to Adoption…pdf`, `/files/DOTS-webmon-report.txt`
 - [ ] `/soups-2026/` — live CFP page with an external signup form
