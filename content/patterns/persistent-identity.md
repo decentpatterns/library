@@ -6,6 +6,7 @@ tags:
   - topic/identity-agency
 thumbnail: "patterns/persistent-identity/thumbnail.svg"
 illustration: "patterns/persistent-identity/illustration.svg"
+status: evergreen
 ---
 
 ### The Design Problem

@@ -8,14 +8,14 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Patterns Garden",
-    pageTitleSuffix: " | Patterns Garden",
+    pageTitle: "Decent Patterns",
+    pageTitleSuffix: " | Decent Patterns",
     enableSPA: true,
     enablePopovers: true,
     analytics: null,
     locale: "en-US",
     baseUrl: "patterns-garden.pages.dev",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    ignorePatterns: ["private", "templates", ".obsidian", "patterns/_template.md"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
@@ -26,15 +26,17 @@ const config: QuartzConfig = {
         code: "IBM Plex Mono",
       },
       colors: {
+        // dark-only site: both palettes carry the dark values so every consumer
+        // of the CSS variables renders dark; print styles live in custom.scss
         lightMode: {
-          light: "#EFF1F5",
-          lightgray: "#CAD3DF",
+          light: "#131F26",
+          lightgray: "#29333B",
           gray: "#A0ADC0",
-          darkgray: "#29333B",
-          dark: "#131F26",
-          secondary: "#D9553B",
-          tertiary: "#2AA893",
-          highlight: "rgba(255, 133, 102, 0.10)",
+          darkgray: "#CAD3DF",
+          dark: "#ECF0F8",
+          secondary: "#FF8566",
+          tertiary: "#32C8B2",
+          highlight: "rgba(255, 133, 102, 0.12)",
           textHighlight: "#FF856644",
         },
         darkMode: {
@@ -59,7 +61,7 @@ const config: QuartzConfig = {
       }),
       Plugin.SyntaxHighlighting({
         theme: {
-          light: "github-light",
+          light: "github-dark",
           dark: "github-dark",
         },
         keepBackground: false,

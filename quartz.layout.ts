@@ -1,6 +1,8 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 
+const REPO_URL = "https://github.com/bumbleblue/gardening"
+
 const explorerOptions: Parameters<typeof Component.Explorer>[0] = {
   mapFn: (node) => {
     const folderNames: Record<string, string> = {
@@ -34,11 +36,22 @@ const explorerOptions: Parameters<typeof Component.Explorer>[0] = {
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
+  afterBody: [
+    Component.ConditionalRender({
+      component: Component.PatternGrid({ mode: "by-topic" }),
+      condition: (page) => page.fileData.slug === "index",
+    }),
+    Component.ConditionalRender({
+      component: Component.PatternGrid({ mode: "current-topic", showDescriptions: true }),
+      condition: (page) =>
+        (page.fileData.slug?.startsWith("topics/") ?? false) &&
+        page.fileData.slug !== "topics/index",
+    }),
+    Component.EditLinks({ repo: REPO_URL }),
+  ],
   footer: Component.Footer({
     links: {
-      "Decent Patterns": "https://decentpatterns.com",
-      "Source (GitHub)": "https://github.com/decentpatterns/library",
+      "Source (GitHub)": REPO_URL,
       "Built with Quartz": "https://quartz.jzhao.xyz",
     },
   }),
@@ -51,7 +64,16 @@ export const defaultContentPageLayout: PageLayout = {
       component: Component.Breadcrumbs(),
       condition: (page) => page.fileData.slug !== "index",
     }),
-    Component.ArticleTitle(),
+    Component.ConditionalRender({
+      component: Component.ArticleTitle(),
+      condition: (page) => page.fileData.slug !== "index",
+    }),
+    Component.ConditionalRender({
+      component: Component.PatternMeta(),
+      condition: (page) =>
+        (page.fileData.slug?.startsWith("patterns/") ?? false) &&
+        page.fileData.slug !== "patterns/index",
+    }),
   ],
   left: [
     Component.PageTitle(),
@@ -61,7 +83,6 @@ export const defaultContentPageLayout: PageLayout = {
         {
           Component: Component.Search(),
         },
-        { Component: Component.Darkmode() },
         { Component: Component.ReaderMode() },
       ],
     }),
@@ -69,7 +90,7 @@ export const defaultContentPageLayout: PageLayout = {
   ],
   right: [
     Component.ConditionalRender({
-      component: Component.PatternThumbnail(),
+      component: Component.PatternThumbnail({ repo: REPO_URL }),
       condition: (page) => page.fileData.slug?.startsWith("patterns/") ?? false,
     }),
     Component.Graph(),
@@ -89,7 +110,6 @@ export const defaultListPageLayout: PageLayout = {
         {
           Component: Component.Search(),
         },
-        { Component: Component.Darkmode() },
       ],
     }),
     Component.Explorer(explorerOptions),

@@ -7,6 +7,7 @@ tags:
   - topic/identity-agency
 thumbnail: "patterns/address/thumbnail.svg"
 illustration: "patterns/address/illustration.svg"
+status: evergreen
 ---
 
 ### The Design Problem

@@ -1,16 +1,34 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { pathToRoot, joinSegments } from "../util/path"
 
-const PatternThumbnail: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
-  const illustration = fileData.frontmatter?.["illustration"] as string | undefined
-  if (!illustration) return null
-  const baseDir = pathToRoot(fileData.slug!)
-  const src = joinSegments(baseDir, illustration)
-  return (
-    <div class="pattern-thumbnail">
-      <img src={src} alt="" aria-hidden="true" />
-    </div>
-  )
+interface Options {
+  repo?: string
 }
 
-export default (() => PatternThumbnail) satisfies QuartzComponentConstructor
+export default ((opts?: Options) => {
+  const PatternThumbnail: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
+    const illustration = fileData.frontmatter?.["illustration"] as string | undefined
+    if (!illustration) {
+      if (!opts?.repo) return null
+      const title = fileData.frontmatter?.title ?? fileData.slug
+      const issueUrl = `${opts.repo}/issues/new?title=${encodeURIComponent(
+        `[${title}] illustration wanted`,
+      )}`
+      return (
+        <div class="pattern-thumbnail pattern-thumbnail-placeholder">
+          <a href={issueUrl} target="_blank" rel="noopener">
+            This pattern needs an illustration — add one
+          </a>
+        </div>
+      )
+    }
+    const baseDir = pathToRoot(fileData.slug!)
+    const src = joinSegments(baseDir, illustration)
+    return (
+      <div class="pattern-thumbnail">
+        <img src={src} alt="" aria-hidden="true" />
+      </div>
+    )
+  }
+  return PatternThumbnail
+}) satisfies QuartzComponentConstructor<Options>

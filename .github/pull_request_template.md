@@ -4,11 +4,12 @@
 
 ## If adding a new pattern
 
-<!-- Delete this section if it doesn't apply. -->
+<!-- Delete this section if it doesn't apply. A 🌱 seedling stub is a welcome PR — don't wait for perfect. -->
 
-- [ ] Copied [`content/patterns/_template.md`](../blob/HEAD/content/patterns/_template.md), removed the `draft: true` line and the how-to comment block
-- [ ] Frontmatter complete: `title`, `description`, a type tag (`protocol` / `ux` / `social`), one `topic/*` tag, `thumbnail` + `illustration` paths
-- [ ] Required sections filled: The Design Problem, The Design Solution, Why Choose, Best Practice, Potential Problems, The Take Away
-- [ ] Images added in `content/patterns/<name>/` (at least `thumbnail.svg` + `illustration.svg`)
-- [ ] Pattern listed in `content/index.md` and on its topic page in `content/topics/`
+- [ ] Copied [`content/patterns/_template.md`](../blob/HEAD/content/patterns/_template.md) and removed the how-to comment block
+- [ ] Frontmatter complete: `title`, `description`, a type tag (`protocol` / `ux` / `social`), one `topic/*` tag, and a `status` (`seedling` / `growing` / `evergreen`)
+- [ ] Sections filled in as far as the status honestly allows (evergreen = all required sections done)
+- [ ] Images are optional — if added, they live in `content/patterns/<name>/` and the `thumbnail` / `illustration` frontmatter paths point at them
 - [ ] Ran `npm run format` (CI checks formatting)
+
+<!-- No need to list your pattern anywhere — the homepage and topic page generate themselves from the frontmatter. -->

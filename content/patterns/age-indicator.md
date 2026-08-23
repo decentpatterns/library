@@ -6,6 +6,7 @@ tags:
   - topic/sync-status
 thumbnail: "patterns/age-indicator/thumbnail.svg"
 illustration: "patterns/age-indicator/illustration.svg"
+status: evergreen
 ---
 
 ### The Design Problem

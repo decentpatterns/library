@@ -24,6 +24,9 @@ import Comments from "./Comments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
 import PatternThumbnail from "./PatternThumbnail"
+import PatternGrid from "./PatternGrid"
+import PatternMeta from "./PatternMeta"
+import EditLinks from "./EditLinks"
 
 export {
   ArticleTitle,
@@ -52,4 +55,7 @@ export {
   Flex,
   ConditionalRender,
   PatternThumbnail,
+  PatternGrid,
+  PatternMeta,
+  EditLinks,
 }

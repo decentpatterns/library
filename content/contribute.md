@@ -1,21 +1,27 @@
 ---
 title: "Contribute"
-description: "Join the conversation and contribute to Decent Patterns."
+description: "This library is a garden — anyone can plant a pattern. Here's how."
 tags:
   - reference
 ---
 
-_Decent Patterns_ is a commons project that helps create tooling and resources by the community, for the community. We actively invite your participation in sharing your specific problems and challenges, as well as offering possible solutions for specific topics.
+This library grows through contributions from practitioners — designers, developers, researchers, and anyone who has wrestled with decentralized technology. You don't need to be a developer, and you don't need to write a polished page. Half-formed is fine; that's what the 🌱 seedling status is for.
 
-## Open Source Design Patterns
+## Ten minutes is enough
 
-Our design patterns live in a [GitHub repository](https://github.com/decentpatterns/library) where you can propose a new pattern or improve an existing one. You don't need to be a developer to take part.
+Have a pattern in mind, or a problem you keep running into? Open an issue — there's a short form for each:
 
-- **Have an idea?** [Open an issue](https://github.com/decentpatterns/library/issues) describing the problem, the solution, and any examples you've seen.
-- **Ready to write one?** Follow the [contributing guide](https://github.com/decentpatterns/library/blob/HEAD/CONTRIBUTING.md): copy the pattern template, fill in the sections, and open a pull request.
+- **[Propose a pattern](https://github.com/bumbleblue/gardening/issues/new?template=propose-pattern.yml)** — you know a pattern (a name, the problem, the solution, examples you've seen) but aren't ready to write the whole page. A maintainer or another contributor can pick it up from there.
+- **[Request a pattern](https://github.com/bumbleblue/gardening/issues/new?template=request-pattern.yml)** — you keep hitting a design problem and want the community to work out a pattern for it.
+
+Spotted a mistake or a gap on an existing page? Every page has an **"Edit this page on GitHub"** link at the bottom — fix it right in your browser.
+
+## Write a pattern
+
+A pattern is a single Markdown file. Copy the [template](https://github.com/bumbleblue/gardening/blob/main/content/patterns/_template.md), fill in the frontmatter, write what you can, and open a pull request — the homepage and topic pages update themselves. Images are optional; a placeholder invites someone else to illustrate it later.
+
+New patterns start as **🌱 seedlings** and grow toward **🌲 evergreen** as the community fills them in — planting a stub is a real contribution, not a half-finished one. The [contributing guide](https://github.com/bumbleblue/gardening/blob/main/CONTRIBUTING.md) has the details, including how to preview the site locally if you want to.
 
 ## Governance
 
-Our core values are mutual respect, curiosity, human-centric approaches, and inclusion.
-
-Decent Patterns is maintained by volunteers. The Maintainers hold decision-making power and set community policy, taking reasonable account of input from contributors. Participation is open to anyone; we follow the [Berlin Code of Conduct](https://berlincodeofconduct.org/). All design assets created are licensed under [CC0](https://creativecommons.org/publicdomain/zero/1.0/) unless otherwise specified. All code created is open source.
+Our core values are mutual respect, curiosity, human-centric approaches, and inclusion. Decent Patterns is maintained by volunteers; the Maintainers hold decision-making power and set community policy, taking reasonable account of input from contributors. Participation is open to anyone. We follow the [Berlin Code of Conduct](https://berlincodeofconduct.org/). All contributions are licensed under [CC0](https://creativecommons.org/publicdomain/zero/1.0/), and all code is open source.

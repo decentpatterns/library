@@ -4,9 +4,13 @@ description: "One-line description shown on cards, in search results, and in lin
 tags:
   - protocol # primary type — pick what fits: protocol | ux | social (see existing patterns)
   - topic/moderation-curation # exactly one topic: identity-agency | moderation-curation | sharing-permissions | sync-status
-thumbnail: "patterns/pattern-name/thumbnail.svg"
-illustration: "patterns/pattern-name/illustration.svg"
-draft: true # DELETE this line when the pattern is ready to publish
+status: seedling # seedling (stub) | growing (usable, incomplete) | evergreen (mature)
+contributors:
+  - Your Name
+# Images are optional — a placeholder is shown until someone adds them.
+# When you have them, uncomment and create content/patterns/<your-pattern-name>/:
+# thumbnail: "patterns/pattern-name/thumbnail.svg"
+# illustration: "patterns/pattern-name/illustration.svg"
 ---
 
 <!--
@@ -14,17 +18,19 @@ draft: true # DELETE this line when the pattern is ready to publish
 
   1. Copy this file to content/patterns/<your-pattern-name>.md
      (lowercase, hyphenated, e.g. social-radius-slider.md).
-  2. Make a folder content/patterns/<your-pattern-name>/ for images and add at
-     least thumbnail.svg and illustration.svg. Look at any existing pattern
-     folder for sizing and style.
-  3. Update the frontmatter above (title, description, tags, image paths) and
-     DELETE the `draft: true` line — until you do, the page will not publish.
-  4. Fill in every REQUIRED section below. OPTIONAL sections can be removed if
-     you genuinely have nothing for them, but they're strongly encouraged.
-  5. Add a card for your pattern to content/index.md and a bullet to its topic
-     page in content/topics/<topic>.md.
-  6. Run `npm run format`, then `npx quartz build --serve` to preview at
-     http://localhost:8080.
+  2. Update the frontmatter above (title, description, tags, status).
+     That's it — the homepage and topic page update themselves from the
+     frontmatter. A seedling with just the frontmatter and a rough
+     "Design Problem" section is a welcome contribution; someone else can help
+     it grow.
+  3. Images are optional. If you have them, create
+     content/patterns/<your-pattern-name>/ with thumbnail.svg and
+     illustration.svg (look at any existing pattern folder for sizing), and
+     uncomment the frontmatter paths.
+  4. Fill in what you can of the sections below. REQUIRED sections must exist
+     before a pattern is marked evergreen; a seedling can leave them as stubs.
+  5. Run `npm run format`, then `npx quartz build --serve` to preview at
+     http://localhost:8080 (optional — editing on GitHub works too).
 
   Link related patterns and glossary terms with [[Wikilinks]] — they create the
   graph view, backlinks, and hover previews that make the library navigable.

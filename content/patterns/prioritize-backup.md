@@ -6,6 +6,7 @@ tags:
   - topic/moderation-curation
 thumbnail: "patterns/prioritize-backup/thumbnail.svg"
 illustration: "patterns/prioritize-backup/illustration.svg"
+status: evergreen
 ---
 
 ### The Design Problem

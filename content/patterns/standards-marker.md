@@ -6,6 +6,7 @@ tags:
   - topic/sharing-permissions
 thumbnail: "patterns/standards-marker/thumbnail.svg"
 illustration: "patterns/standards-marker/illustration.svg"
+status: evergreen
 ---
 
 ### The Design Problem

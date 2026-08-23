@@ -6,6 +6,9 @@ tags:
   - topic/moderation-curation
 thumbnail: "patterns/social-radius-slider/thumbnail.svg"
 illustration: "patterns/social-radius-slider/illustration.svg"
+status: evergreen
+contributors:
+  - cinnamon
 ---
 
 ### The Design Problem

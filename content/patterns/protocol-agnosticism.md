@@ -6,6 +6,7 @@ tags:
   - topic/sync-status
 thumbnail: "patterns/protocol-agnosticism/thumbnail.svg"
 illustration: "patterns/protocol-agnosticism/illustration.svg"
+status: evergreen
 ---
 
 ### The Design Problem

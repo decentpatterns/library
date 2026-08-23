@@ -1,6 +1,6 @@
-# Contributing to Patterns Garden
+# Contributing to Decent Patterns
 
-Thank you for helping grow this library! It's an open, [CC0](https://creativecommons.org/publicdomain/zero/1.0/)-licensed collection of UX design patterns for decentralized technologies. Patterns come from practitioners — you don't need to be a developer to contribute.
+Thank you for helping grow this library! It's an open, [CC0](https://creativecommons.org/publicdomain/zero/1.0/)-licensed collection of UX design patterns for decentralized technologies. Patterns come from practitioners — you don't need to be a developer to contribute, and you don't need to arrive with a finished page. Patterns have a **status** — `seedling` (a stub), `growing` (usable but incomplete), or `evergreen` (mature) — and planting a seedling is a real contribution.
 
 There are two ways in, depending on how far you want to take it.
 
@@ -13,36 +13,38 @@ Open an issue — there's a form for each path:
 
 A maintainer (or another contributor) can pick it up from there. This is the best starting point if you're new.
 
+You can also fix any existing page directly: every page on the site has an **"Edit this page on GitHub"** link at the bottom.
+
 ## 2. Write a pattern (pull request)
 
-Every pattern is a single Markdown file plus a folder of images. You can do this entirely in the GitHub web UI, or locally if you prefer a live preview.
+Every pattern is a single Markdown file. You can do this entirely in the GitHub web UI, or locally if you prefer a live preview.
 
 ### Steps
 
 1. **Fork** this repository and create a branch.
 2. **Copy the template** [`content/patterns/_template.md`](content/patterns/_template.md) to `content/patterns/<your-pattern-name>.md`. Use a lowercase, hyphenated name (e.g. `social-radius-slider.md`).
-3. **Add images.** Create `content/patterns/<your-pattern-name>/` and add at least a `thumbnail.svg` and an `illustration.svg`. Example screenshots go in the same folder. See any existing pattern folder for sizing and style.
-4. **Fill in the sections** (see _Anatomy of a pattern_ below) and update the frontmatter, including deleting the `draft: true` line.
-5. **Cross-link** related patterns and glossary terms with `[[Wikilinks]]` — this powers the graph view, backlinks, and hover previews.
-6. **List it** in two places: add a card in [`content/index.md`](content/index.md) under the right topic, and a bullet on the matching topic page in [`content/topics/`](content/topics).
+3. **Update the frontmatter**: `title`, `description`, tags, and a `status` that honestly reflects how done it is. That's the whole registration — the homepage and topic page generate themselves from the frontmatter.
+4. **Fill in what you can** of the sections (see _Anatomy of a pattern_ below). A `seedling` can leave most of them as stubs.
+5. **Images are optional.** If you have them, create `content/patterns/<your-pattern-name>/` with a `thumbnail.svg` and an `illustration.svg` (see any existing pattern folder for sizing and style) and point the `thumbnail` / `illustration` frontmatter paths at them. Until then the site shows a placeholder inviting someone to illustrate it — often a designer picks that up later.
+6. **Cross-link** related patterns and glossary terms with `[[Wikilinks]]` — this powers the graph view, backlinks, and hover previews.
 7. **Format and preview** (see _Local development_), then open a pull request.
 
 ### Anatomy of a pattern
 
-A pattern page uses these sections, in this order. **Required** sections must be present; **optional** ones are strongly encouraged but may be omitted if you truly have nothing for them.
+A pattern page uses these sections, in this order. An **evergreen** pattern has all required sections filled in; a `seedling` or `growing` pattern can leave gaps — visible gaps are invitations for the next contributor.
 
-| Section                              | Status       |
-| ------------------------------------ | ------------ |
-| The Design Problem                   | **Required** |
-| The Design Solution                  | **Required** |
-| Examples (an `> [!example]` callout) | Optional     |
-| Why Choose [Pattern]?                | **Required** |
-| Best Practice: How to Implement …    | **Required** |
-| Potential Problems with [Pattern]    | **Required** |
-| The Take Away                        | **Required** |
-| References & Where to Learn More     | Optional     |
+| Section                              | Status                   |
+| ------------------------------------ | ------------------------ |
+| The Design Problem                   | **Required (evergreen)** |
+| The Design Solution                  | **Required (evergreen)** |
+| Examples (an `> [!example]` callout) | Optional                 |
+| Why Choose [Pattern]?                | **Required (evergreen)** |
+| Best Practice: How to Implement …    | **Required (evergreen)** |
+| Potential Problems with [Pattern]    | **Required (evergreen)** |
+| The Take Away                        | **Required (evergreen)** |
+| References & Where to Learn More     | Optional                 |
 
-The frontmatter must include `title`, `description`, a primary type tag (`protocol`, `ux`, or `social`), one `topic/<name>` tag, and `thumbnail` + `illustration` paths. The template has all of this stubbed out.
+The frontmatter must include `title`, `description`, a primary type tag (`protocol`, `ux`, or `social`), one `topic/<name>` tag, and a `status`. `thumbnail`, `illustration`, and `contributors` are optional. The template has all of this stubbed out, and `npm test` checks it.
 
 ## Local development
 
@@ -53,6 +55,7 @@ npm install
 npx quartz build --serve   # preview at http://localhost:8080
 npm run format             # auto-format Markdown before committing
 npm run check              # verify formatting + types pass (CI runs this)
+npm test                   # content lint: frontmatter completeness (CI runs this)
 ```
 
 Please run `npm run format` before opening a PR — it normalizes Markdown style so reviews stay focused on content.
