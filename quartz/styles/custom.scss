@@ -52,11 +52,6 @@
   border-bottom: none !important;
 }
 
-// Breadcrumbs: title-case folder names ("patterns" -> "Patterns")
-.breadcrumb-element a {
-  text-transform: capitalize;
-}
-
 // Toolbar icons: Lucide-style stroke icons instead of the plugins' built-in SVGs
 .readermode,
 .search > .search-button {

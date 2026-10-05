@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 #
-# Site configuration. Plugin options that need code (Explorer sort/map) and
-# our own components (pattern grid, meta, thumbnail, edit links, footer) are
-# wired up in quartz.ts.
+# Based on quartz.config.default.yaml (same plugins, same order) so that
+# `diff quartz.config.default.yaml quartz.config.yaml` shows only our changes.
+# What YAML can't express (Explorer callbacks, our own components) is in quartz.ts.
 configuration:
   pageTitle: Decent Patterns
   pageTitleSuffix: " | Decent Patterns"
@@ -49,12 +49,6 @@ configuration:
         highlight: rgba(255, 133, 102, 0.12)
         textHighlight: "#FF856644"
 plugins:
-  # transformers
-  - source: "@quartz-community/note-properties"
-    enabled: true
-    options:
-      hidePropertiesView: true
-    order: 5
   - source: "@quartz-community/created-modified-date"
     enabled: true
     options:
@@ -76,6 +70,7 @@ plugins:
     enabled: true
     options:
       enableInHtmlEmbed: false
+      enableCheckbox: true
     order: 30
   - source: "@quartz-community/github-flavored-markdown"
     enabled: true
@@ -100,15 +95,35 @@ plugins:
     options:
       renderEngine: katex
     order: 80
-  # loads its own default fonts over theme.typography; v4 had no equivalent
-  - source: "@quartz-community/quartz-fonts"
+  - source: "@quartz-community/citations"
     enabled: false
-
-  # filters
+    order: 85
+  - source: "@quartz-community/hard-line-breaks"
+    enabled: false
+    order: 90
+  - source: "@quartz-community/ox-hugo"
+    enabled: false
+    order: 91
+  - source: "@quartz-community/roam"
+    enabled: false
+    order: 92
+  - source: "@quartz-community/quartz-fonts"
+    enabled: true
+    options:
+      header:
+        name: Space Grotesk
+        weights: [300, 400]
+      body: Inter
+      code: IBM Plex Mono
+  - source: "@quartz-themes/core"
+    enabled: false
+    options:
+      theme: tokyo-night
+      mode: both
   - source: "@quartz-community/remove-draft"
     enabled: true
-
-  # emitters
+  - source: "@quartz-community/explicit-publish"
+    enabled: false
   - source: "@quartz-community/alias-redirects"
     enabled: true
   - source: "@quartz-community/content-index"
@@ -120,39 +135,16 @@ plugins:
     enabled: true
   - source: "@quartz-community/og-image"
     enabled: true
-
-  # page types
+  - source: "@quartz-community/cname"
+    enabled: true
+  - source: "@quartz-community/canvas-page"
+    enabled: true
   - source: "@quartz-community/content-page"
     enabled: true
   - source: "@quartz-community/folder-page"
     enabled: true
   - source: "@quartz-community/tag-page"
     enabled: true
-
-  # layout components
-  - source: "@quartz-community/page-title"
-    enabled: true
-    layout:
-      position: left
-      priority: 10
-  - source: "@quartz-community/search"
-    enabled: true
-    layout:
-      position: left
-      priority: 20
-      group: toolbar
-  - source: "@quartz-community/spacer"
-    enabled: true
-    layout:
-      position: left
-      priority: 25
-      display: mobile-only
-  - source: "@quartz-community/reader-mode"
-    enabled: true
-    layout:
-      position: left
-      priority: 35
-      group: toolbar
   - source: "@quartz-community/explorer"
     enabled: true
     layout:
@@ -163,23 +155,124 @@ plugins:
     layout:
       position: right
       priority: 10
+  - source: "@quartz-community/search"
+    enabled: true
+    layout:
+      position: left
+      priority: 20
+      group: toolbar
   - source: "@quartz-community/backlinks"
     enabled: true
     layout:
       position: right
       priority: 50
-  - source: "@quartz-community/breadcrumbs"
-    enabled: true
-    layout:
-      position: beforeBody
-      priority: 5
-      condition: not-index
   - source: "@quartz-community/article-title"
     enabled: true
     layout:
       position: beforeBody
       priority: 10
       condition: not-index
+  # dates are shown by our PatternMeta component (see quartz.ts)
+  - source: "@quartz-community/content-meta"
+    enabled: false
+    layout:
+      position: beforeBody
+      priority: 20
+  - source: "@quartz-community/tag-list"
+    enabled: false
+    layout:
+      position: beforeBody
+      priority: 30
+  - source: "@quartz-community/page-title"
+    enabled: true
+    layout:
+      position: left
+      priority: 10
+  # dark-only site
+  - source: "@quartz-community/darkmode"
+    enabled: false
+    layout:
+      position: left
+      priority: 30
+      group: toolbar
+  - source: "@quartz-community/reader-mode"
+    enabled: true
+    layout:
+      position: left
+      priority: 35
+      group: toolbar
+  - source: "@quartz-community/breadcrumbs"
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 5
+      condition: not-index
+  - source: "@quartz-community/comments"
+    enabled: false
+    options:
+      provider: giscus
+      options: {}
+    layout:
+      position: afterBody
+      priority: 10
+  - source: "@quartz-community/footer"
+    enabled: true
+    options:
+      links:
+        Source (GitHub): https://github.com/decentpatterns/library
+        "License: CC0 1.0": https://creativecommons.org/publicdomain/zero/1.0/
+    layout:
+      position: footer
+      priority: 50
+  - source: "@quartz-community/recent-notes"
+    enabled: false
+  - source: "@quartz-community/spacer"
+    enabled: true
+    options: {}
+    order: 25
+    layout:
+      position: left
+      priority: 25
+      display: mobile-only
+  - source: "@quartz-community/bases-page"
+    enabled: true
+    options: {}
+    order: 50
+  - source: "@quartz-community/note-properties"
+    enabled: true
+    options:
+      includeAll: false
+      includedProperties:
+        - description
+        - tags
+        - aliases
+      excludedProperties: []
+      hidePropertiesView: true
+      delimiters: ---
+      language: yaml
+    order: 5
+    layout:
+      position: beforeBody
+      priority: 15
+      display: all
+  - source: "@quartz-community/unlisted-pages"
+    enabled: true
+    options: {}
+    order: 45
+  - source: "@quartz-community/encrypted-pages"
+    enabled: true
+    options:
+      iterations: 600000
+      passwordField: password
+      unlistWhenEncrypted: false
+      outputPath: static/encryptedContentIndex.json
+    order: 900
+  - source: "@quartz-community/stacked-pages"
+    enabled: false
+    layout:
+      position: afterBody
+      priority: 50
+      display: all
 layout:
   groups:
     toolbar:
@@ -203,3 +296,5 @@ layout:
         - "@quartz-community/reader-mode"
       positions:
         right: []
+    canvas: {}
+    bases: {}

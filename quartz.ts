@@ -6,22 +6,14 @@ import * as Component from "./components"
 
 const REPO_URL = "https://github.com/decentpatterns/library"
 
-// Explorer callbacks can't be expressed in YAML. They are serialised and run in
-// the browser, so they must be self-contained (no references to outer variables).
+// Explorer: Patterns, Topics, Glossary first, then the plugin's default order
+// (folders before pages, alphabetical). Folder names come from each folder's
+// index.md title. Callbacks can't be expressed in YAML; they are serialised and
+// run in the browser, so they must be self-contained (no outer variables).
 // The node fields used here; the plugin's published FileTrieNode type is looser
 // than what it passes at runtime.
 type ExplorerNode = { isFolder: boolean; slugSegment: string; displayName: string }
 
-const mapFn = (node: ExplorerNode) => {
-  const folderNames: Record<string, string> = {
-    patterns: "Patterns",
-    topics: "Topics",
-    glossary: "Glossary",
-  }
-  if (node.isFolder && folderNames[node.slugSegment]) {
-    node.displayName = folderNames[node.slugSegment]
-  }
-}
 const sortFn = (a: ExplorerNode, b: ExplorerNode) => {
   const folderOrder = ["patterns", "topics", "glossary"]
   if (a.isFolder && b.isFolder) {
@@ -39,7 +31,7 @@ const sortFn = (a: ExplorerNode, b: ExplorerNode) => {
   })
 }
 // keyed by the plugin source in quartz.config.yaml
-componentRegistry.setOptionOverrides("@quartz-community/explorer", { mapFn, sortFn })
+componentRegistry.setOptionOverrides("@quartz-community/explorer", { sortFn })
 
 const isPattern = (slug?: string) =>
   (slug?.startsWith("patterns/") ?? false) && slug !== "patterns/index"
@@ -58,14 +50,6 @@ const shared: Partial<FullPageLayout> = {
       condition: (page) => isTopic(page.fileData.slug),
     }),
     Component.EditLinks({ repo: REPO_URL }),
-  ],
-  footer: [
-    Component.Footer({
-      links: {
-        "Source (GitHub)": REPO_URL,
-        "Built with Quartz": "https://quartz.jzhao.xyz",
-      },
-    }),
   ],
 }
 
