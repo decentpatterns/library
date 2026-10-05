@@ -140,6 +140,39 @@ export async function processGoogleFonts(
   return { processedStylesheet, fontFiles }
 }
 
+function hexToHsl(hex: string): { h: number; s: number; l: number } {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  if (!result) return { h: 0, s: 0, l: 0 }
+
+  const r = parseInt(result[1], 16) / 255
+  const g = parseInt(result[2], 16) / 255
+  const b = parseInt(result[3], 16) / 255
+
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const l = (max + min) / 2
+
+  if (max === min) return { h: 0, s: 0, l: Math.round(l * 100) }
+
+  const d = max - min
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+
+  let h = 0
+  switch (max) {
+    case r:
+      h = ((g - b) / d + (g < b ? 6 : 0)) / 6
+      break
+    case g:
+      h = ((b - r) / d + 2) / 6
+      break
+    case b:
+      h = ((r - g) / d + 4) / 6
+      break
+  }
+
+  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) }
+}
+
 export function joinStyles(theme: Theme, ...stylesheet: string[]) {
   return `
 ${stylesheet.join("\n\n")}
@@ -171,6 +204,148 @@ ${stylesheet.join("\n\n")}
   --tertiary: ${theme.colors.darkMode.tertiary};
   --highlight: ${theme.colors.darkMode.highlight};
   --textHighlight: ${theme.colors.darkMode.textHighlight};
+}
+
+:root {
+  /* Surface colors */
+  --background-primary: var(--light);
+  --background-primary-alt: var(--light);
+  --background-secondary: var(--lightgray);
+  --background-secondary-alt: var(--lightgray);
+  --background-modifier-border: var(--lightgray);
+  --background-modifier-border-hover: var(--gray);
+  --background-modifier-border-focus: var(--secondary);
+
+  /* Text colors */
+  --text-normal: var(--darkgray);
+  --text-muted: var(--gray);
+  --text-faint: var(--gray);
+  --text-accent: var(--secondary);
+  --text-accent-hover: var(--tertiary);
+  --text-on-accent: var(--light);
+  --text-on-accent-inverted: var(--dark);
+  --text-highlight-bg: var(--textHighlight);
+
+  /* Interactive */
+  --interactive-normal: var(--light);
+  --interactive-hover: var(--lightgray);
+  --interactive-accent: var(--secondary);
+  --interactive-accent-hover: var(--tertiary);
+
+  /* Base scale */
+  --color-base-00: var(--light);
+  --color-base-05: var(--light);
+  --color-base-10: var(--light);
+  --color-base-20: var(--lightgray);
+  --color-base-25: var(--lightgray);
+  --color-base-30: var(--lightgray);
+  --color-base-35: var(--lightgray);
+  --color-base-40: var(--gray);
+  --color-base-50: var(--gray);
+  --color-base-60: var(--gray);
+  --color-base-70: var(--darkgray);
+  --color-base-100: var(--dark);
+
+  /* Font aliases */
+  --font-text: var(--bodyFont);
+  --font-monospace: var(--codeFont);
+  --font-interface: var(--bodyFont);
+
+  /* Nav/sidebar */
+  --nav-item-color: var(--darkgray);
+  --nav-item-color-hover: var(--dark);
+  --nav-item-color-active: var(--secondary);
+  --nav-item-background-hover: var(--lightgray);
+  --nav-item-background-active: var(--highlight);
+
+  /* Tags */
+  --tag-background: var(--highlight);
+  --tag-color: var(--secondary);
+  --tag-background-hover: var(--lightgray);
+
+  /* Misc */
+  --icon-color: var(--darkgray);
+  --icon-color-hover: var(--dark);
+  --icon-color-active: var(--secondary);
+  --divider-color: var(--lightgray);
+  --link-color: var(--secondary);
+  --link-color-hover: var(--tertiary);
+
+  /* Accent HSL (computed from secondary) */
+  --accent-h: ${hexToHsl(theme.colors.lightMode.secondary).h};
+  --accent-s: ${hexToHsl(theme.colors.lightMode.secondary).s}%;
+  --accent-l: ${hexToHsl(theme.colors.lightMode.secondary).l}%;
+}
+
+:root[saved-theme="dark"] {
+  /* Surface colors */
+  --background-primary: var(--light);
+  --background-primary-alt: var(--light);
+  --background-secondary: var(--lightgray);
+  --background-secondary-alt: var(--lightgray);
+  --background-modifier-border: var(--lightgray);
+  --background-modifier-border-hover: var(--gray);
+  --background-modifier-border-focus: var(--secondary);
+
+  /* Text colors */
+  --text-normal: var(--darkgray);
+  --text-muted: var(--gray);
+  --text-faint: var(--gray);
+  --text-accent: var(--secondary);
+  --text-accent-hover: var(--tertiary);
+  --text-on-accent: var(--light);
+  --text-on-accent-inverted: var(--dark);
+  --text-highlight-bg: var(--textHighlight);
+
+  /* Interactive */
+  --interactive-normal: var(--light);
+  --interactive-hover: var(--lightgray);
+  --interactive-accent: var(--secondary);
+  --interactive-accent-hover: var(--tertiary);
+
+  /* Base scale */
+  --color-base-00: var(--light);
+  --color-base-05: var(--light);
+  --color-base-10: var(--light);
+  --color-base-20: var(--lightgray);
+  --color-base-25: var(--lightgray);
+  --color-base-30: var(--lightgray);
+  --color-base-35: var(--lightgray);
+  --color-base-40: var(--gray);
+  --color-base-50: var(--gray);
+  --color-base-60: var(--gray);
+  --color-base-70: var(--darkgray);
+  --color-base-100: var(--dark);
+
+  /* Font aliases */
+  --font-text: var(--bodyFont);
+  --font-monospace: var(--codeFont);
+  --font-interface: var(--bodyFont);
+
+  /* Nav/sidebar */
+  --nav-item-color: var(--darkgray);
+  --nav-item-color-hover: var(--dark);
+  --nav-item-color-active: var(--secondary);
+  --nav-item-background-hover: var(--lightgray);
+  --nav-item-background-active: var(--highlight);
+
+  /* Tags */
+  --tag-background: var(--highlight);
+  --tag-color: var(--secondary);
+  --tag-background-hover: var(--lightgray);
+
+  /* Misc */
+  --icon-color: var(--darkgray);
+  --icon-color-hover: var(--dark);
+  --icon-color-active: var(--secondary);
+  --divider-color: var(--lightgray);
+  --link-color: var(--secondary);
+  --link-color-hover: var(--tertiary);
+
+  /* Accent HSL (computed from secondary) */
+  --accent-h: ${hexToHsl(theme.colors.darkMode.secondary).h};
+  --accent-s: ${hexToHsl(theme.colors.darkMode.secondary).s}%;
+  --accent-l: ${hexToHsl(theme.colors.darkMode.secondary).l}%;
 }
 `
 }

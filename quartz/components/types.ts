@@ -1,4 +1,4 @@
-import { ComponentType, JSX } from "preact"
+import { JSX } from "preact"
 import { StaticResources, StringResource } from "../util/resources"
 import { QuartzPluginData } from "../plugins/vfile"
 import { GlobalConfiguration } from "../cfg"
@@ -18,7 +18,8 @@ export type QuartzComponentProps = {
     [key: string]: any
   }
 
-export type QuartzComponent = ComponentType<QuartzComponentProps> & {
+export type QuartzComponent = ((props: QuartzComponentProps) => any) & {
+  displayName?: string
   css?: StringResource
   beforeDOMLoaded?: StringResource
   afterDOMLoaded?: StringResource

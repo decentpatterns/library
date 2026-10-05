@@ -1,4 +1,4 @@
-import { ContentDetails } from "../plugins/emitters/contentIndex"
+import type { ContentDetails } from "@quartz-community/content-index"
 import { FullSlug, joinSegments } from "./path"
 
 interface FileTrieData {
@@ -69,7 +69,12 @@ export class FileTrieNode<T extends FileTrieData = ContentDetails> {
     if (path.length === 1) {
       // base case, we are at the end of the path
       if (segment === "index") {
-        this.data ??= file
+        // Last-insert-wins on collision. Matches the emitter's last-write-wins
+        // semantics at plugins/emitters/helpers.ts so the trie's data and the
+        // file on disk agree on which source file "owns" a colliding slug.
+        // Collision detection happens upstream in build.ts; this assignment is
+        // the fallback for any duplicates that still reach the trie.
+        this.data = file
       } else {
         this.makeChild(path, file)
       }

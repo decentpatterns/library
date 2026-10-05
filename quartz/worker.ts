@@ -1,6 +1,6 @@
 import sourceMapSupport from "source-map-support"
 sourceMapSupport.install(options)
-import cfg from "../quartz.config"
+import cfg from "../quartz"
 import { BuildCtx, WorkerSerializableBuildCtx } from "./util/ctx"
 import { FilePath } from "./util/path"
 import {

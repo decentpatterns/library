@@ -107,6 +107,64 @@ describe("FileTrie", () => {
       assert.strictEqual(trie.children[1].children[0].children[0].data, data2)
       assert.strictEqual(trie.children[1].children[0].children[0].children.length, 0)
     })
+
+    test("last-insert-wins on folder-note collision (matches emitter semantics)", () => {
+      const first = {
+        title: "First Folder Note",
+        slug: "foo/index",
+        filePath: "foo/foo.md",
+      }
+      const second = {
+        title: "Second Folder Note",
+        slug: "foo/index",
+        filePath: "foo/index.md",
+      }
+
+      trie.add(first)
+      trie.add(second)
+
+      assert.strictEqual(trie.children.length, 1)
+      assert.strictEqual(trie.children[0].slug, "foo/index")
+      assert.strictEqual(trie.children[0].data, second)
+    })
+
+    test("last-insert-wins on root-level index collision", () => {
+      const first = { title: "First", slug: "index", filePath: "a.md" }
+      const second = { title: "Second", slug: "index", filePath: "b.md" }
+
+      trie.add(first)
+      trie.add(second)
+
+      assert.strictEqual(trie.data, second)
+    })
+
+    test("collision does not affect sibling files in the same folder", () => {
+      const folderNoteA = {
+        title: "Folder Note A",
+        slug: "foo/index",
+        filePath: "foo/foo.md",
+      }
+      const folderNoteB = {
+        title: "Folder Note B",
+        slug: "foo/index",
+        filePath: "foo/index.md",
+      }
+      const sibling = {
+        title: "Sibling",
+        slug: "foo/alice",
+        filePath: "foo/alice.md",
+      }
+
+      trie.add(folderNoteA)
+      trie.add(sibling)
+      trie.add(folderNoteB)
+
+      assert.strictEqual(trie.children.length, 1)
+      assert.strictEqual(trie.children[0].slug, "foo/index")
+      assert.strictEqual(trie.children[0].data, folderNoteB)
+      assert.strictEqual(trie.children[0].children.length, 1)
+      assert.strictEqual(trie.children[0].children[0].data, sibling)
+    })
   })
 
   describe("filter", () => {

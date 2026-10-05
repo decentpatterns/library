@@ -44,16 +44,22 @@ const cleanupFns: Set<(...args: any[]) => void> = new Set()
 window.addCleanup = (fn) => cleanupFns.add(fn)
 
 function startLoading() {
+  document.querySelector(".navigation-progress")?.remove()
   const loadingBar = document.createElement("div")
   loadingBar.className = "navigation-progress"
   loadingBar.style.width = "0"
-  if (!document.body.contains(loadingBar)) {
-    document.body.appendChild(loadingBar)
-  }
+  document.body.prepend(loadingBar)
 
   setTimeout(() => {
     loadingBar.style.width = "80%"
   }, 100)
+}
+
+function stopLoading() {
+  const loadingBar = document.querySelector(".navigation-progress")
+  if (loadingBar) {
+    loadingBar.remove()
+  }
 }
 
 let isNavigating = false
@@ -101,7 +107,7 @@ async function _navigate(url: URL, isBack: boolean = false) {
   announcer.dataset.persist = ""
   html.body.appendChild(announcer)
 
-  // morph body
+  document.querySelector(".navigation-progress")?.remove()
   micromorph(document.body, html.body)
 
   // scroll into place and add history
@@ -139,6 +145,7 @@ async function navigate(url: URL, isBack: boolean = false) {
     console.error(e)
     window.location.assign(url)
   } finally {
+    stopLoading()
     isNavigating = false
   }
 }

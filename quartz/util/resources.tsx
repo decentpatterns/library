@@ -47,7 +47,7 @@ export function JSResourceToScriptElement(resource: JSResource, preserve?: boole
 export function CSSResourceToStyleElement(resource: CSSResource, preserve?: boolean): JSX.Element {
   const spaPreserve = preserve ?? resource.spaPreserve
   if (resource.inline ?? false) {
-    return <style>{resource.content}</style>
+    return <style dangerouslySetInnerHTML={{ __html: resource.content }} />
   } else {
     return (
       <link
@@ -68,6 +68,13 @@ export interface StaticResources {
 }
 
 export type StringResource = string | string[] | undefined
+
+export function normalizeResource(resource: StringResource): string[] {
+  if (!resource) return []
+  if (Array.isArray(resource)) return resource
+  return [resource]
+}
+
 export function concatenateResources(...resources: StringResource[]): StringResource {
   return resources
     .filter((resource): resource is string | string[] => resource !== undefined)

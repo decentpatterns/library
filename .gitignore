@@ -8,3 +8,6 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
+.quartz/
+quartz/cli/tui/dist/
+.turbo/

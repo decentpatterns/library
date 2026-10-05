@@ -1,14 +1,30 @@
 import { FilePath, joinSegments, slugifyFilePath } from "../../util/path"
-import { QuartzEmitterPlugin } from "../types"
+import { QuartzEmitterPlugin, QuartzPageTypePluginInstance } from "../types"
 import path from "path"
 import fs from "fs"
 import { glob } from "../../util/glob"
-import { Argv } from "../../util/ctx"
+import { Argv, BuildCtx } from "../../util/ctx"
 import { QuartzConfig } from "../../cfg"
 
-const filesToCopy = async (argv: Argv, cfg: QuartzConfig) => {
-  // glob all non MD files in content folder and copy it over
-  return await glob("**", argv.directory, ["**/*.md", ...cfg.configuration.ignorePatterns])
+function getPageTypeExtensions(ctx: BuildCtx): Set<string> {
+  const extensions = new Set<string>()
+  const pageTypes = (ctx.cfg.plugins.pageTypes ?? []) as unknown as QuartzPageTypePluginInstance[]
+  for (const pt of pageTypes) {
+    if (pt.fileExtensions) {
+      for (const ext of pt.fileExtensions) {
+        extensions.add(ext)
+      }
+    }
+  }
+  return extensions
+}
+
+const filesToCopy = async (argv: Argv, cfg: QuartzConfig, excludeExtensions: Set<string>) => {
+  const excludePatterns = ["**/*.md", ...cfg.configuration.ignorePatterns]
+  for (const ext of excludeExtensions) {
+    excludePatterns.push(`**/*${ext}`)
+  }
+  return await glob("**", argv.directory, excludePatterns)
 }
 
 const copyFile = async (argv: Argv, fp: FilePath) => {
@@ -17,7 +33,6 @@ const copyFile = async (argv: Argv, fp: FilePath) => {
   const name = slugifyFilePath(fp)
   const dest = joinSegments(argv.output, name) as FilePath
 
-  // ensure dir exists
   const dir = path.dirname(dest) as FilePath
   await fs.promises.mkdir(dir, { recursive: true })
 
@@ -28,16 +43,18 @@ const copyFile = async (argv: Argv, fp: FilePath) => {
 export const Assets: QuartzEmitterPlugin = () => {
   return {
     name: "Assets",
-    async *emit({ argv, cfg }) {
-      const fps = await filesToCopy(argv, cfg)
+    async *emit(ctx) {
+      const excludeExtensions = getPageTypeExtensions(ctx)
+      const fps = await filesToCopy(ctx.argv, ctx.cfg, excludeExtensions)
       for (const fp of fps) {
-        yield copyFile(argv, fp)
+        yield copyFile(ctx.argv, fp)
       }
     },
     async *partialEmit(ctx, _content, _resources, changeEvents) {
+      const excludeExtensions = getPageTypeExtensions(ctx)
       for (const changeEvent of changeEvents) {
         const ext = path.extname(changeEvent.path)
-        if (ext === ".md") continue
+        if (ext === ".md" || excludeExtensions.has(ext)) continue
 
         if (changeEvent.type === "add" || changeEvent.type === "change") {
           yield copyFile(ctx.argv, changeEvent.path)
