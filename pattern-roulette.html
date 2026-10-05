@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pattern Roulette</title>
+    <meta
+      name="description"
+      content="Spin to be dealt a random pattern from the Decent Patterns library."
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+      }
+      img {
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+/>
+
+<style>
+  /* Decent Patterns' own tokens - the site is dark-only by design, so this
+     page commits to the same single visual world and paints every color. */
+  :root {
+    --ground: #131f26;
+    --surface: #1a242c;
+    --surface-lift: #202c35;
+    --edge: #29333b;
+    --muted: #a0adc0;
+    --text: #ecf0f8;
+    --coral: #ff8566;
+    --coral-dim: rgba(255, 133, 102, 0.14);
+    --teal: #32c8b2;
+    --teal-dim: rgba(50, 200, 178, 0.13);
+
+    --display: "Space Grotesk", "Trebuchet MS", sans-serif;
+    --body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  /* ---------- header ---------- */
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2rem, 6vw, 2.9rem);
+    line-height: 1.05;
+    margin: 0;
+    text-wrap: balance;
+    color: var(--coral);
+  }
+
+  .lede {
+    color: var(--muted);
+    font-size: 0.95rem;
+    max-width: 52ch;
+    margin: 0;
+  }
+
+  /* ---------- filters ---------- */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .chip {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--edge);
+    border-radius: 2px;
+    padding: 0.35rem 0.7rem;
+    cursor: pointer;
+    transition:
+      color 0.15s,
+      border-color 0.15s,
+      background 0.15s;
+  }
+
+  .chip:hover {
+    color: var(--text);
+    border-color: var(--muted);
+  }
+
+  .chip[aria-pressed="true"] {
+    color: var(--teal);
+    border-color: var(--teal);
+    background: var(--teal-dim);
+  }
+
+  /* ---------- the reel ---------- */
+  .reel {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--edge);
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-height: 300px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  /* the sweep line that races across while spinning */
+  .reel::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2px;
+    background: var(--coral);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .reel.spinning::after {
+    opacity: 0.5;
+    animation: sweep 0.45s linear infinite;
+  }
+
+  @keyframes sweep {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(720px);
+    }
+  }
+
+  .slot-no {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.9rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    opacity: 0.75;
+  }
+
+  .thumb-frame {
+    width: 100%;
+    max-width: 260px;
+    aspect-ratio: 320 / 205;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .thumb-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .reel.spinning .thumb-frame,
+  .reel.spinning .reel-name {
+    filter: blur(1.4px);
+    opacity: 0.85;
+  }
+
+  .reel-name {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.4rem, 4.5vw, 2rem);
+    line-height: 1.15;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .reel.landed .reel-name {
+    color: var(--coral);
+    animation: pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
+  }
+
+  @keyframes pop {
+    0% {
+      transform: scale(0.94);
+      opacity: 0.4;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .idle-ring {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    border: 1px solid var(--edge);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+
+  .idle-ring::after {
+    content: "";
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--edge);
+  }
+
+  .idle-hint {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  /* ---------- detail under the name ---------- */
+  .detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 96px;
+  }
+
+  .detail p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    max-width: 44ch;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    justify-content: center;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    border: 1px solid var(--edge);
+    color: var(--muted);
+  }
+
+  .tag.topic {
+    color: var(--teal);
+    border-color: rgba(50, 200, 178, 0.35);
+    background: var(--teal-dim);
+  }
+
+  .open-link {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--coral);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 133, 102, 0.4);
+    padding-bottom: 2px;
+    transition: border-color 0.15s;
+  }
+
+  .open-link:hover {
+    border-bottom-color: var(--coral);
+  }
+
+  /* ---------- controls ---------- */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .spin {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--ground);
+    background: var(--coral);
+    border: none;
+    border-radius: 3px;
+    padding: 0.85rem 1.9rem;
+    cursor: pointer;
+    transition:
+      transform 0.12s,
+      background 0.15s;
+  }
+
+  .spin:hover:not(:disabled) {
+    background: #ff9a80;
+  }
+
+  .spin:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  .spin:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .count {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .kbd {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    border: 1px solid var(--edge);
+    border-radius: 2px;
+    padding: 0.1rem 0.35rem;
+  }
+
+  /* ---------- the wheel track ---------- */
+  .track-head {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .track {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .slot {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-variant-numeric: tabular-nums;
+    width: 2.1rem;
+    height: 2.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--edge);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition:
+      color 0.15s,
+      border-color 0.15s,
+      background 0.15s;
+  }
+
+  .slot:hover {
+    color: var(--text);
+    border-color: var(--muted);
+  }
+
+  .slot[data-state="seen"] {
+    color: var(--teal);
+    border-color: rgba(50, 200, 178, 0.3);
+  }
+
+  .slot[data-state="current"] {
+    color: var(--ground);
+    background: var(--coral);
+    border-color: var(--coral);
+  }
+
+  .slot[data-out="true"] {
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  footer {
+    border-top: 1px solid var(--edge);
+    padding-top: 1.25rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    justify-content: space-between;
+  }
+
+  footer a {
+    color: var(--coral);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  footer a:hover {
+    border-bottom-color: var(--coral);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reel.spinning::after {
+      animation: none;
+      opacity: 0;
+    }
+    .reel.landed .reel-name {
+      animation: none;
+    }
+    .reel.spinning .thumb-frame,
+    .reel.spinning .reel-name {
+      filter: none;
+    }
+    * {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Decent Patterns</span>
+    <h1>Pattern Roulette</h1>
+    <p class="lede">
+      Twenty-three design patterns for decentralized applications. Spin the wheel, get dealt one,
+      go read it. No repeats until the deck runs out.
+    </p>
+  </header>
+
+  <div class="filters" role="group" aria-label="Limit the deck to one topic">
+    <button class="chip" data-topic="" aria-pressed="true">Whole deck</button>
+  </div>
+
+  <section class="reel" id="reel" aria-live="polite">
+    <span class="slot-no" id="slotNo"></span>
+    <div id="reelBody">
+      <div class="idle-ring" aria-hidden="true"></div>
+      <p class="idle-hint">Press spin to be dealt a pattern.</p>
+    </div>
+  </section>
+
+  <div class="controls">
+    <button class="spin" id="spinBtn">Spin</button>
+    <span class="count" id="count"></span>
+    <span class="kbd">space</span>
+  </div>
+
+  <div>
+    <p class="track-head">The wheel &middot; click any slot to jump</p>
+    <div class="track" id="track"></div>
+  </div>
+
+  <footer>
+    <span>Patterns are CC0. Illustrations from the library.</span>
+    <a href="https://decentpatterns.com/library/" target="_blank" rel="noopener"
+      >Browse the full library &rarr;</a
+    >
+  </footer>
+</div>
+
+<script>
+  const PATTERNS = [{"slug":"address","title":"Address","desc":"Users are uniquely identified by their handle and a server name.","topic":"identity-agency","topicName":"Identity & Agency","types":["ui","protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHJlY3QgeD0iMTQzLjE2NyIgeT0iNjIuNSIgd2lkdGg9IjcwLjMzMzMiIGhlaWdodD0iNDQuODEzNCIgcng9IjMuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHJlY3QgeD0iMTM0LjI3OCIgeT0iNzAuNDY5MiIgd2lkdGg9IjcyLjU1NTYiIGhlaWdodD0iNDUuODA5NSIgcng9IjMuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHJlY3QgeD0iMTI2LjUiIHk9Ijc4LjQzOCIgd2lkdGg9IjczLjY2NjciIGhlaWdodD0iNDYuODA1NiIgcng9IjMuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHJlY3QgeD0iMTA2LjUiIHk9Ijk1LjM3MjEiIHdpZHRoPSI3My42NjY3IiBoZWlnaHQ9IjQ3LjgwMTciIHJ4PSIzLjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIi8+Cjwvc3ZnPgo=","n":1},{"slug":"age-indicator","title":"Age Indicator","desc":"Quickly distinguish if information is viral or stale","topic":"sync-status","topicName":"Sync & Status","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTE2My42NzkgMTU1SDE2MC45NTRWMTM2LjkzOEwxNTUuNDkgMTM4Ljk0NVYxMzYuNDg0TDE2My4yNTQgMTMzLjU2OUgxNjMuNjc5VjE1NVoiIGZpbGw9IiNGRjg1NjYiLz4KPHBhdGggZD0iTTE2Ny43MDcgNTUuMjM4M0MxNjcuNzA3IDU2LjMwMjcgMTY3LjQyNCA1Ny4yNSAxNjYuODU3IDU4LjA4MDFDMTY2LjMwMSA1OC45MTAyIDE2NS41NDQgNTkuNTU5NiAxNjQuNTg3IDYwLjAyODNDMTY1LjcgNjAuNTA2OCAxNjYuNTc5IDYxLjIwNTEgMTY3LjIyNCA2Mi4xMjNDMTY3Ljg3OCA2My4wNDEgMTY4LjIwNSA2NC4wODExIDE2OC4yMDUgNjUuMjQzMkMxNjguMjA1IDY3LjA4ODkgMTY3LjU4IDY4LjU1ODYgMTY2LjMzIDY5LjY1MjNDMTY1LjA5IDcwLjc0NjEgMTYzLjQ1NCA3MS4yOTMgMTYxLjQyMyA3MS4yOTNDMTU5LjM3MiA3MS4yOTMgMTU3LjcyNyA3MC43NDYxIDE1Ni40ODYgNjkuNjUyM0MxNTUuMjU2IDY4LjU0ODggMTU0LjY0MSA2Ny4wNzkxIDE1NC42NDEgNjUuMjQzMkMxNTQuNjQxIDY0LjA5MDggMTU0Ljk1MyA2My4wNTA4IDE1NS41NzggNjIuMTIzQzE1Ni4yMTMgNjEuMTk1MyAxNTcuMDg3IDYwLjQ5MjIgMTU4LjIgNjAuMDEzN0MxNTcuMjUzIDU5LjU0NDkgMTU2LjUwNiA1OC44OTU1IDE1NS45NTkgNTguMDY1NEMxNTUuNDEyIDU3LjIzNTQgMTU1LjEzOSA1Ni4yOTMgMTU1LjEzOSA1NS4yMzgzQzE1NS4xMzkgNTMuNDQxNCAxNTUuNzE1IDUyLjAxNTYgMTU2Ljg2NyA1MC45NjA5QzE1OC4wMiA0OS45MDYyIDE1OS41MzggNDkuMzc4OSAxNjEuNDIzIDQ5LjM3ODlDMTYzLjI5OCA0OS4zNzg5IDE2NC44MTIgNDkuOTA2MiAxNjUuOTY0IDUwLjk2MDlDMTY3LjEyNiA1Mi4wMTU2IDE2Ny43MDcgNTMuNDQxNCAxNjcuNzA3IDU1LjIzODNaTTE2NS40OTUgNjUuMTg0NkMxNjUuNDk1IDYzLjk5MzIgMTY1LjExNCA2My4wMjE1IDE2NC4zNTMgNjIuMjY5NUMxNjMuNjAxIDYxLjUxNzYgMTYyLjYxNCA2MS4xNDE2IDE2MS4zOTQgNjEuMTQxNkMxNjAuMTczIDYxLjE0MTYgMTU5LjE5MSA2MS41MTI3IDE1OC40NDkgNjIuMjU0OUMxNTcuNzE3IDYyLjk5NzEgMTU3LjM1MSA2My45NzM2IDE1Ny4zNTEgNjUuMTg0NkMxNTcuMzUxIDY2LjM5NTUgMTU3LjcwNyA2Ny4zNDc3IDE1OC40MiA2OC4wNDFDMTU5LjE0MyA2OC43MzQ0IDE2MC4xNDQgNjkuMDgxMSAxNjEuNDIzIDY5LjA4MTFDMTYyLjY5MiA2OS4wODExIDE2My42ODggNjguNzM0NCAxNjQuNDExIDY4LjA0MUMxNjUuMTM0IDY3LjMzNzkgMTY1LjQ5NSA2Ni4zODU3IDE2NS40OTUgNjUuMTg0NlpNMTYxLjQyMyA1MS42MDU1QzE2MC4zNTggNTEuNjA1NSAxNTkuNDk0IDUxLjkzNzUgMTU4LjgzIDUyLjYwMTZDMTU4LjE3NiA1My4yNTU5IDE1Ny44NDkgNTQuMTQ5NCAxNTcuODQ5IDU1LjI4MjJDMTU3Ljg0OSA1Ni4zNjYyIDE1OC4xNzEgNTcuMjQ1MSAxNTguODE1IDU3LjkxODlDMTU5LjQ3IDU4LjU4MyAxNjAuMzM5IDU4LjkxNSAxNjEuNDIzIDU4LjkxNUMxNjIuNTA3IDU4LjkxNSAxNjMuMzcxIDU4LjU4MyAxNjQuMDE2IDU3LjkxODlDMTY0LjY3IDU3LjI0NTEgMTY0Ljk5NyA1Ni4zNjYyIDE2NC45OTcgNTUuMjgyMkMxNjQuOTk3IDU0LjE5ODIgMTY0LjY2IDUzLjMxNDUgMTYzLjk4NiA1Mi42MzA5QzE2My4zMTIgNTEuOTQ3MyAxNjIuNDU4IDUxLjYwNTUgMTYxLjQyMyA1MS42MDU1WiIgZmlsbD0iI0ZGODU2NiIvPgo8cGF0aCBkPSJNMjA3LjAyMSAxMTAuMDYySDIxMS45NTNWMTEzLjc0OEgyMDcuMDIxVjEyMkgyMDIuNDhWMTEzLjc0OEgxODYuMjk0VjExMS4wODdMMjAyLjIxMiA4Ni40NTMxSDIwNy4wMjFWMTEwLjA2MlpNMTkxLjQyMSAxMTAuMDYySDIwMi40OFY5Mi42Mjk5TDIwMS45NDMgOTMuNjA2NEwxOTEuNDIxIDExMC4wNjJaIiBmaWxsPSIjRkY4NTY2Ii8+CjxwYXRoIGQ9Ik0xMjAuMTQ2IDEwMy41N0MxMjAuMTQ2IDEwNi43NDQgMTE5LjYwNCAxMDkuMTAzIDExOC41MjEgMTEwLjY0NkMxMTcuNDM3IDExMi4xODggMTE1Ljc0MiAxMTIuOTYgMTEzLjQzOCAxMTIuOTZDMTExLjE2MiAxMTIuOTYgMTA5LjQ3OCAxMTIuMjA4IDEwOC4zODQgMTEwLjcwNEMxMDcuMjkgMTA5LjE5IDEwNi43MjQgMTA2LjkzNSAxMDYuNjg1IDEwMy45MzdWMTAwLjMxOEMxMDYuNjg1IDk3LjE4MzYgMTA3LjIyNyA5NC44NTQ1IDEwOC4zMTEgOTMuMzMxMUMxMDkuMzk1IDkxLjgwNzYgMTExLjA5NCA5MS4wNDU5IDExMy40MDggOTEuMDQ1OUMxMTUuNzAzIDkxLjA0NTkgMTE3LjM5MyA5MS43ODMyIDExOC40NzcgOTMuMjU3OEMxMTkuNTYxIDk0LjcyMjcgMTIwLjExNyA5Ni45ODgzIDEyMC4xNDYgMTAwLjA1NVYxMDMuNTdaTTExNy40MzcgOTkuODY0M0MxMTcuNDM3IDk3LjU2OTMgMTE3LjExNCA5NS44OTk0IDExNi40NyA5NC44NTQ1QzExNS44MjUgOTMuNzk5OCAxMTQuODA1IDkzLjI3MjUgMTEzLjQwOCA5My4yNzI1QzExMi4wMjEgOTMuMjcyNSAxMTEuMDExIDkzLjc5NDkgMTEwLjM3NiA5NC44Mzk4QzEwOS43NDEgOTUuODg0OCAxMDkuNDE0IDk3LjQ5MTIgMTA5LjM5NSA5OS42NTkyVjEwMy45OTVDMTA5LjM5NSAxMDYuMyAxMDkuNzI3IDEwOC4wMDQgMTEwLjM5MSAxMDkuMTA3QzExMS4wNjQgMTEwLjIwMSAxMTIuMDggMTEwLjc0OCAxMTMuNDM4IDExMC43NDhDMTE0Ljc3NSAxMTAuNzQ4IDExNS43NjcgMTEwLjIzIDExNi40MTEgMTA5LjE5NUMxMTcuMDY1IDEwOC4xNiAxMTcuNDA3IDEwNi41MjkgMTE3LjQzNyAxMDQuMzAzVjk5Ljg2NDNaIiBmaWxsPSIjRkY4NTY2Ii8+CjxwYXRoIGQ9Ik0xMzcuODU1IDEwMy41N0MxMzcuODU1IDEwNi43NDQgMTM3LjMxMyAxMDkuMTAzIDEzNi4yMjkgMTEwLjY0NkMxMzUuMTQ1IDExMi4xODggMTMzLjQ1MSAxMTIuOTYgMTMxLjE0NiAxMTIuOTZDMTI4Ljg3MSAxMTIuOTYgMTI3LjE4NiAxMTIuMjA4IDEyNi4wOTIgMTEwLjcwNEMxMjQuOTk5IDEwOS4xOSAxMjQuNDMyIDEwNi45MzUgMTI0LjM5MyAxMDMuOTM3VjEwMC4zMThDMTI0LjM5MyA5Ny4xODM2IDEyNC45MzUgOTQuODU0NSAxMjYuMDE5IDkzLjMzMTFDMTI3LjEwMyA5MS44MDc2IDEyOC44MDIgOTEuMDQ1OSAxMzEuMTE3IDkxLjA0NTlDMTMzLjQxMiA5MS4wNDU5IDEzNS4xMDEgOTEuNzgzMiAxMzYuMTg1IDkzLjI1NzhDMTM3LjI2OSA5NC43MjI3IDEzNy44MjYgOTYuOTg4MyAxMzcuODU1IDEwMC4wNTVWMTAzLjU3Wk0xMzUuMTQ1IDk5Ljg2NDNDMTM1LjE0NSA5Ny41NjkzIDEzNC44MjMgOTUuODk5NCAxMzQuMTc4IDk0Ljg1NDVDMTMzLjUzNCA5My43OTk4IDEzMi41MTMgOTMuMjcyNSAxMzEuMTE3IDkzLjI3MjVDMTI5LjczIDkzLjI3MjUgMTI4LjcxOSA5My43OTQ5IDEyOC4wODQgOTQuODM5OEMxMjcuNDUgOTUuODg0OCAxMjcuMTIzIDk3LjQ5MTIgMTI3LjEwMyA5OS42NTkyVjEwMy45OTVDMTI3LjEwMyAxMDYuMyAxMjcuNDM1IDEwOC4wMDQgMTI4LjA5OSAxMDkuMTA3QzEyOC43NzMgMTEwLjIwMSAxMjkuNzg5IDExMC43NDggMTMxLjE0NiAxMTAuNzQ4QzEzMi40ODQgMTEwLjc0OCAxMzMuNDc1IDExMC4yMyAxMzQuMTIgMTA5LjE5NUMxMzQuNzc0IDEwOC4xNiAxMzUuMTE2IDEwNi41MjkgMTM1LjE0NSAxMDQuMzAzVjk5Ljg2NDNaIiBmaWxsPSIjRkY4NTY2Ii8+CjxjaXJjbGUgY3g9IjE2MCIgY3k9IjEwMiIgcj0iNTMuNSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPC9zdmc+Cg==","n":2},{"slug":"cautious-optimism","title":"Cautious Optimism","desc":"Build opportunities for detecting and reacting to bad behavior","topic":"moderation-curation","topicName":"Moderation & Curation","types":["protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTEzNi40MjkgNjUuMzMzNUgxMDVWMTAySDEzNi40MjlWNjUuMzMzNVoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMzYuNDI5IDEyMC4zMzNIMTA1VjE1N0gxMzYuNDI5VjEyMC4zMzNaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjE1IDQ3SDE4My41NzJWODMuNjY2NkgyMTVWNDdaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjE1IDEwMkgxODMuNTcyVjEzOC42NjdIMjE1VjEwMloiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNTIuMTQyIDQ3SDEzNi40MjhWNjUuMzMzM0gxNTIuMTQyVjQ3WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE1Mi4xNDIgMTAySDEzNi40MjhWMTIwLjMzM0gxNTIuMTQyVjEwMloiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNjcuODU3IDY1LjMzMzVIMTUyLjE0M1Y4My42NjY4SDE2Ny44NTdWNjUuMzMzNVoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xODMuNTcyIDgzLjY2N0gxNjcuODU3VjEwMkgxODMuNTcyVjgzLjY2N1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNjcuODU3IDEyMC4zMzNIMTUyLjE0M1YxMzguNjY2SDE2Ny44NTdWMTIwLjMzM1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xODMuNTcyIDEzOC42NjdIMTY3Ljg1N1YxNTdIMTgzLjU3MlYxMzguNjY3WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==","n":3},{"slug":"conditional-file-sharing","title":"Conditional File Sharing","desc":"Help users collectively keep data online","topic":"moderation-curation","topicName":"Moderation & Curation","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTEwNSA2NC45MjNMMTIxLjkyMyA0OEwxMzguODQ2IDY0LjkyM0wxNTUuNzY5IDQ4IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTA1IDgxLjg0NTlMMTIxLjkyMyA2NC45MjI5TDEzOC44NDYgODEuODQ1OUwxNTUuNzY5IDY0LjkyMjkiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMDUgOTguNzY5MkwxMjEuOTIzIDgxLjg0NjJMMTM4Ljg0NiA5OC43NjkyTDE1NS43NjkgODEuODQ2MiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE2NC4yMzEgMTQxLjA3N0wxODEuMTU0IDE1OEwxOTguMDc3IDE0MS4wNzdMMjE1IDE1OCIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE2NC4yMzEgMTI0LjE1M0wxODEuMTU0IDE0MS4wNzZMMTk4LjA3NyAxMjQuMTUzTDIxNSAxNDEuMDc2IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTY0LjIzMSAxMDcuMjMxTDE4MS4xNTQgMTI0LjE1NEwxOTguMDc3IDEwNy4yMzFMMjE1IDEyNC4xNTQiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xOTguMDc3IDQ4TDIxNSA2NC45MjNMMTk4LjA3NyA4MS44NDZMMjE1IDk4Ljc2OSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE4MS4xNTQgNDhMMTk4LjA3NyA2NC45MjNMMTgxLjE1NCA4MS44NDZMMTk4LjA3NyA5OC43NjkiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNjQuMjMxIDQ4TDE4MS4xNTQgNjQuOTIzTDE2NC4yMzEgODEuODQ2TDE4MS4xNTQgOTguNzY5IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTIxLjkyMyAxMDcuMjMxTDEwNSAxMjQuMTU0TDEyMS45MjMgMTQxLjA3N0wxMDUgMTU4IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTM4Ljg0NiAxMDcuMjMxTDEyMS45MjMgMTI0LjE1NEwxMzguODQ2IDE0MS4wNzdMMTIxLjkyMyAxNTgiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNTUuNzY5IDEwNy4yMzFMMTM4Ljg0NiAxMjQuMTU0TDE1NS43NjkgMTQxLjA3N0wxMzguODQ2IDE1OCIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==","n":4},{"slug":"content-curators","title":"Content Curators","desc":"Choice, flexibility, and control over feeds.","topic":"moderation-curation","topicName":"Moderation & Curation","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNjAgOTFDMTY2LjYyMyA5MSAxNzIgOTYuMzc2OSAxNzIgMTAzQzE3MiAxMDkuNjIzIDE2Ni42MjMgMTE1IDE2MCAxMTVDMTUzLjM3NyAxMTUgMTQ4IDEwOS42MjMgMTQ4IDEwM0MxNDggOTYuMzc2OSAxNTMuMzc3IDkxIDE2MCA5MVoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTU0LjAxMiA5Mi43MTM2QzE3OC4wNjggNzguOTM4NSAyMDAuMjgxIDcyLjM2MzYgMjAzLjU4NiA3OC4wNDA4QzIwNi44OTEgODMuNzE4IDE5MC4wNDQgOTkuNTExMiAxNjUuOTg4IDExMy4yODZDMTQxLjkzMiAxMjcuMDYyIDExOS43MTggMTMzLjYzNiAxMTYuNDE0IDEyNy45NTlDMTEzLjEwOSAxMjIuMjgyIDEyOS45NTcgMTA2LjQ4OSAxNTQuMDEyIDkyLjcxMzZaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE0OS41MzQgMTA4LjQ0M0MxMzguODU0IDkwLjI1MDEgMTM0Ljg3NCA3Mi44MTY1IDE0MC42NSA2OS41MzYzQzE0Ni40MjcgNjYuMjU1OSAxNTkuNzg3IDc4LjM2MzQgMTcwLjQ2NiA5Ni41NTY2QzE4MS4xNDYgMTE0Ljc1IDE4NS4xMjYgMTMyLjE4NCAxNzkuMzUgMTM1LjQ2NEMxNzMuNTczIDEzOC43NDQgMTYwLjIxMyAxMjYuNjM2IDE0OS41MzQgMTA4LjQ0M1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTI4LjAxIDg0LjcwMzlDMTQ0LjY5MSA1Ni4wODM1IDE3Mi41NjcgNDEuMDQ1NSAxOTAuMjIzIDUxLjE0MzJDMjA3Ljg3OCA2MS4yNDEyIDIwOC42NyA5Mi42NzU2IDE5MS45OSAxMjEuMjk2QzE3NS4zMDkgMTQ5LjkxNyAxNDcuNDMzIDE2NC45NTUgMTI5Ljc3NyAxNTQuODU3QzExMi4xMjIgMTQ0Ljc1OSAxMTEuMzMgMTEzLjMyNSAxMjguMDEgODQuNzAzOVoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTc4LjI5NiA3MC44NzM5QzIwNi45MTcgODcuMzY0OSAyMjEuOTU1IDExNC45MjQgMjExLjg1NyAxMzIuMzc5QzIwMS43NTkgMTQ5LjgzNCAxNzAuMzI0IDE1MC42MTcgMTQxLjcwNCAxMzQuMTI2QzExMy4wODMgMTE3LjYzNSA5OC4wNDUzIDkwLjA3NTUgMTA4LjE0MyA3Mi42MjA2QzExOC4yNDEgNTUuMTY1NyAxNDkuNjc1IDU0LjM4MzIgMTc4LjI5NiA3MC44NzM5WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==","n":5},{"slug":"discovery-server","title":"Discovery Server","desc":"A centralized server to discover new content and backup user data.","topic":"sync-status","topicName":"Sync & Status","types":["protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTEzMSAxMjAuOTM4QzE0MC45NDEgMTIwLjkzOCAxNDkgMTEyLjg3OSAxNDkgMTAyLjkzOEMxNDkgOTIuOTk2NCAxNDAuOTQxIDg0LjkzNzUgMTMxIDg0LjkzNzVDMTIxLjA1OSA4NC45Mzc1IDExMyA5Mi45OTY0IDExMyAxMDIuOTM4QzExMyAxMTIuODc5IDEyMS4wNTkgMTIwLjkzOCAxMzEgMTIwLjkzOFoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMzEgMTA5LjkzOEMxMzQuODY2IDEwOS45MzggMTM4IDEwNi44MDMgMTM4IDEwMi45MzhDMTM4IDk5LjA3MTUgMTM0Ljg2NiA5NS45Mzc1IDEzMSA5NS45Mzc1QzEyNy4xMzQgOTUuOTM3NSAxMjQgOTkuMDcxNSAxMjQgMTAyLjkzOEMxMjQgMTA2LjgwMyAxMjcuMTM0IDEwOS45MzggMTMxIDEwOS45MzhaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTg5LjkzMSAxMjAuODU3QzE5OS44NzIgMTIwLjg1NyAyMDcuOTMxIDExMi43OTggMjA3LjkzMSAxMDIuODU3QzIwNy45MzEgOTIuOTE1OCAxOTkuODcyIDg0Ljg1NjkgMTg5LjkzMSA4NC44NTY5QzE3OS45OSA4NC44NTY5IDE3MS45MzEgOTIuOTE1OCAxNzEuOTMxIDEwMi44NTdDMTcxLjkzMSAxMTIuNzk4IDE3OS45OSAxMjAuODU3IDE4OS45MzEgMTIwLjg1N1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNjAuMzkzIDkwQzE3MC4zMzQgOTAgMTc4LjM5MyA4MS45NDExIDE3OC4zOTMgNzJDMTc4LjM5MyA2Mi4wNTg5IDE3MC4zMzQgNTQgMTYwLjM5MyA1NEMxNTAuNDUyIDU0IDE0Mi4zOTMgNjIuMDU4OSAxNDIuMzkzIDcyQzE0Mi4zOTMgODEuOTQxMSAxNTAuNDUyIDkwIDE2MC4zOTMgOTBaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTYwLjM5MyAxNTEuNzE0QzE3MC4zMzQgMTUxLjcxNCAxNzguMzkzIDE0My42NTUgMTc4LjM5MyAxMzMuNzE0QzE3OC4zOTMgMTIzLjc3MyAxNzAuMzM0IDExNS43MTQgMTYwLjM5MyAxMTUuNzE0QzE1MC40NTIgMTE1LjcxNCAxNDIuMzkzIDEyMy43NzMgMTQyLjM5MyAxMzMuNzE0QzE0Mi4zOTMgMTQzLjY1NSAxNTAuNDUyIDE1MS43MTQgMTYwLjM5MyAxNTEuNzE0WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==","n":6},{"slug":"disposable-identity","title":"Disposable Identity","desc":"Privacy-preserving connections with trusted contacts","topic":"identity-agency","topicName":"Identity & Agency","types":["protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTIwNS40NzkgMTAzQzIwNS40NzkgMTI4LjEzNSAxODUuMzU3IDE0OC40NzkgMTYwLjU3MyAxNDguNDc5QzEzNS43ODkgMTQ4LjQ3OSAxMTUuNjY3IDEyOC4xMzUgMTE1LjY2NyAxMDNDMTE1LjY2NyA3Ny44NjQ5IDEzNS43ODkgNTcuNTIwNSAxNjAuNTczIDU3LjUyMDVDMTg1LjM1NyA1Ny41MjA1IDIwNS40NzkgNzcuODY0OSAyMDUuNDc5IDEwM1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik0xNjkuODU4IDU5LjA3MUwxNTQuNjAzIDY4LjYzMjhMMTU0LjYxNyA0OS40ODUyTDE2OS44NTggNTkuMDcxWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTIwNC4xMTUgMTEzLjMxMkwxOTQuNjg4IDk4LjcwMzFMMjEzLjU0MiA5OC43MDMxTDIwNC4xMTUgMTEzLjMxMloiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMTUuODg1IDkzLjgzM0wxMDYuNDU4IDEwOC40NDJMMTI1LjMxMiAxMDguNDQyTDExNS44ODUgOTMuODMzWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE0OS41MjYgMTQ2Ljk0NUwxNjQuNzgyIDE1Ni41MDdMMTY0Ljc2OCAxMzcuMzZMMTQ5LjUyNiAxNDYuOTQ1WiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==","n":7},{"slug":"host-roulette","title":"Host Roulette","desc":"Encourage an equal distribution of users per server.","topic":"identity-agency","topicName":"Identity & Agency","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTE1NC4wNzkgMTMyLjY1NEMxNTQuMDc5IDE0NS44MjcgMTQzLjQyNSAxNTYuNSAxMzAuMjg5IDE1Ni41QzExNy4xNTQgMTU2LjUgMTA2LjUgMTQ1LjgyNyAxMDYuNSAxMzIuNjU0QzEwNi41IDExOS40ODEgMTE3LjE1NCAxMDguODA4IDEzMC4yODkgMTA4LjgwOEMxNDMuNDI1IDEwOC44MDggMTU0LjA3OSAxMTkuNDgxIDE1NC4wNzkgMTMyLjY1NFoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik0xNDMuODY5IDEzMy4xNDJDMTQzLjg2OSAxNDAuNTA3IDEzNy45NDMgMTQ2LjQ2IDEzMC42NTUgMTQ2LjQ2QzEyMy4zNjcgMTQ2LjQ2IDExNy40NDEgMTQwLjUwNyAxMTcuNDQxIDEzMy4xNDJDMTE3LjQ0MSAxMjUuNzc2IDEyMy4zNjcgMTE5LjgyNCAxMzAuNjU1IDExOS44MjRDMTM3Ljk0MyAxMTkuODI0IDE0My44NjkgMTI1Ljc3NiAxNDMuODY5IDEzMy4xNDJaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIvPgo8cGF0aCBkPSJNMTQxLjE2NyAxNDguODM1QzE0MS4xNjcgMTQ5LjgyNSAxNDAuMzY0IDE1MC42MjcgMTM5LjM3NSAxNTAuNjI3QzEzOC4zODUgMTUwLjYyNyAxMzcuNTgzIDE0OS44MjUgMTM3LjU4MyAxNDguODM1QzEzNy41ODMgMTQ3Ljg0NiAxMzguMzg1IDE0Ny4wNDMgMTM5LjM3NSAxNDcuMDQzQzE0MC4zNjQgMTQ3LjA0MyAxNDEuMTY3IDE0Ny44NDYgMTQxLjE2NyAxNDguODM1WiIgc3Ryb2tlPSIjRkY4NTY2Ii8+CjxwYXRoIGQ9Ik0xNTQuMDc5IDczLjM0NkMxNTQuMDc5IDg2LjUxODkgMTQzLjQyNSA5Ny4xOTE5IDEzMC4yODkgOTcuMTkxOUMxMTcuMTU0IDk3LjE5MTkgMTA2LjUgODYuNTE4OSAxMDYuNSA3My4zNDZDMTA2LjUgNjAuMTczIDExNy4xNTQgNDkuNSAxMzAuMjg5IDQ5LjVDMTQzLjQyNSA0OS41IDE1NC4wNzkgNjAuMTczIDE1NC4wNzkgNzMuMzQ2WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHBhdGggZD0iTTE0My41ODggNzMuNTMxNUMxNDMuNTg4IDgwLjc5NDEgMTM3LjcxNSA4Ni42NzU5IDEzMC40NzcgODYuNjc1OUMxMjMuMjM4IDg2LjY3NTkgMTE3LjM2NSA4MC43OTQxIDExNy4zNjUgNzMuNTMxNUMxMTcuMzY1IDY2LjI2OSAxMjMuMjM4IDYwLjM4NzIgMTMwLjQ3NyA2MC4zODcyQzEzNy43MTUgNjAuMzg3MiAxNDMuNTg4IDY2LjI2OSAxNDMuNTg4IDczLjUzMTVaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIvPgo8cGF0aCBkPSJNMTEzLjY2NCA3MC44MDAzQzExMy42NjQgNzEuNzk3OCAxMTIuODU4IDcyLjYwNDUgMTExLjg2NSA3Mi42MDQ1QzExMC44NzMgNzIuNjA0NSAxMTAuMDY2IDcxLjc5NzggMTEwLjA2NiA3MC44MDAzQzExMC4wNjYgNjkuODAyOCAxMTAuODczIDY4Ljk5NjEgMTExLjg2NSA2OC45OTYxQzExMi44NTggNjguOTk2MSAxMTMuNjY0IDY5LjgwMjggMTEzLjY2NCA3MC44MDAzWiIgc3Ryb2tlPSIjRkY4NTY2Ii8+CjxwYXRoIGQ9Ik0yMTIuOTY5IDEzMi42NTRDMjEyLjk2OSAxNDUuODI3IDIwMi4zMTUgMTU2LjUgMTg5LjE4IDE1Ni41QzE3Ni4wNDUgMTU2LjUgMTY1LjM5MSAxNDUuODI3IDE2NS4zOTEgMTMyLjY1NEMxNjUuMzkxIDExOS40ODEgMTc2LjA0NSAxMDguODA4IDE4OS4xOCAxMDguODA4QzIwMi4zMTUgMTA4LjgwOCAyMTIuOTY5IDExOS40ODEgMjEyLjk2OSAxMzIuNjU0WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHBhdGggZD0iTTIwMi40NzkgMTMyLjgzOUMyMDIuNDc5IDE0MC4xMDIgMTk2LjYwNiAxNDUuOTg0IDE4OS4zNjcgMTQ1Ljk4NEMxODIuMTI5IDE0NS45ODQgMTc2LjI1NiAxNDAuMTAyIDE3Ni4yNTYgMTMyLjgzOUMxNzYuMjU2IDEyNS41NzcgMTgyLjEyOSAxMTkuNjk1IDE4OS4zNjcgMTE5LjY5NUMxOTYuNjA2IDExOS42OTUgMjAyLjQ3OSAxMjUuNTc3IDIwMi40NzkgMTMyLjgzOVoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik0yMDYuNDc5IDEyMy42MjNDMjA2LjQ3OSAxMjQuNjEzIDIwNS42NzcgMTI1LjQxNSAyMDQuNjg3IDEyNS40MTVDMjAzLjY5OCAxMjUuNDE1IDIwMi44OTYgMTI0LjYxMyAyMDIuODk2IDEyMy42MjNDMjAyLjg5NiAxMjIuNjM0IDIwMy42OTggMTIxLjgzMiAyMDQuNjg3IDEyMS44MzJDMjA1LjY3NyAxMjEuODMyIDIwNi40NzkgMTIyLjYzNCAyMDYuNDc5IDEyMy42MjNaIiBzdHJva2U9IiNGRjg1NjYiLz4KPHBhdGggZD0iTTIxMy41IDczLjM0NkMyMTMuNSA4Ni41MTg5IDIwMi44NDYgOTcuMTkxOSAxODkuNzExIDk3LjE5MTlDMTc2LjU3NSA5Ny4xOTE5IDE2NS45MjEgODYuNTE4OSAxNjUuOTIxIDczLjM0NkMxNjUuOTIxIDYwLjE3MyAxNzYuNTc1IDQ5LjUgMTg5LjcxMSA0OS41QzIwMi44NDYgNDkuNSAyMTMuNSA2MC4xNzMgMjEzLjUgNzMuMzQ2WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHBhdGggZD0iTTIwMy4wMSA3My41MzE1QzIwMy4wMSA4MC43OTQxIDE5Ny4xMzYgODYuNjc1OSAxODkuODk4IDg2LjY3NTlDMTgyLjY2IDg2LjY3NTkgMTc2Ljc4NiA4MC43OTQxIDE3Ni43ODYgNzMuNTMxNUMxNzYuNzg2IDY2LjI2OSAxODIuNjYgNjAuMzg3MiAxODkuODk4IDYwLjM4NzJDMTk3LjEzNiA2MC4zODcyIDIwMy4wMSA2Ni4yNjkgMjAzLjAxIDczLjUzMTVaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIvPgo8cGF0aCBkPSJNMTc3LjgzMyA4NS44MTA3QzE3Ny44MzMgODYuODAwMiAxNzcuMDMxIDg3LjYwMjMgMTc2LjA0MiA4Ny42MDIzQzE3NS4wNTIgODcuNjAyMyAxNzQuMjUgODYuODAwMiAxNzQuMjUgODUuODEwN0MxNzQuMjUgODQuODIxMiAxNzUuMDUyIDg0LjAxOSAxNzYuMDQyIDg0LjAxOUMxNzcuMDMxIDg0LjAxOSAxNzcuODMzIDg0LjgyMTIgMTc3LjgzMyA4NS44MTA3WiIgc3Ryb2tlPSIjRkY4NTY2Ii8+Cjwvc3ZnPgo=","n":8},{"slug":"network-health-indicator","title":"Network Health Indicator","desc":"Build trust through data visualizations.","topic":"sync-status","topicName":"Sync & Status","types":["protocol","ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTE1MS41MzggNDhIMTI2LjE1NFY3Mi40NDQ1SDE1MS41MzhWNDhaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjE1IDEwOS4xMTFIMTg5LjYxNVYxMzMuNTU2SDIxNVYxMDkuMTExWiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE2NC4yMzEgOTYuODg4N0gxMzguODQ2VjEyMS4zMzNIMTY0LjIzMVY5Ni44ODg3WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEzOC44NDYgMTA5LjExMUMxMjQuNzQ0IDEwOS4xMTEgMTE3LjY5MiAxMDkuMTExIDExNy42OTIgMTA5LjExMUMxMTEuNjYyIDEwOS4xMTEgMTA1IDEwNS4wMzcgMTA1IDk2Ljg4ODlDMTA1IDg4Ljc0MDcgMTEwLjkzMSA4NC42NjY3IDExNy42OTIgODQuNjY2N0MxMTcuNjkyIDg0LjY2NjcgMTQxLjY2NyA4NC42NjY3IDE4OS42MTUgODQuNjY2N0MxOTguOTYyIDg0LjY2NjcgMjAyLjMwOCA3Ni45MDc2IDIwMi4zMDggNzIuNDQ0NEMyMDIuMzA4IDY3Ljk4MTIgMjAwLjE5MiA2MC4yMjIyIDE4OS42MTUgNjAuMjIyMkMxODIuNTY0IDYwLjIyMjIgMTY5Ljg3MiA2MC4yMjIyIDE1MS41MzggNjAuMjIyMiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTIwMi4zMDggMTA5LjExMUMyMDIuMzA4IDg0LjY2NjcgMjAyLjMwOCA3Mi40NDQ0IDIwMi4zMDggNzIuNDQ0NEMyMDIuMzA4IDY2LjYzNzIgMTk4LjA3NyA2MC4yMjIyIDE4OS42MTUgNjAuMjIyMkMxODEuMTU0IDYwLjIyMjIgMTc2LjkyMyA2NS45MzM3IDE3Ni45MjMgNzIuNDQ0NEMxNzYuOTIzIDcyLjQ0NDQgMTc2LjkyMyA5Ni44ODg5IDE3Ni45MjMgMTQ1Ljc3OEMxNzYuOTIzIDE1NC43NzggMTY4Ljg2NiAxNTggMTY0LjIzMSAxNThDMTU5LjU5NiAxNTggMTUxLjUzOSAxNTUuOTYzIDE1MS41MzkgMTQ1Ljc3OEMxNTEuNTM5IDEzOC45ODggMTUxLjUzOSAxMzAuODQgMTUxLjUzOSAxMjEuMzMzIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K","n":9},{"slug":"paper-keys","title":"Paper Keys","desc":"Accessible verification, backup, and sharing","topic":"sharing-permissions","topicName":"Sharing & Permissions","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTEyNyAxMDYuODg2Vjk2LjkwNTRDMTI3IDkxLjM5MyAxMjIuMDc1IDg2LjkyNDMgMTE2IDg2LjkyNDNDMTA5LjkyNSA4Ni45MjQzIDEwNSA5MS4zOTMgMTA1IDk2LjkwNTRWMTA2Ljg4NkMxMDUgMTEyLjM5OSAxMDkuOTI1IDExNi44NjggMTE2IDExNi44NjhDMTIyLjA3NSAxMTYuODY4IDEyNyAxMTIuMzk5IDEyNyAxMDYuODg2WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMjcgMTAxLjg5NkgyMTVWMTE2Ljg2OEgyMDRWMTExLjg3N0gxOTNWMTE2Ljg2OEgxODJWMTAxLjg5NkgxMjdaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTkzIDY2Ljk2MjJWNTYuOTgxMUMxOTMgNTEuNDY4NyAxOTcuOTI1IDQ3IDIwNCA0N0MyMTAuMDc1IDQ3IDIxNSA1MS40Njg3IDIxNSA1Ni45ODExVjY2Ljk2MjJDMjE1IDcyLjQ3NDUgMjEwLjA3NSA3Ni45NDMyIDIwNCA3Ni45NDMyQzE5Ny45MjUgNzYuOTQzMiAxOTMgNzIuNDc0NSAxOTMgNjYuOTYyMloiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTkzIDYxLjk3MTdIMTA1Vjc2Ljk0MzNIMTE2VjcxLjk1MjhIMTI3Vjc2Ljk0MzNIMTM4VjYxLjk3MTdIMTkzWiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE5My4wMDIgMTQ3LjAxOVYxMzcuMDM4QzE5My4wMDIgMTMxLjUyNSAxOTcuOTI2IDEyNy4wNTcgMjA0LjAwMSAxMjcuMDU3QzIxMC4wNzcgMTI3LjA1NyAyMTUuMDAxIDEzMS41MjUgMjE1LjAwMSAxMzcuMDM4VjE0Ny4wMTlDMjE1LjAwMSAxNTIuNTMxIDIxMC4wNzcgMTU3IDIwNC4wMDEgMTU3QzE5Ny45MjYgMTU3IDE5My4wMDIgMTUyLjUzMSAxOTMuMDAyIDE0Ny4wMTlaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE5My4wMDIgMTQyLjAyOEgxMDUuMDAyVjE1N0gxMTYuMDAyVjE1Mi4wMDlIMTI3LjAwMlYxNTdIMTM4LjAwMlYxNDIuMDI4SDE5My4wMDJaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K","n":10},{"slug":"persistent-identity","title":"Persistent Identity","desc":"Securely move between providers and aliases.","topic":"identity-agency","topicName":"Identity & Agency","types":["protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTEyMi43MjIgNzMuMjA4MkMxNDMuNSA0OC41NzI4IDE4OC4xMTEgNTUuNDQ3OCAyMDAuOTQ0IDczLjIwODEiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEzNS41NTYgNTMuNzI5MkMxNTMuMzUgNDQuMzk4NiAxNzkuMjMyIDQ3Ljk5MDMgMTkwLjU1NiA1My43MjkyIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNzkuNDQ4IDEzMC4wNTZDMTQwLjExMSAxNTEuMDY5IDEzNC4zMDMgNzcuNDA1NiAxODAuMzMgOTQuOTE2NiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTY4Ljc2MiAxMTIuNzczQzE3Ny44MTMgMTAxLjcyMyAxOTkuNjAyIDExOS40NzIgMTc4LjM5OSAxMzAuNjM3IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMzEuNDk1IDEzMC4wOEMxMTAuOTM1IDg2LjUzNzEgMTYxLjY5NCA1OC42MjQ2IDE4OS4wODcgODUuMTk4NCIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjA4LjU5OCAxMTIuNzc0QzIwMC4yNDUgMTYyLjQ1NyAxNDUuNTM3IDE2MC4zNTkgMTMxLjQ5NSAxMzAuMDgxIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMTcuMzQ2IDEyMS43NzJDMTEzLjg0OSA3NC41MTc4IDE0Ni44NCA2Mi42NDI1IDE3MS40ODIgNjYuOTY5OUMxOTYuMTI0IDcxLjI5NzMgMjA3LjExNSA5MC40MDUzIDE5OC4zNTMgOTQuNDY4QzE4OS41OTEgOTguNTMwNyAxODIuNDcyIDgxLjgyOCAxNTguOTI1IDg0LjUzNjJDMTM1LjM3OCA4Ny4yNDQ0IDEyOC43NTQgMTEzLjQ4OCAxNDEuNzE2IDEzMC4wMDNDMTU0LjY3NyAxNDYuNTE4IDE5MS42MTcgMTUwLjM1IDE5OC4zNTMgMTE0LjM0MSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTc4LjM3IDEyMC42MDRDMTc4Ljk5OCAxMjAuMDY0IDE3OS4wNyAxMTkuMTE3IDE3OC41MyAxMTguNDg5QzE3Ny45ODkgMTE3Ljg2MSAxNzcuMDQyIDExNy43ODkgMTc2LjQxNCAxMTguMzNMMTc4LjM3IDEyMC42MDRaTTE1OC4zIDExMS45MTdMMTU5Ljc3NCAxMTIuMTkyTDE1OC4zIDExMS45MTdaTTE4NC42MTIgMTA2LjIyM0MxODUuMzE3IDEwNi42NTggMTg2LjI0MSAxMDYuNDM5IDE4Ni42NzYgMTA1LjczNEMxODcuMTExIDEwNS4wMjkgMTg2Ljg5MSAxMDQuMTA1IDE4Ni4xODYgMTAzLjY3TDE4NC42MTIgMTA2LjIyM1pNMTc2LjQxNCAxMTguMzNDMTcxLjExNiAxMjIuODg2IDE2Ni41MzYgMTIzLjE1MyAxNjMuNjUgMTIxLjY3MUMxNjAuNzM3IDEyMC4xNzUgMTU4Ljk1MiAxMTYuNjA4IDE1OS43NzQgMTEyLjE5MkwxNTYuODI1IDExMS42NDNDMTU1LjgwNiAxMTcuMTE4IDE1Ny45OCAxMjIuMTMxIDE2Mi4yNzkgMTI0LjM0QzE2Ni42MDYgMTI2LjU2MiAxNzIuNDkzIDEyNS42NTkgMTc4LjM3IDEyMC42MDRMMTc2LjQxNCAxMTguMzNaTTE1OS43NzQgMTEyLjE5MkMxNjAuNjI4IDEwNy42MDQgMTYzLjE0NiAxMDMuOTI0IDE2Ny4wNzEgMTAyLjQyMUMxNzEuMDA4IDEwMC45MTMgMTc2LjgxOCAxMDEuNDE4IDE4NC42MTIgMTA2LjIyM0wxODYuMTg2IDEwMy42N0MxNzcuOTY3IDk4LjYwMTkgMTcxLjE0NyA5Ny42NDY4IDE2NS45OTggOTkuNjE5M0MxNjAuODM3IDEwMS41OTcgMTU3LjgxMiAxMDYuMzM5IDE1Ni44MjUgMTExLjY0M0wxNTkuNzc0IDExMi4xOTJaIiBmaWxsPSIjRkY4NTY2Ii8+Cjwvc3ZnPgo=","n":11},{"slug":"physical-beacon","title":"Physical Beacon","desc":"Control the physical location of data.","topic":"sync-status","topicName":"Sync & Status","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTE2Ni4yMjIgMTAzSDExNy4xMTFDMTEzLjc5OCAxMDMgMTExLjExMSAxMDUuNDgyIDExMS4xMTEgMTA4LjU0NFYxNTIuNDU2QzExMS4xMTEgMTU1LjUxOCAxMTMuNzk4IDE1OCAxMTcuMTExIDE1OEgxNjYuMjIyQzE2OS41MzYgMTU4IDE3Mi4yMjIgMTU1LjUxOCAxNzIuMjIyIDE1Mi40NTZWMTA4LjU0NEMxNzIuMjIyIDEwNS40ODIgMTY5LjUzNiAxMDMgMTY2LjIyMiAxMDNaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjA5IDQ4SDE4NC4zMzRDMTgxLjAyIDQ4IDE3OC4zMzQgNTAuNDgyMSAxNzguMzM0IDUzLjU0NFY3NS40NTZDMTc4LjMzNCA3OC41MTc5IDE4MS4wMiA4MSAxODQuMzM0IDgxSDIwOUMyMTIuMzE0IDgxIDIxNSA3OC41MTc5IDIxNSA3NS40NTZWNTMuNTQ0QzIxNSA1MC40ODIxIDIxMi4zMTQgNDggMjA5IDQ4WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEyMy4zMzMgMTAzVjgxVjY0LjVIMTA1VjgxIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTYwIDEwMy4wMDFWODEuMDAwNUgxNjYuMTExIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTQxLjY2NiAxMDNWODFWNjQuNUgxNzguMzMyIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTA1IDQ4SDE2My4wNTUiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNzUuMjc3IDEwOC41SDE5Ni42NjZWOTEuOTk5NSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE3NS4yNzggMTQxLjVIMTkwLjU1NVYxNThIMjAyLjc3OEgyMTVWMTQxLjUiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0yMTEuOTQ0IDkyLjAwMDlWMTE0LjAwMVYxMjcuNzUxSDE3NS4yNzgiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=","n":12},{"slug":"prioritize-backup","title":"Prioritize Backup","desc":"Prioritizing backup is crucial for competing with centralized services that provide long-term storage.","topic":"moderation-curation","topicName":"Moderation & Curation","types":["protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTE1Mi4xNDMgNDdIMTA1Vjk0LjE0MjlIMTUyLjE0M1Y0N1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xODMuNTcxIDEwOS44NTZIMTM2LjQyOFYxNTYuOTk5SDE4My41NzFWMTA5Ljg1NloiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNjcuODU3IDEyNS41NjlIMTUyLjE0M1YxNDEuMjg0SDE2Ny44NTdWMTI1LjU2OVoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xODMuNTcxIDQ3SDE2Ny44NTdWNjIuNzE0M0gxODMuNTcxVjQ3WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE4My41NzEgNzguNDMwN0gxNjcuODU3Vjk0LjE0NDlIMTgzLjU3MVY3OC40MzA3WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEyMC43MTQgMTA5Ljg1NkgxMDVWMTI1LjU3MUgxMjAuNzE0VjEwOS44NTZaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTIwLjcxNCAxNDEuMjg3SDEwNVYxNTcuMDAxSDEyMC43MTRWMTQxLjI4N1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0yMTUgNDdIMTk5LjI4NlY2Mi43MTQzSDIxNVY0N1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0yMTUgNzguNDMwN0gxOTkuMjg2Vjk0LjE0NDlIMjE1Vjc4LjQzMDdaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjE1IDEwOS44NTZIMTk5LjI4NlYxMjUuNTcxSDIxNVYxMDkuODU2WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTIxNSAxNDEuMjg3SDE5OS4yODZWMTU3LjAwMUgyMTVWMTQxLjI4N1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=","n":13},{"slug":"protocol-agnosticism","title":"Protocol Agnosticism","desc":"Give options for which relevant protocols to use.","topic":"sync-status","topicName":"Sync & Status","types":["protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTEwNS44OTggMTIyLjEyNEM5OS45NzM5IDExOC43MDMgOTcuODkzOCAxMTEuMTk5IDEwMS4yNTYgMTA1LjM3NkMxMDQuNjE4IDk5LjU1MjQgMTEyLjE1NyA5Ny42MDE2IDExOC4wODEgMTAxLjAyMiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE4Mi40ODQgMTM4LjIwNUMxODguNDA4IDE0MS42MjUgMTkwLjQ4OCAxNDkuMTI5IDE4Ny4xMjYgMTU0Ljk1M0MxODMuNzY0IDE2MC43NzYgMTc2LjIyNSAxNjIuNzI3IDE3MC4zMDEgMTU5LjMwNiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTExOC4wODEgMTAxLjAyMkMxMzUuODU0IDExMS4yODMgMTUyLjUyOCAxNDkuMDQ2IDE3MC4zMDEgMTU5LjMwNyIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEwNS44OTggMTIyLjEyNEMxMjMuNjcgMTMyLjM4NSAxNjQuNzEyIDEyNy45NDQgMTgyLjQ4NCAxMzguMjA1IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTE4LjI0IDEyMi4yMTVDMTEyLjM2NiAxMjUuNTQ4IDEwNC43OTcgMTIzLjQ4NSAxMDEuMzQ3IDExNy42MTFDOTcuODk3OCAxMTEuNzM3IDk5Ljg2NjEgMTA0LjI2MyAxMDUuNzQgMTAwLjkzIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTY5LjU5NCA2NC42OTgxQzE3NS40NjggNjEuMzY1MiAxODMuMDM3IDYzLjQyNzkgMTg2LjQ4NiA2OS4zMDE1QzE4OS45MzYgNzUuMTc1MyAxODcuOTY4IDgyLjY0OTkgMTgyLjA5NCA4NS45ODI4IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTA1Ljc0IDEwMC45M0MxMjMuMzYxIDkwLjkzMTMgMTY0LjQ3MyA5NS45ODA3IDE4Mi4wOTQgODUuOTgyIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTE4LjIzOSAxMjIuMjE1QzEzNS44NjEgMTEyLjIxNiAxNTEuOTczIDc0LjY5NjIgMTY5LjU5NCA2NC42OTc1IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTYzLjUwMiA3NS4yNDgzQzE2My40NTIgNjguNDk1MSAxNjguOTQxIDYzLjA1MzIgMTc1Ljc1MiA2My4xMDM2QzE4Mi41NjQgNjMuMTU0MiAxODguMTM1IDY4LjY3NzkgMTg4LjE4NSA3NS40MzExIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTg4LjczNCAxNDguODQ3QzE4OC43ODQgMTU1LjYgMTgzLjI5NSAxNjEuMDQyIDE3Ni40ODQgMTYwLjk5MUMxNjkuNjcyIDE2MC45NDEgMTY0LjEwMSAxNTUuNDE3IDE2NC4wNTEgMTQ4LjY2NCIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE4OC4xODYgNzUuNDMwN0MxODguMzM3IDk1LjY5MDMgMTYzLjkgMTI4LjQwNCAxNjQuMDUxIDE0OC42NjQiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNjMuNTAyIDc1LjI0OEMxNjMuNjU0IDk1LjUwNzcgMTg4LjU4MyAxMjguNTg3IDE4OC43MzQgMTQ4Ljg0NyIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==","n":14},{"slug":"QR-code-verification","title":"QR Code Verification","desc":"Securely verify or transfer information between two peers.","topic":"sharing-permissions","topicName":"Sharing & Permissions","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF8yODcxXzE1MDgpIj4KPG1hc2sgaWQ9Im1hc2swXzI4NzFfMTUwOCIgc3R5bGU9Im1hc2stdHlwZTphbHBoYSIgbWFza1VuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeD0iNzYiIHk9IjE3IiB3aWR0aD0iMTcwIiBoZWlnaHQ9IjE3MCI+CjxwYXRoIGQ9Ik0yNDUuNzk4IDEwMS44OTlDMjQ1Ljc5OCA1NS4wMTA2IDIwNy43ODcgMTcgMTYwLjg5OSAxN0MxMTQuMDExIDE3IDc2IDU1LjAxMDYgNzYgMTAxLjg5OUM3NiAxNDguNzg3IDExNC4wMTEgMTg2Ljc5OCAxNjAuODk5IDE4Ni43OThDMjA3Ljc4NyAxODYuNzk4IDI0NS43OTggMTQ4Ljc4NyAyNDUuNzk4IDEwMS44OTlaIiBmaWxsPSJ3aGl0ZSIvPgo8L21hc2s+CjxnIG1hc2s9InVybCgjbWFzazBfMjg3MV8xNTA4KSI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTAxIDYyVjgySDEyMUgxNDFWNjJWNDJIMTIxSDEwMVY2MlpNMTUyLjQyOSA0NC44NTcxQzE1Mi40MjkgNDYuNzYxNCAxNTEuNDc2IDQ3LjcxNDMgMTQ5LjU3MSA0Ny43MTQzQzE0Ny42NjcgNDcuNzE0MyAxNDYuNzE0IDQ4LjY2NzEgMTQ2LjcxNCA1MC41NzE0QzE0Ni43MTQgNTIuNDc1NyAxNDcuNjY3IDUzLjQyODYgMTQ5LjU3MSA1My40Mjg2QzE1MS40NzYgNTMuNDI4NiAxNTIuNDI5IDUyLjQ3NTcgMTUyLjQyOSA1MC41NzE0QzE1Mi40MjkgNDguNjY3MSAxNTMuMzgxIDQ3LjcxNDMgMTU1LjI4NiA0Ny43MTQzQzE1Ny4xOSA0Ny43MTQzIDE1OC4xNDMgNDYuNzYxNCAxNTguMTQzIDQ0Ljg1NzFDMTU4LjE0MyA0Mi45NTI5IDE1Ny4xOSA0MiAxNTUuMjg2IDQyQzE1My4zODEgNDIgMTUyLjQyOSA0Mi45NTI5IDE1Mi40MjkgNDQuODU3MVpNMTYzLjg1NyA0Ny43MTQzQzE2My44NTcgNTIuNDc1NyAxNjMuMzgxIDUzLjQyODYgMTYxIDUzLjQyODZDMTU5LjA5NiA1My40Mjg2IDE1OC4xNDMgNTQuMzgxNCAxNTguMTQzIDU2LjI4NTdDMTU4LjE0MyA1OC4xOSAxNTcuMTkgNTkuMTQyOSAxNTUuMjg2IDU5LjE0MjlDMTUzLjM4MSA1OS4xNDI5IDE1Mi40MjkgNjAuMDk1NyAxNTIuNDI5IDYyQzE1Mi40MjkgNjMuOTA0MyAxNTEuNDc2IDY0Ljg1NzEgMTQ5LjU3MSA2NC44NTcxQzE0Ny42NjcgNjQuODU3MSAxNDYuNzE0IDY1LjgxIDE0Ni43MTQgNjcuNzE0M0MxNDYuNzE0IDY5LjYxODYgMTQ3LjY2NyA3MC41NzE0IDE0OS41NzEgNzAuNTcxNEMxNTEuNDc2IDcwLjU3MTQgMTUyLjQyOSA3MS41MjQzIDE1Mi40MjkgNzMuNDI4NkMxNTIuNDI5IDc1LjMzMjkgMTUxLjQ3NiA3Ni4yODU3IDE0OS41NzEgNzYuMjg1N0MxNDcuNjY3IDc2LjI4NTcgMTQ2LjcxNCA3Ny4yMzg2IDE0Ni43MTQgNzkuMTQyOUMxNDYuNzE0IDgxLjA0NzEgMTQ3LjY2NyA4MiAxNDkuNTcxIDgyQzE1MS40NzYgODIgMTUyLjQyOSA4MS4wNDcxIDE1Mi40MjkgNzkuMTQyOUMxNTIuNDI5IDc3LjIzODYgMTUzLjM4MSA3Ni4yODU3IDE1NS4yODYgNzYuMjg1N0MxNTcuNjY3IDc2LjI4NTcgMTU4LjE0MyA3Ny4yMzg2IDE1OC4xNDMgODJDMTU4LjE0MyA4Ni43NjE0IDE1Ny42NjcgODcuNzE0MyAxNTUuMjg2IDg3LjcxNDNDMTUzLjM4MSA4Ny43MTQzIDE1Mi40MjkgODguNjY3MSAxNTIuNDI5IDkwLjU3MTRDMTUyLjQyOSA5Mi40NzU3IDE1MS40NzYgOTMuNDI4NiAxNDkuNTcxIDkzLjQyODZDMTQ3LjY2NyA5My40Mjg2IDE0Ni43MTQgOTQuMzgxNCAxNDYuNzE0IDk2LjI4NTdDMTQ2LjcxNCA5OC44MjU3IDE0NS43NjEgOTkuMTQyOSAxMzguMTQzIDk5LjE0MjlDMTMwLjUyNCA5OS4xNDI5IDEyOS41NzEgOTkuNDYgMTI5LjU3MSAxMDJDMTI5LjU3MSAxMDQuNTQgMTMwLjUyNCAxMDQuODU3IDEzOC4xNDMgMTA0Ljg1N0MxNDUuNzYxIDEwNC44NTcgMTQ2LjcxNCAxMDUuMTc0IDE0Ni43MTQgMTA3LjcxNEMxNDYuNzE0IDExMC4wOTYgMTQ1Ljc2MSAxMTAuNTcxIDE0MSAxMTAuNTcxQzEzNi4yMzkgMTEwLjU3MSAxMzUuMjg2IDExMS4wNDcgMTM1LjI4NiAxMTMuNDI5QzEzNS4yODYgMTE1LjgxIDEzNi4yMzkgMTE2LjI4NiAxNDEgMTE2LjI4NkMxNDUuNzYxIDExNi4yODYgMTQ2LjcxNCAxMTYuNzYxIDE0Ni43MTQgMTE5LjE0M0MxNDYuNzE0IDEyMS41MjQgMTQ3LjY2NyAxMjIgMTUyLjQyOSAxMjJDMTU3LjE5IDEyMiAxNTguMTQzIDEyMi40NzYgMTU4LjE0MyAxMjQuODU3QzE1OC4xNDMgMTI2Ljc2MSAxNTcuMTkgMTI3LjcxNCAxNTUuMjg2IDEyNy43MTRDMTUzLjM4MSAxMjcuNzE0IDE1Mi40MjkgMTI4LjY2NyAxNTIuNDI5IDEzMC41NzFDMTUyLjQyOSAxMzIuNDc2IDE1MS40NzYgMTMzLjQyOSAxNDkuNTcxIDEzMy40MjlDMTQ3LjY2NyAxMzMuNDI5IDE0Ni43MTQgMTM0LjM4MSAxNDYuNzE0IDEzNi4yODZDMTQ2LjcxNCAxMzguNjY3IDE0Ny42NjcgMTM5LjE0MyAxNTIuNDI5IDEzOS4xNDNIMTU4LjE0M1YxMzMuNDI5QzE1OC4xNDMgMTI4LjY2NyAxNTguNjE5IDEyNy43MTQgMTYxIDEyNy43MTRDMTYzLjM4MSAxMjcuNzE0IDE2My44NTcgMTI2Ljc2MSAxNjMuODU3IDEyMkMxNjMuODU3IDExNy4yMzkgMTY0LjMzMyAxMTYuMjg2IDE2Ni43MTQgMTE2LjI4NkMxNjguNjE5IDExNi4yODYgMTY5LjU3MSAxMTUuMzMzIDE2OS41NzEgMTEzLjQyOUMxNjkuNTcxIDExMS41MjQgMTcwLjUyNCAxMTAuNTcxIDE3Mi40MjkgMTEwLjU3MUMxNzQuMzMzIDExMC41NzEgMTc1LjI4NiAxMTEuNTI0IDE3NS4yODYgMTEzLjQyOUMxNzUuMjg2IDExNS4zMzMgMTc2LjIzOSAxMTYuMjg2IDE3OC4xNDMgMTE2LjI4NkMxODAuMDQ3IDExNi4yODYgMTgxIDExNy4yMzkgMTgxIDExOS4xNDNDMTgxIDEyMS4wNDcgMTgxLjk1MyAxMjIgMTgzLjg1NyAxMjJDMTg1Ljc2MSAxMjIgMTg2LjcxNCAxMjEuMDQ3IDE4Ni43MTQgMTE5LjE0M0MxODYuNzE0IDExNy4yMzkgMTg3LjY2NyAxMTYuMjg2IDE4OS41NzEgMTE2LjI4NkMxOTEuNDc2IDExNi4yODYgMTkyLjQyOSAxMTUuMzMzIDE5Mi40MjkgMTEzLjQyOUMxOTIuNDI5IDExMS41MjQgMTkzLjM4MSAxMTAuNTcxIDE5NS4yODYgMTEwLjU3MUMxOTcuMTkgMTEwLjU3MSAxOTguMTQzIDEwOS42MTkgMTk4LjE0MyAxMDcuNzE0QzE5OC4xNDMgMTA1LjgxIDE5OS4wOTYgMTA0Ljg1NyAyMDEgMTA0Ljg1N0MyMDMuMzgxIDEwNC44NTcgMjAzLjg1NyAxMDMuOTA0IDIwMy44NTcgOTkuMTQyOUMyMDMuODU3IDk0LjM4MTQgMjAzLjM4MSA5My40Mjg2IDIwMSA5My40Mjg2QzE5OS4wOTYgOTMuNDI4NiAxOTguMTQzIDkyLjQ3NTcgMTk4LjE0MyA5MC41NzE0QzE5OC4xNDMgODguNjY3MSAxOTcuMTkgODcuNzE0MyAxOTUuMjg2IDg3LjcxNDNDMTkzLjM4MSA4Ny43MTQzIDE5Mi40MjkgODguNjY3MSAxOTIuNDI5IDkwLjU3MTRDMTkyLjQyOSA5Mi40NzU3IDE5MS40NzYgOTMuNDI4NiAxODkuNTcxIDkzLjQyODZDMTg3LjY2NyA5My40Mjg2IDE4Ni43MTQgOTQuMzgxNCAxODYuNzE0IDk2LjI4NTdDMTg2LjcxNCA5OC4xOSAxODUuNzYxIDk5LjE0MjkgMTgzLjg1NyA5OS4xNDI5QzE4MS45NTMgOTkuMTQyOSAxODEgOTguMTkgMTgxIDk2LjI4NTdDMTgxIDk0LjM4MTQgMTgwLjA0NyA5My40Mjg2IDE3OC4xNDMgOTMuNDI4NkMxNzYuMjM5IDkzLjQyODYgMTc1LjI4NiA5Mi40NzU3IDE3NS4yODYgOTAuNTcxNEMxNzUuMjg2IDg4LjY2NzEgMTc0LjMzMyA4Ny43MTQzIDE3Mi40MjkgODcuNzE0M0MxNzAuNTI0IDg3LjcxNDMgMTY5LjU3MSA4OC42NjcxIDE2OS41NzEgOTAuNTcxNEMxNjkuNTcxIDkyLjQ3NTcgMTY4LjYxOSA5My40Mjg2IDE2Ni43MTQgOTMuNDI4NkMxNjQuODEgOTMuNDI4NiAxNjMuODU3IDk0LjM4MTQgMTYzLjg1NyA5Ni4yODU3QzE2My44NTcgOTguNjY3MSAxNjIuOTA0IDk5LjE0MjkgMTU4LjE0MyA5OS4xNDI5QzE1My4zODEgOTkuMTQyOSAxNTIuNDI5IDk4LjY2NzEgMTUyLjQyOSA5Ni4yODU3QzE1Mi40MjkgOTQuMzgxNCAxNTMuMzgxIDkzLjQyODYgMTU1LjI4NiA5My40Mjg2QzE1Ny4xOSA5My40Mjg2IDE1OC4xNDMgOTIuNDc1NyAxNTguMTQzIDkwLjU3MTRDMTU4LjE0MyA4OC42NjcxIDE1OS4wOTYgODcuNzE0MyAxNjEgODcuNzE0M0MxNjMuMzgxIDg3LjcxNDMgMTYzLjg1NyA4Ni43NjE0IDE2My44NTcgODJDMTYzLjg1NyA3Ny4yMzg2IDE2NC4zMzMgNzYuMjg1NyAxNjYuNzE0IDc2LjI4NTdDMTY4LjYxOSA3Ni4yODU3IDE2OS41NzEgNzcuMjM4NiAxNjkuNTcxIDc5LjE0MjlDMTY5LjU3MSA4MS4wNDcxIDE3MC41MjQgODIgMTcyLjQyOSA4MkMxNzQuMzMzIDgyIDE3NS4yODYgODEuMDQ3MSAxNzUuMjg2IDc5LjE0MjlDMTc1LjI4NiA3Ny4yMzg2IDE3NC4zMzMgNzYuMjg1NyAxNzIuNDI5IDc2LjI4NTdDMTcwLjUyNCA3Ni4yODU3IDE2OS41NzEgNzUuMzMyOSAxNjkuNTcxIDczLjQyODZDMTY5LjU3MSA3MS41MjQzIDE3MC41MjQgNzAuNTcxNCAxNzIuNDI5IDcwLjU3MTRDMTc0LjMzMyA3MC41NzE0IDE3NS4yODYgNjkuNjE4NiAxNzUuMjg2IDY3LjcxNDNDMTc1LjI4NiA2NS44MSAxNzQuMzMzIDY0Ljg1NzEgMTcyLjQyOSA2NC44NTcxQzE3MC41MjQgNjQuODU3MSAxNjkuNTcxIDYzLjkwNDMgMTY5LjU3MSA2MkMxNjkuNTcxIDYwLjA5NTcgMTY4LjYxOSA1OS4xNDI5IDE2Ni43MTQgNTkuMTQyOUMxNjQuODEgNTkuMTQyOSAxNjMuODU3IDU4LjE5IDE2My44NTcgNTYuMjg1N0MxNjMuODU3IDU0LjM4MTQgMTY0LjgxIDUzLjQyODYgMTY2LjcxNCA1My40Mjg2QzE2OS4wOTYgNTMuNDI4NiAxNjkuNTcxIDUyLjQ3NTcgMTY5LjU3MSA0Ny43MTQzQzE2OS41NzEgNDIuOTUyOSAxNjkuMDk2IDQyIDE2Ni43MTQgNDJDMTY0LjMzMyA0MiAxNjMuODU3IDQyLjk1MjkgMTYzLjg1NyA0Ny43MTQzWk0xODEgNjJWODJIMjAxSDIyMVY2MlY0MkgyMDFIMTgxVjYyWk0xMzUuMjg2IDYyVjc2LjI4NTdIMTIxSDEwNi43MTRWNjJWNDcuNzE0M0gxMjFIMTM1LjI4NlY2MlpNMjE1LjI4NiA2MlY3Ni4yODU3SDIwMUgxODYuNzE0VjYyVjQ3LjcxNDNIMjAxSDIxNS4yODZWNjJaTTExMi40MjkgNjJWNzAuNTcxNEgxMjFIMTI5LjU3MVY2MlY1My40Mjg2SDEyMUgxMTIuNDI5VjYyWk0xOTIuNDI5IDYyVjcwLjU3MTRIMjAxSDIwOS41NzFWNjJWNTMuNDI4NkgyMDFIMTkyLjQyOVY2MlpNMTYzLjg1NyA2NC44NTcxVjcwLjU3MTRIMTU4LjE0M0MxNTMuMzgxIDcwLjU3MTQgMTUyLjQyOSA3MC4wOTU3IDE1Mi40MjkgNjcuNzE0M0MxNTIuNDI5IDY1LjgxIDE1My4zODEgNjQuODU3MSAxNTUuMjg2IDY0Ljg1NzFDMTU3LjE5IDY0Ljg1NzEgMTU4LjE0MyA2My45MDQzIDE1OC4xNDMgNjJDMTU4LjE0MyA2MC4wOTU3IDE1OS4wOTYgNTkuMTQyOSAxNjEgNTkuMTQyOUMxNjMuMzgxIDU5LjE0MjkgMTYzLjg1NyA2MC4wOTU3IDE2My44NTcgNjQuODU3MVpNMTAxIDkzLjQyODZWOTkuMTQyOUgxMDYuNzE0QzExMS40NzYgOTkuMTQyOSAxMTIuNDI5IDk5LjYxODYgMTEyLjQyOSAxMDJDMTEyLjQyOSAxMDMuOTA0IDExMy4zODEgMTA0Ljg1NyAxMTUuMjg2IDEwNC44NTdDMTE3LjE5IDEwNC44NTcgMTE4LjE0MyAxMDUuODEgMTE4LjE0MyAxMDcuNzE0QzExOC4xNDMgMTEwLjA5NiAxMTcuMTkgMTEwLjU3MSAxMTIuNDI5IDExMC41NzFDMTA3LjY2NyAxMTAuNTcxIDEwNi43MTQgMTEwLjA5NiAxMDYuNzE0IDEwNy43MTRDMTA2LjcxNCAxMDUuODEgMTA1Ljc2MSAxMDQuODU3IDEwMy44NTcgMTA0Ljg1N0MxMDEuNDc2IDEwNC44NTcgMTAxIDEwNS44MSAxMDEgMTEwLjU3MVYxMTYuMjg2SDExMi40MjlIMTIzLjg1N1YxMTAuNTcxQzEyMy44NTcgMTA1LjgxIDEyMy4zODEgMTA0Ljg1NyAxMjEgMTA0Ljg1N0MxMTguNDYgMTA0Ljg1NyAxMTguMTQzIDEwMy45MDQgMTE4LjE0MyA5Ni4yODU3QzExOC4xNDMgODguNjY3MSAxMTcuODI2IDg3LjcxNDMgMTE1LjI4NiA4Ny43MTQzQzExMy4zODEgODcuNzE0MyAxMTIuNDI5IDg4LjY2NzEgMTEyLjQyOSA5MC41NzE0QzExMi40MjkgOTIuNDc1NyAxMTEuNDc2IDkzLjQyODYgMTA5LjU3MSA5My40Mjg2QzEwNy42NjcgOTMuNDI4NiAxMDYuNzE0IDkyLjQ3NTcgMTA2LjcxNCA5MC41NzE0QzEwNi43MTQgODguNjY3MSAxMDUuNzYxIDg3LjcxNDMgMTAzLjg1NyA4Ny43MTQzQzEwMS40NzYgODcuNzE0MyAxMDEgODguNjY3MSAxMDEgOTMuNDI4NlpNMTIzLjg1NyA5MC41NzE0QzEyMy44NTcgOTIuNDc1NyAxMjQuODEgOTMuNDI4NiAxMjYuNzE0IDkzLjQyODZDMTI4LjYxOSA5My40Mjg2IDEyOS41NzEgOTIuNDc1NyAxMjkuNTcxIDkwLjU3MTRDMTI5LjU3MSA4OC42NjcxIDEyOC42MTkgODcuNzE0MyAxMjYuNzE0IDg3LjcxNDNDMTI0LjgxIDg3LjcxNDMgMTIzLjg1NyA4OC42NjcxIDEyMy44NTcgOTAuNTcxNFpNMTM1LjI4NiA5MC41NzE0QzEzNS4yODYgOTIuNDc1NyAxMzYuMjM5IDkzLjQyODYgMTM4LjE0MyA5My40Mjg2QzE0MC4wNDcgOTMuNDI4NiAxNDEgOTIuNDc1NyAxNDEgOTAuNTcxNEMxNDEgODguNjY3MSAxNDAuMDQ3IDg3LjcxNDMgMTM4LjE0MyA4Ny43MTQzQzEzNi4yMzkgODcuNzE0MyAxMzUuMjg2IDg4LjY2NzEgMTM1LjI4NiA5MC41NzE0Wk0yMDkuNTcxIDk2LjI4NTdWMTA0Ljg1N0gyMTUuMjg2SDIyMVY5OS4xNDI5QzIyMSA5NC4zODE0IDIyMC41MjQgOTMuNDI4NiAyMTguMTQzIDkzLjQyODZDMjE2LjIzOSA5My40Mjg2IDIxNS4yODYgOTIuNDc1NyAyMTUuMjg2IDkwLjU3MTRDMjE1LjI4NiA4OC42NjcxIDIxNC4zMzMgODcuNzE0MyAyMTIuNDI5IDg3LjcxNDNDMjA5Ljg4OSA4Ny43MTQzIDIwOS41NzEgODguNjY3MSAyMDkuNTcxIDk2LjI4NTdaTTE3NS4yODYgOTkuMTQyOUMxNzUuMjg2IDEwMy45MDQgMTc0LjgxIDEwNC44NTcgMTcyLjQyOSAxMDQuODU3QzE3MC4wNDcgMTA0Ljg1NyAxNjkuNTcxIDEwMy45MDQgMTY5LjU3MSA5OS4xNDI5QzE2OS41NzEgOTQuMzgxNCAxNzAuMDQ3IDkzLjQyODYgMTcyLjQyOSA5My40Mjg2QzE3NC44MSA5My40Mjg2IDE3NS4yODYgOTQuMzgxNCAxNzUuMjg2IDk5LjE0MjlaTTE5OC4xNDMgOTkuMTQyOUMxOTguMTQzIDEwMy45MDQgMTk3LjY2NyAxMDQuODU3IDE5NS4yODYgMTA0Ljg1N0MxOTIuOTA0IDEwNC44NTcgMTkyLjQyOSAxMDMuOTA0IDE5Mi40MjkgOTkuMTQyOUMxOTIuNDI5IDk0LjM4MTQgMTkyLjkwNCA5My40Mjg2IDE5NS4yODYgOTMuNDI4NkMxOTcuNjY3IDkzLjQyODYgMTk4LjE0MyA5NC4zODE0IDE5OC4xNDMgOTkuMTQyOVpNMTUyLjQyOSAxMDJDMTUyLjQyOSAxMDQuMzgxIDE1My4zODEgMTA0Ljg1NyAxNTguMTQzIDEwNC44NTdIMTYzLjg1N1YxMTAuNTcxQzE2My44NTcgMTE1LjMzMyAxNjMuMzgxIDExNi4yODYgMTYxIDExNi4yODZDMTU5LjA5NiAxMTYuMjg2IDE1OC4xNDMgMTE1LjMzMyAxNTguMTQzIDExMy40MjlDMTU4LjE0MyAxMTEuNTI0IDE1Ny4xOSAxMTAuNTcxIDE1NS4yODYgMTEwLjU3MUMxNTMuMzgxIDExMC41NzEgMTUyLjQyOSAxMTEuNTI0IDE1Mi40MjkgMTEzLjQyOUMxNTIuNDI5IDExNS4zMzMgMTUxLjQ3NiAxMTYuMjg2IDE0OS41NzEgMTE2LjI4NkMxNDcuNjY3IDExNi4yODYgMTQ2LjcxNCAxMTUuMzMzIDE0Ni43MTQgMTEzLjQyOUMxNDYuNzE0IDExMS41MjQgMTQ3LjY2NyAxMTAuNTcxIDE0OS41NzEgMTEwLjU3MUMxNTEuNDc2IDExMC41NzEgMTUyLjQyOSAxMDkuNjE5IDE1Mi40MjkgMTA3LjcxNEMxNTIuNDI5IDEwNS44MSAxNTEuNDc2IDEwNC44NTcgMTQ5LjU3MSAxMDQuODU3QzE0Ny42NjcgMTA0Ljg1NyAxNDYuNzE0IDEwMy45MDQgMTQ2LjcxNCAxMDJDMTQ2LjcxNCAxMDAuMDk2IDE0Ny42NjcgOTkuMTQyOSAxNDkuNTcxIDk5LjE0MjlDMTUxLjQ3NiA5OS4xNDI5IDE1Mi40MjkgMTAwLjA5NiAxNTIuNDI5IDEwMlpNMTg2LjcxNCAxMDcuNzE0QzE4Ni43MTQgMTA5LjYxOSAxODUuNzYxIDExMC41NzEgMTgzLjg1NyAxMTAuNTcxQzE4MS45NTMgMTEwLjU3MSAxODEgMTA5LjYxOSAxODEgMTA3LjcxNEMxODEgMTA1LjgxIDE4MS45NTMgMTA0Ljg1NyAxODMuODU3IDEwNC44NTdDMTg1Ljc2MSAxMDQuODU3IDE4Ni43MTQgMTA1LjgxIDE4Ni43MTQgMTA3LjcxNFpNMjAzLjg1NyAxMTkuMTQzQzIwMy44NTcgMTIxLjUyNCAyMDIuOTA0IDEyMiAxOTguMTQzIDEyMkMxOTMuMzgxIDEyMiAxOTIuNDI5IDEyMi40NzYgMTkyLjQyOSAxMjQuODU3QzE5Mi40MjkgMTI3LjIzOSAxOTMuMzgxIDEyNy43MTQgMTk4LjE0MyAxMjcuNzE0QzIwMi45MDQgMTI3LjcxNCAyMDMuODU3IDEyNy4yMzkgMjAzLjg1NyAxMjQuODU3QzIwMy44NTcgMTIyLjk1MyAyMDQuODEgMTIyIDIwNi43MTQgMTIyQzIwOS4yNTQgMTIyIDIwOS41NzEgMTIyLjk1MyAyMDkuNTcxIDEzMC41NzFDMjA5LjU3MSAxMzguMTkgMjA5LjI1NCAxMzkuMTQzIDIwNi43MTQgMTM5LjE0M0MyMDQuODEgMTM5LjE0MyAyMDMuODU3IDE0MC4wOTYgMjAzLjg1NyAxNDJDMjAzLjg1NyAxNDQuMzgxIDIwNC44MSAxNDQuODU3IDIwOS41NzEgMTQ0Ljg1N0MyMTQuMzMzIDE0NC44NTcgMjE1LjI4NiAxNDUuMzMzIDIxNS4yODYgMTQ3LjcxNEMyMTUuMjg2IDE0OS42MTkgMjE0LjMzMyAxNTAuNTcxIDIxMi40MjkgMTUwLjU3MUMyMTAuNTI0IDE1MC41NzEgMjA5LjU3MSAxNTEuNTI0IDIwOS41NzEgMTUzLjQyOUMyMDkuNTcxIDE1NS4zMzMgMjA4LjYxOSAxNTYuMjg2IDIwNi43MTQgMTU2LjI4NkMyMDQuODEgMTU2LjI4NiAyMDMuODU3IDE1NS4zMzMgMjAzLjg1NyAxNTMuNDI5QzIwMy44NTcgMTUxLjA0NyAyMDIuOTA0IDE1MC41NzEgMTk4LjE0MyAxNTAuNTcxSDE5Mi40MjlWMTQ0Ljg1N0MxOTIuNDI5IDE0MC4wOTYgMTkyLjkwNCAxMzkuMTQzIDE5NS4yODYgMTM5LjE0M0MxOTcuMTkgMTM5LjE0MyAxOTguMTQzIDEzOC4xOSAxOTguMTQzIDEzNi4yODZDMTk4LjE0MyAxMzQuMzgxIDE5Ny4xOSAxMzMuNDI5IDE5NS4yODYgMTMzLjQyOUMxOTMuMzgxIDEzMy40MjkgMTkyLjQyOSAxMzQuMzgxIDE5Mi40MjkgMTM2LjI4NkMxOTIuNDI5IDEzOC4xOSAxOTEuNDc2IDEzOS4xNDMgMTg5LjU3MSAxMzkuMTQzQzE4Ny4xOSAxMzkuMTQzIDE4Ni43MTQgMTM4LjE5IDE4Ni43MTQgMTMzLjQyOUMxODYuNzE0IDEyOC42NjcgMTg2LjIzOSAxMjcuNzE0IDE4My44NTcgMTI3LjcxNEMxODEuNDc2IDEyNy43MTQgMTgxIDEyOC42NjcgMTgxIDEzMy40MjlDMTgxIDEzOC4xOSAxODAuNTI0IDEzOS4xNDMgMTc4LjE0MyAxMzkuMTQzQzE3Ni4yMzkgMTM5LjE0MyAxNzUuMjg2IDEzOC4xOSAxNzUuMjg2IDEzNi4yODZDMTc1LjI4NiAxMzQuMzgxIDE3NC4zMzMgMTMzLjQyOSAxNzIuNDI5IDEzMy40MjlDMTcwLjUyNCAxMzMuNDI5IDE2OS41NzEgMTM0LjM4MSAxNjkuNTcxIDEzNi4yODZDMTY5LjU3MSAxMzguMTkgMTY4LjYxOSAxMzkuMTQzIDE2Ni43MTQgMTM5LjE0M0MxNjQuODEgMTM5LjE0MyAxNjMuODU3IDE0MC4wOTYgMTYzLjg1NyAxNDJDMTYzLjg1NyAxNDQuNTQgMTYyLjkwNCAxNDQuODU3IDE1NS4yODYgMTQ0Ljg1N0MxNDcuNjY3IDE0NC44NTcgMTQ2LjcxNCAxNDUuMTc0IDE0Ni43MTQgMTQ3LjcxNEMxNDYuNzE0IDE1MC4wOTYgMTQ3LjY2NyAxNTAuNTcxIDE1Mi40MjkgMTUwLjU3MUMxNTcuMTkgMTUwLjU3MSAxNTguMTQzIDE1MS4wNDcgMTU4LjE0MyAxNTMuNDI5QzE1OC4xNDMgMTU1LjMzMyAxNTkuMDk2IDE1Ni4yODYgMTYxIDE1Ni4yODZDMTYyLjkwNCAxNTYuMjg2IDE2My44NTcgMTU3LjIzOSAxNjMuODU3IDE1OS4xNDNDMTYzLjg1NyAxNjEuMDQ3IDE2NC44MSAxNjIgMTY2LjcxNCAxNjJDMTY4LjYxOSAxNjIgMTY5LjU3MSAxNjEuMDQ3IDE2OS41NzEgMTU5LjE0M0MxNjkuNTcxIDE1Ny4yMzkgMTcwLjUyNCAxNTYuMjg2IDE3Mi40MjkgMTU2LjI4NkMxNzQuMzMzIDE1Ni4yODYgMTc1LjI4NiAxNTcuMjM5IDE3NS4yODYgMTU5LjE0M0MxNzUuMjg2IDE2MS42ODMgMTc2LjIzOSAxNjIgMTgzLjg1NyAxNjJDMTkxLjQ3NiAxNjIgMTkyLjQyOSAxNjEuNjgzIDE5Mi40MjkgMTU5LjE0M0MxOTIuNDI5IDE1Ni43NjEgMTkzLjM4MSAxNTYuMjg2IDE5OC4xNDMgMTU2LjI4NkMyMDIuOTA0IDE1Ni4yODYgMjAzLjg1NyAxNTYuNzYxIDIwMy44NTcgMTU5LjE0M0MyMDMuODU3IDE2MS42ODMgMjA0LjgxIDE2MiAyMTIuNDI5IDE2MkMyMjAuMDQ3IDE2MiAyMjEgMTYxLjY4MyAyMjEgMTU5LjE0M0MyMjEgMTU3LjIzOSAyMjAuMDQ3IDE1Ni4yODYgMjE4LjE0MyAxNTYuMjg2QzIxNi4yMzkgMTU2LjI4NiAyMTUuMjg2IDE1NS4zMzMgMjE1LjI4NiAxNTMuNDI5QzIxNS4yODYgMTUxLjUyNCAyMTYuMjM5IDE1MC41NzEgMjE4LjE0MyAxNTAuNTcxQzIyMC4wNDcgMTUwLjU3MSAyMjEgMTQ5LjYxOSAyMjEgMTQ3LjcxNEMyMjEgMTQ1LjgxIDIyMC4wNDcgMTQ0Ljg1NyAyMTguMTQzIDE0NC44NTdDMjE2LjIzOSAxNDQuODU3IDIxNS4yODYgMTQzLjkwNCAyMTUuMjg2IDE0MkMyMTUuMjg2IDE0MC4wOTYgMjE2LjIzOSAxMzkuMTQzIDIxOC4xNDMgMTM5LjE0M0MyMjAuMDQ3IDEzOS4xNDMgMjIxIDEzOC4xOSAyMjEgMTM2LjI4NkMyMjEgMTM0LjM4MSAyMjAuMDQ3IDEzMy40MjkgMjE4LjE0MyAxMzMuNDI5QzIxNi4yMzkgMTMzLjQyOSAyMTUuMjg2IDEzMi40NzYgMjE1LjI4NiAxMzAuNTcxQzIxNS4yODYgMTI4LjY2NyAyMTYuMjM5IDEyNy43MTQgMjE4LjE0MyAxMjcuNzE0QzIyMC41MjQgMTI3LjcxNCAyMjEgMTI2Ljc2MSAyMjEgMTIyVjExNi4yODZIMjEyLjQyOUMyMDQuODEgMTE2LjI4NiAyMDMuODU3IDExNi42MDMgMjAzLjg1NyAxMTkuMTQzWk0xMDEgMTQyVjE2MkgxMjFIMTQxVjE0MlYxMjJIMTIxSDEwMVYxNDJaTTE2OS41NzEgMTI0Ljg1N0MxNjkuNTcxIDEyNi43NjEgMTcwLjUyNCAxMjcuNzE0IDE3Mi40MjkgMTI3LjcxNEMxNzQuMzMzIDEyNy43MTQgMTc1LjI4NiAxMjYuNzYxIDE3NS4yODYgMTI0Ljg1N0MxNzUuMjg2IDEyMi45NTMgMTc0LjMzMyAxMjIgMTcyLjQyOSAxMjJDMTcwLjUyNCAxMjIgMTY5LjU3MSAxMjIuOTUzIDE2OS41NzEgMTI0Ljg1N1pNMTM1LjI4NiAxNDJWMTU2LjI4NkgxMjFIMTA2LjcxNFYxNDJWMTI3LjcxNEgxMjFIMTM1LjI4NlYxNDJaTTExMi40MjkgMTQyVjE1MC41NzFIMTIxSDEyOS41NzFWMTQyVjEzMy40MjlIMTIxSDExMi40MjlWMTQyWk0xNzUuMjg2IDE0NC44NTdDMTc1LjI4NiAxNDkuNjE5IDE3NC44MSAxNTAuNTcxIDE3Mi40MjkgMTUwLjU3MUMxNzAuMDQ3IDE1MC41NzEgMTY5LjU3MSAxNDkuNjE5IDE2OS41NzEgMTQ0Ljg1N0MxNjkuNTcxIDE0MC4wOTYgMTcwLjA0NyAxMzkuMTQzIDE3Mi40MjkgMTM5LjE0M0MxNzQuODEgMTM5LjE0MyAxNzUuMjg2IDE0MC4wOTYgMTc1LjI4NiAxNDQuODU3Wk0xODYuNzE0IDE0MkMxODYuNzE0IDE0My45MDQgMTg1Ljc2MSAxNDQuODU3IDE4My44NTcgMTQ0Ljg1N0MxODEuOTUzIDE0NC44NTcgMTgxIDE0My45MDQgMTgxIDE0MkMxODEgMTQwLjA5NiAxODEuOTUzIDEzOS4xNDMgMTgzLjg1NyAxMzkuMTQzQzE4NS43NjEgMTM5LjE0MyAxODYuNzE0IDE0MC4wOTYgMTg2LjcxNCAxNDJaTTE4Ni43MTQgMTUzLjQyOUMxODYuNzE0IDE1NS4zMzMgMTg1Ljc2MSAxNTYuMjg2IDE4My44NTcgMTU2LjI4NkMxODEuOTUzIDE1Ni4yODYgMTgxIDE1NS4zMzMgMTgxIDE1My40MjlDMTgxIDE1MS41MjQgMTgxLjk1MyAxNTAuNTcxIDE4My44NTcgMTUwLjU3MUMxODUuNzYxIDE1MC41NzEgMTg2LjcxNCAxNTEuNTI0IDE4Ni43MTQgMTUzLjQyOVpNMTQ2LjcxNCAxNTkuMTQzQzE0Ni43MTQgMTYxLjA0NyAxNDcuNjY3IDE2MiAxNDkuNTcxIDE2MkMxNTEuNDc2IDE2MiAxNTIuNDI5IDE2MS4wNDcgMTUyLjQyOSAxNTkuMTQzQzE1Mi40MjkgMTU3LjIzOSAxNTEuNDc2IDE1Ni4yODYgMTQ5LjU3MSAxNTYuMjg2QzE0Ny42NjcgMTU2LjI4NiAxNDYuNzE0IDE1Ny4yMzkgMTQ2LjcxNCAxNTkuMTQzWiIgZmlsbD0iI0ZGODU2NiIvPgo8L2c+CjwvZz4KPHJlY3QgeD0iMSIgeT0iMSIgd2lkdGg9IjMxOCIgaGVpZ2h0PSIyMDMiIHJ4PSI3IiBzdHJva2U9IiNBMEFEQzAiIHN0cm9rZS13aWR0aD0iMiIvPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF8yODcxXzE1MDgiPgo8cmVjdCB3aWR0aD0iMTIzIiBoZWlnaHQ9IjEyMyIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk5IDQxKSIvPgo8L2NsaXBQYXRoPgo8L2RlZnM+Cjwvc3ZnPgo=","n":15},{"slug":"secret-sharing","title":"Secret Sharing","desc":"Backup your keys and other secrets with your trusted peers.","topic":"sharing-permissions","topicName":"Sharing & Permissions","types":["protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTE1My40MzkgMTU1Ljk1NUwxNDEuOTkgMTM0LjMyN0wxNTMuNDM5IDExMi42OThMMTY1LjI1NyAxMzQuMzI3TDE1My40MzkgMTU1Ljk1NVoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xOTMuODYxIDEyMi4yNDlMMTgyLjQxMiAxMDAuNjJMMTkzLjg2MSA3OC45OTE2TDIwNS42NzkgMTAwLjYyTDE5My44NjEgMTIyLjI0OVoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xMjMuMTk0IDEwNS4wNzNMMTEzLjUwNSA4Ni43NjlMMTIzLjE5NCA2OC40NjU1TDEzMy4xOTUgODYuNzY5TDEyMy4xOTQgMTA1LjA3M1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xNjguNzg4IDgxLjM4ODhMMTYwLjQ5MyA2NS43MTY4TDE2OC43ODggNTAuMDQ0OEwxNzcuMzUyIDY1LjcxNjhMMTY4Ljc4OCA4MS4zODg4WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjIiLz4KPGxpbmUgeDE9IjE1NC4xMjUiIHkxPSIxMTQuNDU4IiB4Mj0iMTU0LjEyNSIgeTI9IjE1NC40NTgiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxsaW5lIHgxPSIxOTQuMTgyIiB5MT0iNzkuODEyOSIgeDI9IjE5NC4zNjgiIHkyPSIxMjEuMTMyIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMiIvPgo8bGluZSB4MT0iMTIzLjM3OSIgeTE9IjY5LjU3ODYiIHgyPSIxMjMuMzc5IiB5Mj0iMTAzLjc4OSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjIiLz4KPGxpbmUgeDE9IjE2OC45OTQiIHkxPSI1MC42MzEzIiB4Mj0iMTY4Ljk5NCIgeTI9IjgwLjYzMTIiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxsaW5lIHkxPSItMSIgeDI9IjEzLjQ3MDEiIHkyPSItMSIgdHJhbnNmb3JtPSJtYXRyaXgoLTAuOTQ4ODQyIC0wLjMxNTc1MiAwLjMxNTc1NCAtMC45NDg4NDEgMTU1LjQxNyAxMzcuMzc1KSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjIiLz4KPGxpbmUgeTE9Ii0xIiB4Mj0iMTIuMTIxOCIgeTI9Ii0xIiB0cmFuc2Zvcm09Im1hdHJpeCgtMC45MDgyMDEgLTAuNDE4NTM1IDAuMzQ1MjY5IC0wLjkzODUwNCAxOTQuMDY3IDEwNC40ODkpIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMiIvPgo8bGluZSB5MT0iLTEiIHgyPSIxMC40MTkzIiB5Mj0iLTEiIHRyYW5zZm9ybT0ibWF0cml4KC0wLjkwODIwMSAtMC40MTg1MzUgMC4zNDUyNjkgLTAuOTM4NTA0IDEyMy4zNjggOTAuMDk0NykiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxsaW5lIHkxPSItMSIgeDI9IjkuMDcxODMiIHkyPSItMSIgdHJhbnNmb3JtPSJtYXRyaXgoLTAuOTA4MjAxIC0wLjQxODUzNSAwLjM0NTI2OSAtMC45Mzg1MDQgMTY4LjkzOSA2OC42MTA4KSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTE2NC41NTkgMTMzLjcwM0wxNTMuMzIxIDEzOS4wNTYiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0yMDQuOTgxIDk5Ljk5NzRMMTkzLjc0MyAxMDUuMzUiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxsaW5lIHkxPSItMSIgeDI9IjEwLjI1MTYiIHkyPSItMSIgdHJhbnNmb3JtPSJtYXRyaXgoLTAuOTA1MDEyIDAuNDI1Mzg2IC0wLjM1MTMxNSAtMC45MzYyNTcgMTMyLjA5IDg1LjczMjQpIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMiIvPgo8bGluZSB5MT0iLTEiIHgyPSI4LjkyNTc5IiB5Mj0iLTEiIHRyYW5zZm9ybT0ibWF0cml4KC0wLjkwNTAxMiAwLjQyNTM4NiAtMC4zNTEzMTUgLTAuOTM2MjU3IDE3Ni41MzIgNjQuODE0NSkiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxsaW5lIHkxPSItMSIgeDI9IjQwLjIyIiB5Mj0iLTEiIHRyYW5zZm9ybT0ibWF0cml4KDAuNTg0NTk5IDAuODExMzIzIC0wLjc0MjMzNiAwLjY3MDAyOCAxMjMuMzIgOTEuNjg0NikiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxsaW5lIHgxPSIxIiB5MT0iLTEiIHgyPSIzNC4yNTgiIHkyPSItMSIgdHJhbnNmb3JtPSJtYXRyaXgoMC45MzM2MjIgLTAuMzU4MjYgMC4yOTI5MDIgMC45NTYxNDMgMTI4LjQ5MyA3OS4wNTE4KSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8bGluZSB4MT0iMSIgeTE9Ii0xIiB4Mj0iMjguNTQ2OCIgeTI9Ii0xIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjYxNDg3IDAuNzg4NjI4IC0wLjc4ODYzIDAuNjE0ODY4IDE2OC42MzYgNjguOTA4MikiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPGxpbmUgeDE9IjEiIHkxPSItMSIgeDI9IjUzLjA5NzciIHkyPSItMSIgdHJhbnNmb3JtPSJtYXRyaXgoMC45NjQ4ODMgMC4yNjI2ODEgLTAuMjEyMzc2IDAuOTc3MTg4IDEzMi4yNTUgODcuOTk5NSkiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPGxpbmUgeDE9IjEiIHkxPSItMSIgeDI9IjQ4LjIiIHkyPSItMSIgdHJhbnNmb3JtPSJtYXRyaXgoLTAuMjc3MTYxIDAuOTYwODIzIC0wLjk2MDgyNCAtMC4yNzcxNiAxNjYuODE4IDY4LjkwODIpIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxsaW5lIHgxPSIxIiB5MT0iLTEiIHgyPSIzNy41MzgyIiB5Mj0iLTEiIHRyYW5zZm9ybT0ibWF0cml4KC0wLjcyMTE1NiAwLjY5Mjc3MyAtMC42OTI3NzUgLTAuNzIxMTU0IDE4OS4xNTYgMTAyLjIxKSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K","n":16},{"slug":"social-radius-slider","title":"Social Radius Slider","desc":"Control information overload in large networks.","topic":"moderation-curation","topicName":"Moderation & Curation","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xNjAgMTU4QzE5MC4zNzYgMTU4IDIxNSAxMzMuMzc2IDIxNSAxMDNDMjE1IDcyLjYyNDMgMTkwLjM3NiA0OCAxNjAgNDhDMTI5LjYyNCA0OCAxMDUgNzIuNjI0MyAxMDUgMTAzIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTYwIDEwM0wxOTEuNDI5IDcxLjU3MTMiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNjAgNjMuNzE0MkMxMzguMzAzIDYzLjcxNDIgMTIwLjcxNCA4MS4zMDMgMTIwLjcxNCAxMDNDMTIwLjcxNCAxMjQuNjk3IDEzOC4zMDMgMTQyLjI4NiAxNjAgMTQyLjI4NkMxODEuNjk3IDE0Mi4yODYgMTk5LjI4NiAxMjQuNjk3IDE5OS4yODYgMTAzIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTYwIDc5LjQyODRDMTQ2Ljk4MiA3OS40Mjg0IDEzNi40MjggODkuOTgxNyAxMzYuNDI4IDEwM0MxMzYuNDI4IDExNi4wMTggMTQ2Ljk4MiAxMjYuNTcxIDE2MCAxMjYuNTcxQzE3My4wMTggMTI2LjU3MSAxODMuNTcxIDExNi4wMTggMTgzLjU3MSAxMDMiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+Cg==","n":17},{"slug":"standards-marker","title":"Standards Marker","desc":"Quickly find and open files that are related to your application.","topic":"sharing-permissions","topicName":"Sharing & Permissions","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMDUgNDhIMTYwTDE0MS42NjcgNjQuNjAzOEwxNjAgODEuMjA3NkgxMDVWNDhaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTA1IDgxLjIwNzVWMTI0Ljc5MiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE0MS42NjcgNjQuNjAzNUgxODcuNUwxNjkuMTY3IDgxLjIwNzNMMTg3LjUgOTcuODExMUgxNDEuNjY3IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTY5LjE2NyA4MS4yMDc1SDIxNUwxOTYuNjY3IDk3LjgxMTNMMjE1IDExNC40MTVIMTY5LjE2NyIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE0MS42NjcgOTcuODExNVYxNDEuMzk2IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTY5LjE2NyAxMTQuNDE1VjE1OCIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==","n":18},{"slug":"tombstones","title":"Tombstones","desc":"Protect privacy & safety through networked deletion","topic":"moderation-curation","topicName":"Moderation & Curation","types":["protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTA3LjQ5MyAxMDMuODlMMTE0Ljk1OSAxNDNMMjE1IDExNS40NDdMMjExLjI2NyA5NS44OTIxTDIwNy41MzQgNzYuMzM2OUwxMDcuNDkzIDEwMy44OVoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTUyLjc5NSA2My4wMDAxTDE1Ni43ODcgODMuOTcxTDE1OS42NDEgOTguOTQ5NkwyMTQuNjM1IDExNC42NjdMMjExLjIwOSA5Ni42ODk5TDIwNy4yMjggNzUuODAyMUwxNTIuNzk1IDYzLjAwMDFaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE1MS43NjEgNjMuMjg1NkwxNTUuNzc0IDg0LjI1MDVMMTU4LjYzOCA5OS4yMjY1TDExNC44MzkgMTQyLjE1M0wxMTEuNDAyIDEyNC4xNzlMMTA3LjQwOCAxMDMuMjk1TDE1MS43NjEgNjMuMjg1NloiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+Cg==","n":19},{"slug":"trackers","title":"Trackers","desc":"Trackers can facilitate introduction in peer-to-peer networks.","topic":"sync-status","topicName":"Sync & Status","types":["protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHJlY3QgeD0iMTM2Ljk3OCIgeT0iNDkuNSIgd2lkdGg9IjI4LjI0MDgiIGhlaWdodD0iMzAuNDc4MyIgcng9IjguNSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMTM2Ljk3OCA0OS41KSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHJlY3QgeD0iMTM2Ljk3OSIgeT0iODguNzQyMiIgd2lkdGg9IjI4LjI0MDgiIGhlaWdodD0iMzAuNDc4MyIgcng9IjguNSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMTM2Ljk3OSA4OC43NDIyKSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHJlY3QgeD0iMTM2Ljk3OSIgeT0iMTI4LjI1OSIgd2lkdGg9IjI4LjI0MDgiIGhlaWdodD0iMzAuNDc4MyIgcng9IjguNSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMTM2Ljk3OSAxMjguMjU5KSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHJlY3QgeD0iMTc2LjE5NSIgeT0iNDkuNSIgd2lkdGg9IjI4LjI0MDgiIGhlaWdodD0iMzEuNDM0OCIgcng9IjguNSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMTc2LjE5NSA0OS41KSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHJlY3QgeD0iMTc2LjE5NSIgeT0iODguNzQyMiIgd2lkdGg9IjI4LjI0MDgiIGhlaWdodD0iMzEuNDM0OCIgcng9IjguNSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMTc2LjE5NSA4OC43NDIyKSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHJlY3QgeD0iMTc2LjE5NSIgeT0iMTI4LjI1OSIgd2lkdGg9IjI4LjI0MDgiIGhlaWdodD0iMzEuNDM0OCIgcng9IjguNSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMTc2LjE5NSAxMjguMjU5KSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPHJlY3QgeD0iMjEzLjUiIHk9IjQ5LjUiIHdpZHRoPSIyOC4yNDA4IiBoZWlnaHQ9IjMwLjQ3ODMiIHJ4PSI4LjUiIHRyYW5zZm9ybT0icm90YXRlKDkwIDIxMy41IDQ5LjUpIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIvPgo8cmVjdCB4PSIyMTMuNSIgeT0iODguNzQyMiIgd2lkdGg9IjI4LjI0MDgiIGhlaWdodD0iMzAuNDc4MyIgcng9IjguNSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMjEzLjUgODguNzQyMikiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxyZWN0IHg9IjIxMy41IiB5PSIxMjguMjU5IiB3aWR0aD0iMjguMjQwOCIgaGVpZ2h0PSIzMC40NzgzIiByeD0iOC41IiB0cmFuc2Zvcm09InJvdGF0ZSg5MCAyMTMuNSAxMjguMjU5KSIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiLz4KPGxpbmUgeDE9IjEzMi4zMjYiIHkxPSI2MS42MTY3IiB4Mj0iMTUxLjMyNiIgeTI9IjYxLjYxNjciIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPGxpbmUgeDE9IjEzMi4zMjYiIHkxPSIxMDEuODY2IiB4Mj0iMTUxLjMyNiIgeTI9IjEwMS44NjYiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPGxpbmUgeDE9IjEzMi4zMjYiIHkxPSIxNDEuMzg0IiB4Mj0iMTUxLjMyNiIgeTI9IjE0MS4zODQiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPGxpbmUgeDE9IjE2OS42MyIgeTE9IjYxLjYxNjciIHgyPSIxODguNjMiIHkyPSI2MS42MTY3IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxsaW5lIHgxPSIxNjkuNjMiIHkxPSIxMDEuODY2IiB4Mj0iMTg4LjYzIiB5Mj0iMTAxLjg2NiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8bGluZSB4MT0iMTY5LjYzIiB5MT0iMTQxLjM4NCIgeDI9IjE4OC42MyIgeTI9IjE0MS4zODQiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==","n":20},{"slug":"village-or-city","title":"Village or City","desc":"Set clear expectations around the kinds of social interactions you want to see.","topic":"moderation-curation","topicName":"Moderation & Curation","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTE0Ny44MzUgMTM3LjY0M0wxNzQuODA0IDg1LjgyMDVMMjAxLjc3NCAxMzcuNjQzSDE0Ny44MzVaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIvPgo8cGF0aCBkPSJNMTUxLjg0NSAxMDMuMDcxTDE3OS44MDkgNTEuMTYyN0wyMDcuNzczIDEwMy4wNzFIMTUxLjg0NVoiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik0xMTIuMzk0IDExNS42NDNMMTQxLjE5IDYzLjY2NjVMMTY5Ljk4NSAxMTUuNjQzSDExMi4zOTRaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIvPgo8L3N2Zz4K","n":21},{"slug":"visual-hash","title":"Visual Hash","desc":"Quickly differentiate between two users or pieces of content.","topic":"sharing-permissions","topicName":"Sharing & Permissions","types":["ui"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTE1Ni4xODEgMTA2LjcxNkgxMzQuMDI4VjEyOS4wMTNIMTU2LjE4MVYxMDYuNzE2WiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE1Ni4xODEgMTM2LjQ0NkgxMzQuMDI4VjE1OEgxNTYuMTgxVjEzNi40NDZaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTI3LjE1MyAxMDYuNzE2SDEwNVYxMjkuMDEzSDEyNy4xNTNWMTA2LjcxNloiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMjcuMTUzIDEzNi40NDZIMTA1VjE1OEgxMjcuMTUzVjEzNi40NDZaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTg1Ljk3MiAxMDYuNzE2SDE2My4wNTZWMTI5LjAxM0gxODUuOTcyVjEwNi43MTZaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTg1Ljk3MiAxMzYuNDQ2SDE2My4wNTZWMTU4SDE4NS45NzJWMTM2LjQ0NloiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0yMTUgMTA2LjcxNkgxOTIuMDgzVjEyOS4wMTNIMjE1VjEwNi43MTZaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjE1IDEzNi40NDZIMTkyLjA4M1YxNThIMjE1VjEzNi40NDZaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTU2LjE4MSA3Ny43M0gxMzQuMDI4Vjk5LjI4MzlIMTU2LjE4MVY3Ny43M1oiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMjcuMTUzIDc3LjczSDEwNVY5OS4yODM5SDEyNy4xNTNWNzcuNzNaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTU2LjE4MSA0OEgxMzQuMDI4VjcwLjI5NzJIMTU2LjE4MVY0OFoiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMjcuMTUzIDQ4SDEwNVY3MC4yOTcySDEyNy4xNTNWNDhaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjEzLjUgNzMuNjc5OUMyMTMuNSA4Ni45OTI4IDIwMi4zNzMgOTcuODU5OCAxODguNTUzIDk3Ljg1OThDMTc0LjczMyA5Ny44NTk4IDE2My42MDYgODYuOTkyOCAxNjMuNjA2IDczLjY3OTlDMTYzLjYwNiA2MC4zNjcgMTc0LjczMyA0OS41IDE4OC41NTMgNDkuNUMyMDIuMzczIDQ5LjUgMjEzLjUgNjAuMzY3IDIxMy41IDczLjY3OTlaIiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIvPgo8L3N2Zz4K","n":22},{"slug":"whisper-links","title":"Whisper Links","desc":"Share resources quickly between two trusted users.","topic":"sharing-permissions","topicName":"Sharing & Permissions","types":["ui","protocol"],"img":"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjIwNSIgdmlld0JveD0iMCAwIDMyMCAyMDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIzMTgiIGhlaWdodD0iMjAzIiByeD0iOSIgc3Ryb2tlPSIjQTBBREMwIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTEwNSA2Ni42MjE2TDE0MS42NjcgNDdMMTc4LjMzMyA2Ni42MjE2TDIxNSA0NyIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEwNSAxMDUuMjdMMTQxLjY2NyA4NS42NDg0TDE3OC4zMzMgMTA1LjI3TDIxNSA4NS42NDg0IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTA1IDEzMC44MzhMMTQxLjY2NyAxMTEuMjE2TDE3OC4zMzMgMTMwLjgzOEwyMTUgMTExLjIxNiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEwNSAxMTcuNzU2TDE0MS42NjcgOTguNzI5TDE3OC4zMzMgMTE3Ljc1NkwyMTUgOTguNzI5IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTA1IDc5LjcwMjJMMTQxLjY2NyA2MC4wODA2TDE3OC4zMzMgNzkuNzAyMkwyMTUgNjAuMDgwNiIgc3Ryb2tlPSIjRkY4NTY2IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEwNSAxNDMuOTE5TDE0MS42NjcgMTI0LjI5N0wxNzguMzMzIDE0My45MTlMMjE1IDEyNC4yOTciIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMDUgOTIuMTg4N0wxNDEuNjY3IDczLjE2MTZMMTc4LjMzMyA5Mi4xODg3TDIxNSA3My4xNjE2IiBzdHJva2U9IiNGRjg1NjYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTA1IDE1N0wxNDEuNjY3IDEzNy4zNzhMMTc4LjMzMyAxNTdMMjE1IDEzNy4zNzgiIHN0cm9rZT0iI0ZGODU2NiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=","n":23}]
+  const TOPICS = {"identity-agency":"Identity & Agency","moderation-curation":"Moderation & Curation","sharing-permissions":"Sharing & Permissions","sync-status":"Sync & Status"}
+
+  const BASE = "https://decentpatterns.com/library/"
+  const reel = document.getElementById("reel")
+  const reelBody = document.getElementById("reelBody")
+  const slotNo = document.getElementById("slotNo")
+  const spinBtn = document.getElementById("spinBtn")
+  const countEl = document.getElementById("count")
+  const trackEl = document.getElementById("track")
+  const filtersEl = document.querySelector(".filters")
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+  let topic = ""
+  let deck = []
+  let seen = new Set()
+  let current = null
+  let spinning = false
+
+  // ---- filters ----
+  for (const [key, name] of Object.entries(TOPICS)) {
+    const b = document.createElement("button")
+    b.className = "chip"
+    b.dataset.topic = key
+    b.setAttribute("aria-pressed", "false")
+    b.textContent = name
+    filtersEl.appendChild(b)
+  }
+
+  filtersEl.addEventListener("click", (e) => {
+    const btn = e.target.closest(".chip")
+    if (!btn || spinning) return
+    topic = btn.dataset.topic
+    for (const c of filtersEl.querySelectorAll(".chip")) {
+      c.setAttribute("aria-pressed", String(c.dataset.topic === topic))
+    }
+    seen = new Set()
+    buildDeck()
+    renderTrack()
+    renderCount()
+  })
+
+  // ---- deck ----
+  const pool = () => PATTERNS.filter((p) => !topic || p.topic === topic)
+
+  function buildDeck() {
+    deck = pool().filter((p) => !seen.has(p.slug))
+    for (let i = deck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[deck[i], deck[j]] = [deck[j], deck[i]]
+    }
+  }
+
+  function renderCount() {
+    const total = pool().length
+    const n = pool().filter((p) => seen.has(p.slug)).length
+    countEl.textContent = `${n} of ${total} dealt`
+    spinBtn.textContent = n >= total ? "Reshuffle the deck" : current ? "Spin again" : "Spin"
+  }
+
+  // ---- track ----
+  function renderTrack() {
+    trackEl.textContent = ""
+    for (const p of PATTERNS) {
+      const b = document.createElement("button")
+      b.className = "slot"
+      b.textContent = String(p.n).padStart(2, "0")
+      b.title = p.title
+      b.setAttribute("aria-label", p.title)
+      b.dataset.out = String(!!topic && p.topic !== topic)
+      b.dataset.state =
+        current && current.slug === p.slug ? "current" : seen.has(p.slug) ? "seen" : "unseen"
+      b.addEventListener("click", () => {
+        if (spinning) return
+        land(p)
+      })
+      trackEl.appendChild(b)
+    }
+  }
+
+  // ---- rendering a pattern ----
+  function paint(p, withDetail) {
+    slotNo.textContent = String(p.n).padStart(2, "0")
+    reelBody.textContent = ""
+
+    if (p.img) {
+      const frame = document.createElement("div")
+      frame.className = "thumb-frame"
+      const img = document.createElement("img")
+      img.src = p.img
+      img.alt = ""
+      frame.appendChild(img)
+      reelBody.appendChild(frame)
+    }
+
+    const h = document.createElement("p")
+    h.className = "reel-name"
+    h.textContent = p.title
+    reelBody.appendChild(h)
+
+    const d = document.createElement("div")
+    d.className = "detail"
+    reelBody.appendChild(d)
+    if (!withDetail) return
+
+    const desc = document.createElement("p")
+    desc.textContent = p.desc
+    d.appendChild(desc)
+
+    const tags = document.createElement("div")
+    tags.className = "tags"
+    if (p.topicName) {
+      const t = document.createElement("span")
+      t.className = "tag topic"
+      t.textContent = p.topicName
+      tags.appendChild(t)
+    }
+    for (const ty of p.types) {
+      const t = document.createElement("span")
+      t.className = "tag"
+      t.textContent = ty
+      tags.appendChild(t)
+    }
+    d.appendChild(tags)
+
+    const a = document.createElement("a")
+    a.className = "open-link"
+    a.href = BASE + p.slug
+    a.target = "_blank"
+    a.rel = "noopener"
+    a.textContent = "Open " + p.title + " \u2192"
+    d.appendChild(a)
+  }
+
+  function land(p) {
+    current = p
+    seen.add(p.slug)
+    deck = deck.filter((x) => x.slug !== p.slug)
+    reel.classList.remove("spinning")
+    reel.classList.add("landed")
+    paint(p, true)
+    renderTrack()
+    renderCount()
+    spinBtn.disabled = false
+    spinning = false
+  }
+
+  // ---- the spin ----
+  function spin() {
+    if (spinning) return
+    const total = pool().length
+    if (pool().filter((x) => seen.has(x.slug)).length >= total) {
+      seen = new Set()
+      current = null
+      buildDeck()
+      renderTrack()
+      renderCount()
+      reel.classList.remove("landed")
+      slotNo.textContent = ""
+      reelBody.textContent = ""
+      const m = document.createElement("div")
+      m.className = "idle-ring"
+      m.setAttribute("aria-hidden", "true")
+      const hint = document.createElement("p")
+      hint.className = "idle-hint"
+      hint.textContent = "Deck reshuffled. " + total + " patterns back in play."
+      reelBody.append(m, hint)
+      return
+    }
+
+    if (!deck.length) buildDeck()
+    const target = deck[0]
+    if (!target) return
+
+    if (reduced) {
+      land(target)
+      return
+    }
+
+    spinning = true
+    spinBtn.disabled = true
+    reel.classList.remove("landed")
+    reel.classList.add("spinning")
+
+    const faces = pool().length > 1 ? pool() : PATTERNS
+    const duration = 1700
+    const start = performance.now()
+    let last = 0
+    let i = Math.floor(Math.random() * faces.length)
+
+    function frame(now) {
+      const t = Math.min((now - start) / duration, 1)
+      // ease-out: ticks start fast (~45ms) and stretch toward ~260ms
+      const interval = 45 + Math.pow(t, 2.6) * 215
+      if (now - last >= interval) {
+        i = (i + 1) % faces.length
+        paint(faces[i], false)
+        last = now
+      }
+      if (t < 1) {
+        requestAnimationFrame(frame)
+      } else {
+        land(target)
+      }
+    }
+    requestAnimationFrame(frame)
+  }
+
+  spinBtn.addEventListener("click", spin)
+
+  document.addEventListener("keydown", (e) => {
+    if (e.code !== "Space") return
+    const tag = (e.target.tagName || "").toLowerCase()
+    if (tag === "input" || tag === "textarea" || e.target.isContentEditable) return
+    if (e.target === spinBtn) return // let the button's own click fire
+    e.preventDefault()
+    spin()
+  })
+
+  buildDeck()
+  renderTrack()
+  renderCount()
+</script>
+  </body>
+</html>
