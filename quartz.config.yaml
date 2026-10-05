@@ -1,0 +1,206 @@
+# yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
+#
+# Site configuration. Plugin options that need code (Explorer sort/map) and
+# our own components (pattern grid, meta, thumbnail, edit links, footer) are
+# wired up in quartz.ts.
+configuration:
+  pageTitle: Decent Patterns
+  pageTitleSuffix: " | Decent Patterns"
+  enableSPA: true
+  enablePopovers: true
+  analytics: null
+  locale: en-US
+  baseUrl: decentpatterns.com
+  ignorePatterns:
+    - private
+    - templates
+    - .obsidian
+    - patterns/_template.md
+  theme:
+    fontOrigin: googleFonts
+    cdnCaching: true
+    typography:
+      header:
+        name: Space Grotesk
+        weights: [300, 400]
+      body: Inter
+      code: IBM Plex Mono
+    # dark-only site: both palettes carry the dark values so every consumer
+    # of the CSS variables renders dark; print styles live in custom.scss
+    colors:
+      lightMode:
+        light: "#131F26"
+        lightgray: "#29333B"
+        gray: "#A0ADC0"
+        darkgray: "#CAD3DF"
+        dark: "#ECF0F8"
+        secondary: "#FF8566"
+        tertiary: "#32C8B2"
+        highlight: rgba(255, 133, 102, 0.12)
+        textHighlight: "#FF856644"
+      darkMode:
+        light: "#131F26"
+        lightgray: "#29333B"
+        gray: "#A0ADC0"
+        darkgray: "#CAD3DF"
+        dark: "#ECF0F8"
+        secondary: "#FF8566"
+        tertiary: "#32C8B2"
+        highlight: rgba(255, 133, 102, 0.12)
+        textHighlight: "#FF856644"
+plugins:
+  # transformers
+  - source: "@quartz-community/note-properties"
+    enabled: true
+    options:
+      hidePropertiesView: true
+    order: 5
+  - source: "@quartz-community/created-modified-date"
+    enabled: true
+    options:
+      defaultDateType: modified
+      priority:
+        - frontmatter
+        - git
+        - filesystem
+    order: 10
+  - source: "@quartz-community/syntax-highlighting"
+    enabled: true
+    options:
+      theme:
+        light: github-dark
+        dark: github-dark
+      keepBackground: false
+    order: 20
+  - source: "@quartz-community/obsidian-flavored-markdown"
+    enabled: true
+    options:
+      enableInHtmlEmbed: false
+    order: 30
+  - source: "@quartz-community/github-flavored-markdown"
+    enabled: true
+    order: 40
+  - source: "@quartz-community/table-of-contents"
+    enabled: true
+    order: 50
+    layout:
+      position: right
+      priority: 30
+      display: desktop-only
+  - source: "@quartz-community/crawl-links"
+    enabled: true
+    options:
+      markdownLinkResolution: shortest
+    order: 60
+  - source: "@quartz-community/description"
+    enabled: true
+    order: 70
+  - source: "@quartz-community/latex"
+    enabled: true
+    options:
+      renderEngine: katex
+    order: 80
+  - source: "@quartz-community/quartz-fonts"
+    enabled: true
+
+  # filters
+  - source: "@quartz-community/remove-draft"
+    enabled: true
+
+  # emitters
+  - source: "@quartz-community/alias-redirects"
+    enabled: true
+  - source: "@quartz-community/content-index"
+    enabled: true
+    options:
+      enableSiteMap: true
+      enableRSS: true
+  - source: "@quartz-community/favicon"
+    enabled: true
+  - source: "@quartz-community/og-image"
+    enabled: true
+
+  # page types
+  - source: "@quartz-community/content-page"
+    enabled: true
+  - source: "@quartz-community/folder-page"
+    enabled: true
+  - source: "@quartz-community/tag-page"
+    enabled: true
+
+  # layout components
+  - source: "@quartz-community/page-title"
+    enabled: true
+    layout:
+      position: left
+      priority: 10
+  - source: "@quartz-community/search"
+    enabled: true
+    layout:
+      position: left
+      priority: 20
+      group: toolbar
+      groupOptions:
+        grow: true
+  - source: "@quartz-community/spacer"
+    enabled: true
+    layout:
+      position: left
+      priority: 25
+      display: mobile-only
+  - source: "@quartz-community/reader-mode"
+    enabled: true
+    layout:
+      position: left
+      priority: 35
+      group: toolbar
+  - source: "@quartz-community/explorer"
+    enabled: true
+    layout:
+      position: left
+      priority: 50
+  - source: "@quartz-community/graph"
+    enabled: true
+    layout:
+      position: right
+      priority: 10
+  - source: "@quartz-community/backlinks"
+    enabled: true
+    layout:
+      position: right
+      priority: 50
+  - source: "@quartz-community/breadcrumbs"
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 5
+      condition: not-index
+  - source: "@quartz-community/article-title"
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 10
+      condition: not-index
+layout:
+  groups:
+    toolbar:
+      priority: 35
+      direction: row
+      gap: 0.5rem
+  byPageType:
+    "404":
+      positions:
+        beforeBody: []
+        left: []
+        right: []
+    content: {}
+    folder:
+      exclude:
+        - "@quartz-community/reader-mode"
+      positions:
+        right: []
+    tag:
+      exclude:
+        - "@quartz-community/reader-mode"
+      positions:
+        right: []

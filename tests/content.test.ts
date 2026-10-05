@@ -3,13 +3,18 @@ import assert from "node:assert"
 import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import matter from "gray-matter"
+import { parse } from "yaml"
 
 const contentDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "content")
 const patternsDir = path.join(contentDir, "patterns")
 const topicsDir = path.join(contentDir, "topics")
 
 const VALID_STATUSES = ["stub", "draft", "mature"]
+
+function frontmatter(source: string): Record<string, any> {
+  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/)
+  return match ? (parse(match[1]) ?? {}) : {}
+}
 
 const patternFiles = fs
   .readdirSync(patternsDir)
@@ -27,7 +32,7 @@ test("there are patterns and topics to lint", () => {
 
 for (const file of patternFiles) {
   test(`pattern frontmatter: ${file}`, () => {
-    const { data } = matter(fs.readFileSync(path.join(patternsDir, file), "utf-8"))
+    const data = frontmatter(fs.readFileSync(path.join(patternsDir, file), "utf-8"))
 
     assert.ok(typeof data.title === "string" && data.title.trim().length > 0, "title is required")
     assert.ok(
