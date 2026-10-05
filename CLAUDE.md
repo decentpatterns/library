@@ -1,6 +1,6 @@
 # Project: Decent Patterns
 
-A Quartz v4 static site — the pattern library and website of Decent Patterns (`decentpatterns.com`, repo `decentpatterns/library`). The pre-Quartz content is archived on the `master` branch; see `MIGRATION.md` for cutover status.
+A Quartz v5 static site — the pattern library and website of Decent Patterns (`decentpatterns.com`, repo `decentpatterns/library`). The pre-Quartz content is archived on the `master` branch; see `MIGRATION.md` for cutover status.
 
 ## Dev Commands
 
@@ -22,9 +22,19 @@ npm test                         # Run tests (tsx --test)
   - `content/glossary/index.md` — Glossary overview page (linked from index as [[Glossary]])
   - `content/glossary/<name>.md` — Glossary term pages (one per term)
   - `content/index.md` — Landing page
-- `quartz.config.ts` — Site config (title, theme colors, plugins)
-- `quartz.layout.ts` — Page layout and sidebar components
-- `quartz/` — Quartz framework source (avoid editing unless necessary)
+- `quartz.config.yaml` — Site config (title, theme colors) and plugins, including each plugin's layout position
+- `quartz.ts` — What YAML can't express: Explorer sort/rename callbacks, and adding our own components to the layout
+- `components/` — Our own components (pattern grid, pattern meta, illustration, edit links, footer, head)
+- `quartz/styles/custom.scss` — Site styles (the one file in `quartz/` that is ours)
+- `quartz/` — Quartz framework source, tracked from upstream `v5` (avoid editing unless necessary)
+
+## Quartz 5 notes
+
+- Plugins are npm packages (`@quartz-community/*`). In `quartz.ts` and in `layout.byPageType.*.exclude` they are referred to by their full source, e.g. `@quartz-community/explorer`.
+- Quartz 5.0 ignores the `layout` exported from `quartz.ts`, so `quartz.ts` swaps in its own `PageTypeDispatcher`. Check whether that's still needed when upgrading.
+- Quartz's base and plugin CSS sits in `@layer quartz-base`, so unlayered rules in `custom.scss` beat them regardless of specificity. Put bare element rules (e.g. `h2`) inside `@layer quartz-base { … }`.
+- Emitted URLs and asset paths are lowercased. Paths written into HTML by our components must go through `slugifyFilePath`.
+- Upgrading Quartz: `git fetch https://github.com/jackyzha0/quartz.git v5 && git merge FETCH_HEAD`, then `npm install`.
 
 ## Content Conventions
 

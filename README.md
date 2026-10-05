@@ -21,7 +21,7 @@ Plus a **glossary** of key decentralization terms.
 
 ## Architecture
 
-The site is built with [Quartz v4](https://quartz.jzhao.xyz/), a static-site generator that transforms Markdown into a fully functional website with features like full-text search, graph view, backlinks, and popover previews.
+The site is built with [Quartz v5](https://quartz.jzhao.xyz/), a static-site generator that transforms Markdown into a fully functional website with features like full-text search, graph view, backlinks, and popover previews.
 
 ```
 content/
