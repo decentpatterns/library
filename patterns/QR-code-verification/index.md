@@ -41,7 +41,9 @@ Allow users to load the QR code as an image in case their camera is broken or un
 
 ### Potential Problems with QR Code Verification
 
-Long pass phrases (such as a [mnemonic code](https://en.wikipedia.org/wiki/Mnemonic)) is more complex than showing and scanning a QR code or importing a backup file. However, these long phrases may be useful instead of QR codes in low-bandwidth scenarios where image uploading is costly or time consuming. If used instead of a QR Code, mnemonic phrases should be translated into the user's native language.
+- For better or worse, the COVID-19 pandemic has introduced QR codes at a very large scale. Most people understand the basic interaction with a QR code; but it has also taught a rather non-chalant attitude with scanning any QR code one comes across. Beware of bad actors putting QR code stickers for phishing attempts and more - best to protect your QR in some fashion, and always add a visual brand close to it so people know they can trust it.
+- Keep in mind that anyone can take a picture of your QR code and use it later.
+- Long pass phrases (such as a [mnemonic code](https://en.wikipedia.org/wiki/Mnemonic)) is more complex than showing and scanning a QR code or importing a backup file. However, these long phrases may be useful instead of QR codes in low-bandwidth scenarios where image uploading is costly or time consuming. If used instead of a QR Code, mnemonic phrases should be translated into the user's native language.
 
 ### The Take Away
 
