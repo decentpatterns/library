@@ -100,8 +100,9 @@ plugins:
     options:
       renderEngine: katex
     order: 80
+  # loads its own default fonts over theme.typography; v4 had no equivalent
   - source: "@quartz-community/quartz-fonts"
-    enabled: true
+    enabled: false
 
   # filters
   - source: "@quartz-community/remove-draft"
@@ -140,8 +141,6 @@ plugins:
       position: left
       priority: 20
       group: toolbar
-      groupOptions:
-        grow: true
   - source: "@quartz-community/spacer"
     enabled: true
     layout:
